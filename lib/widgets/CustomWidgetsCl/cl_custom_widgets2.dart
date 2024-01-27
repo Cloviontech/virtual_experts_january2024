@@ -455,7 +455,7 @@ class ClListTileInsideCardWidget extends StatelessWidget {
           ),
         ),
         D10HCustomClSizedBoxWidget(
-          height: 20,
+          height: 100,
         ),
       ],
     );
@@ -463,8 +463,10 @@ class ClListTileInsideCardWidget extends StatelessWidget {
 }
 
 class ClListviewBuilderTableWidget extends
- StatelessWidget {
-  const ClListviewBuilderTableWidget({
+ StatefulWidget {
+
+
+   ClListviewBuilderTableWidget({
     super.key,
     required this.officeDetailsQus,
     required this.officeDetailsAns,
@@ -474,13 +476,19 @@ class ClListviewBuilderTableWidget extends
   final List<String> officeDetailsAns;
 
   @override
+  State<ClListviewBuilderTableWidget> createState() => _ClListviewBuilderTableWidgetState();
+}
+
+class _ClListviewBuilderTableWidgetState extends State<ClListviewBuilderTableWidget> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8), color: Colors.white),
-      height: officeDetailsQus.length * 60,
+      height: widget.officeDetailsQus.length * 60,
       child: ListView.builder(
-          itemCount: officeDetailsQus.length,
+        // scrollDirection:ScrollController(),
+          itemCount: widget.officeDetailsQus.length,
           itemBuilder: (context, Index) {
             return ListTile(
               horizontalTitleGap: DeviceSize.itemWidth / 3.11,
@@ -488,7 +496,7 @@ class ClListviewBuilderTableWidget extends
                 // width: MediaQuery.of(context).size.width/3,
                 width: size.width / 4,
                 child: Text(
-                  officeDetailsQus[Index],
+                  widget.officeDetailsQus[Index],
                   style: TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
@@ -497,7 +505,7 @@ class ClListviewBuilderTableWidget extends
                 ),
               ),
               title: Text(
-                officeDetailsAns[Index],
+                widget.officeDetailsAns[Index],
                 style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,

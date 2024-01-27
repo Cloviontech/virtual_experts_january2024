@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:virtual_experts/routes/app_routes.dart';
 
 import '../../../core/utils/color_constant.dart';
 import '../../../model_final/modelAllUser.dart';
@@ -142,6 +143,10 @@ class _DashboardPrivateInvestigatorScreenState
                           color: ColorConstant.gray600,
                           fontSize: MediaQuery.of(context).size.height / 50),
                     ),
+                    onTap: () => 
+                      Navigator.pushNamed(context, AppRoutes.clientsHome)
+  
+                    ,
                   ),
                 ),
                 Card(

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/4ScreenSignUp.dart';
+import 'package:virtual_experts/presentation/4LocalAdmin/bottom_navigation_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../model_final/modelAllUser.dart';
@@ -9,13 +13,14 @@ import '../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../MatchingList/1screen_advertisement.dart';
 
 class ThreeSigninScreen extends StatefulWidget {
-  const ThreeSigninScreen({super.key});
+  const ThreeSigninScreen({super.key, required this.service});
 
-   static late String userUidAccess;
+  static late String userUidAccess;
+
+  final String service;
 
   @override
   State<ThreeSigninScreen> createState() => _ThreeSigninScreenState();
@@ -33,8 +38,6 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
   String? _userUidSignIn;
   String _userUidSignInClean = 'null';
 
- 
-
   // Future login() async {
   //   _databaseManager.signIn(
   //       context, emailController.text, passwordController.text);
@@ -47,7 +50,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
-  void login(String url) async {
+  void login() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
 
@@ -56,9 +59,6 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
     };
 
     var requestBody = {
-
-
-      
       // 'email': 'abhijithbrindav@gmail.com',
       // 'email': 'saran@gmail.com',
 
@@ -69,9 +69,12 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
       'password': passwordController.text,
     };
     print('Login Processing');
+    print(widget.service);
 
     var response = await http.post(
-      Uri.parse("http://${ApiService.ipAddress}/pi_signin/"),
+      Uri.parse("http://${ApiService.ipAddress}/${widget.service}/"),
+      // Uri.parse("http://${ApiService.ipAddress}/pm_signin/"),
+      
       // headers: headers,
       body: requestBody,
     );
@@ -98,7 +101,41 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
       });
       print(preferences.getString("uid2").toString());
 
-      Navigator.pushNamed(context, AppRoutes.contactDetailsPrivateInvestScreen); //permanent
+      if (widget.service == 'pi_signin') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ContactDetailsPrivateInvestScreen(
+              service: 'pi_complete_account',
+            );
+          }),
+        );
+      }
+
+        else if (widget.service == 'pm_signin') {
+           Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return BottomNavigationLocalAdminScreen(
+             
+            );
+          }),
+        );
+        }
+
+
+         else if (widget.service == 'sm_signin') {
+           Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return BottomNavigationSalesScreen(
+             
+            );
+          }),
+        );
+        }
+
+      // Navigator.pushNamed(context, AppRoutes.contactDetailsPrivateInvestScreen); //permanent
       //  Navigator.pushNamed(
       //         context, AppRoutes.FourteenScreenBottomNavigationscr);  // Temperory for testing use only
     } else {
@@ -156,8 +193,8 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height /
-                                    11.85),
+                                top:
+                                    MediaQuery.of(context).size.height / 11.85),
                             child: const Center(
                               child: Column(
                                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -201,7 +238,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                               const D10HCustomClSizedBoxWidget(
                                 height: 100,
                               ),
-              
+
                               Container(
                                 height: 50,
                                 decoration: BoxDecoration(
@@ -214,8 +251,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                         AutofillHints.email
                                       ],
                                       controller: emailController,
-                                      keyboardType:
-                                          TextInputType.emailAddress,
+                                      keyboardType: TextInputType.emailAddress,
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return ("Please Enter Your Email");
@@ -233,9 +269,8 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                           hintStyle: const TextStyle(
                                               color: Colors.black),
                                           suffixIcon: Padding(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 15),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 15),
                                             child: SvgPicture.asset(
                                               'assets/images/img_user_black_900_16x12.svg',
                                               color: Colors.black,
@@ -244,7 +279,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                     )),
                               ),
                               // ),
-              
+
                               const Padding(
                                 padding: EdgeInsets.only(top: 20),
                                 child: Text(
@@ -303,6 +338,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                               ),
                             ],
                           ),
+                          // Text(widget.service),
                           const Center(
                             child: Text("Forgot Password",
                                 style: TextStyle(
@@ -315,12 +351,12 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                     ],
                                     decoration: TextDecoration.underline,
                                     decorationThickness: 3)
-              
+
                                 // TextStyle(
                                 //     color: Colors.black,
                                 //     decoration: TextDecoration.underline,
                                 //     decorationThickness: 1,
-              
+
                                 //     // textBaseline: TextBaseline.ideographic,
                                 //     // decorationStyle: TextDecorationStyle.dashed,
                                 //     ),
@@ -373,16 +409,17 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                   // login("http://3.86.99.140:8000/signin/");
                                   // login("http://54.211.84.169:8000/signin/");
                                   // login("http://${ApiService.ipAddress}/signin/");
-                                  login("http://10.0.2.2:8000/pi_signin/");
+                                  // login("http://10.0.2.2:8000/pi_signin/");
+                                  login();
                                   Fluttertoast.showToast(
                                     backgroundColor: Colors.green,
                                     textColor: Colors.white,
                                     msg: 'Signing Process',
                                     toastLength: Toast.LENGTH_SHORT,
                                   );
-              
+
                                   // ec2-54-159-186-219.compute-1.amazonaws.com
-              
+
                                   // saveData();
                                 } else {
                                   Fluttertoast.showToast(
@@ -399,7 +436,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                               child: const Text(
                                 'Sign In',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                    color: Colors.white,
                                     fontFamily: 'Roboto',
                                     fontWeight: FontWeight.w700,
                                     fontSize: 18),
@@ -443,7 +480,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: SvgPicture.asset(
                                     // 'assets/images/img_facebook_deep_purple_a200.svg'),
-              
+
                                     'assets/images/img_floatingicon.svg',
                                     height: 40,
                                   ),
@@ -487,8 +524,40 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                     padding: const EdgeInsets.only(left: 10),
                                     child: InkWell(
                                       onTap: () {
-                                        Navigator.pushNamed(context,
-                                            AppRoutes.fourSignUpScreen);
+                                        // Navigator.pushNamed(context,
+                                        //     AppRoutes.fourSignUpScreen);
+
+                                        if (widget.service == 'pi_signin') {
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) {
+                                            return FourSignUpScreen(
+                                                service: 'pi_signup');
+                                          }),
+                                        );
+                                        }
+
+
+                                        else if (widget.service == 'pm_signin')
+
+                                          Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) {
+                                            return FourSignUpScreen(
+                                                service: 'pm_signup');
+                                          }),
+                                        );
+
+                                          else if (widget.service == 'sm_signin')
+
+                                          Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) {
+                                            return FourSignUpScreen(
+                                                service: 'sm_signup');
+                                          }),
+                                        );
                                       },
                                       child: SizedBox(
                                         // color: Colors.white,
@@ -502,8 +571,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                                 color: ColorConstant
                                                     .deepPurpleA200,
                                                 fontSize:
-                                                    DeviceSize.itemHeight /
-                                                        13),
+                                                    DeviceSize.itemHeight / 13),
                                             // textAlign: TextAlign.end,
                                           ),
                                         ),

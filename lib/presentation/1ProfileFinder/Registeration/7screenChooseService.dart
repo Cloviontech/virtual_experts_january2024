@@ -23,7 +23,7 @@ class SevenChooseServiceScreen extends StatefulWidget {
 
 class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
   List<String> ServiceItems = [
-    // "Profile Finder",
+    "Profile Manager",
     "Hiring Manager",
     "Sales Person",
     "Advertisement",
@@ -32,22 +32,25 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
   ];
 
   List<Widget> Navigation = [
+    ThreeSigninScreen(service: 'pm_signin',),
     // EightUploadTheIDScreen(),
-    BottomNavigationThirteenHiringMgrMainScreen(),
+    // BottomNavigationThirteenHiringMgrMainScreen(),
+    ThreeSigninScreen(service: 'hm_signin',),
+    ThreeSigninScreen(service: 'sm_signin',),
     BottomNavigationSalesScreen(),
     BottomNavigationThirteenHiringMgrMainScreen(),
-    BottomNavigationSalesScreen(),
+    // BottomNavigationSalesScreen(),
     
     // "Advertisement",
     // "Affiliate Program",
     // ContactDetailsPrivateInvestScreen(),
-    ThreeSigninScreen(),
+    ThreeSigninScreen(service: 'pi_signin',),
     // CscPicker()
 
   ];
 
   final List<String> _IconItems = [
-    // ImageConstant.imgUserWhiteA700,
+    ImageConstant.imgUserWhiteA700,
     ImageConstant.imgFilelist3line,
     ImageConstant.imgUser2line,
     ImageConstant.imgLayoutgridfill,

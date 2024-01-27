@@ -34,3 +34,60 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+
+
+/*
+
+
+// parsing list of json
+
+   static late List<PiMyData> userList;
+
+
+   Future<void> fetchData() async {
+
+    
+      late String private_investicator_id;
+   SharedPreferences preferences = await SharedPreferences.getInstance();
+    private_investicator_id = preferences.getString("uid2").toString();
+  
+    final response = await http.get(Uri.parse("http://${ApiService.ipAddress}/pi_my_data/$private_investicator_id"));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      setState(() {
+        userList = jsonResponse.map((data) => PiMyData.fromJson(data)).toList();
+      
+      
+      
+      
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+
+  // 
+
+  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return SuccessStoryThirtyFiveScreen(index: 0,);
+                  }),
+                );
+
+
+  // 
+
+   Fluttertoast.showToast(
+          msg: "Rejected Successfully...!",
+          backgroundColor: ColorConstant.deepPurpleA200,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_SHORT,
+        );
+
+
+
+ */

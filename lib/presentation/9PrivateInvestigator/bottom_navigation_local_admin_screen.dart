@@ -6,7 +6,7 @@ import 'package:virtual_experts/presentation/9PrivateInvestigator/task/tasks/tas
 
 import '../../core/utils/color_constant.dart';
 import 'clients/clients_main.dart';
-import 'dashboard_local_admin/dashboard_local_admin_screen.dart';
+import 'dashboard_private_investigator/dashboard_private_admin_screen.dart';
 
 class BottomNavigationPrivateInvestigatorScreen extends StatefulWidget {
   const BottomNavigationPrivateInvestigatorScreen({super.key});

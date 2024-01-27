@@ -1795,9 +1795,14 @@ class _MatchingListImageHorizontalListViewState
 
   _getDataMatList() async {
     debugPrint('_getDataMatList start');
+
+    late String private_investicator_id;
+   SharedPreferences preferences = await SharedPreferences.getInstance();
+    private_investicator_id = preferences.getString("uid2").toString();
+  
     
     final responseMatList = await http.get(
-        Uri.parse("http://${ApiService.ipAddress}/all_male_user_data/${ThreeSigninScreen.userUidAccess}"
+        Uri.parse("http://${ApiService.ipAddress}/pi_my_clients/$private_investicator_id"
              ));
     var json = jsonDecode(responseMatList.body);
 

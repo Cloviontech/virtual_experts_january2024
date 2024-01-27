@@ -10,7 +10,7 @@ class CustomWidgetTextformfieldWithSuffixicon extends StatelessWidget {
     required this.name,
     this.fontWeight,
     this.onChangedd,
-    this.hintText,
+    this.hintText, this.controller,
   });
 
   final String name;
@@ -18,6 +18,7 @@ class CustomWidgetTextformfieldWithSuffixicon extends StatelessWidget {
 
   final Function(String)? onChangedd;
   final hintText;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {

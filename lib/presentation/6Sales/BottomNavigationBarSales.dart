@@ -5,6 +5,7 @@ import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixte
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Approvals/AllApplicationsThirteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/6Sales/dashBoard/DashBoardSalesScreen.dart';
+import 'package:virtual_experts/presentation/6Sales/settings/settings.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
@@ -23,7 +24,7 @@ class _BottomNavigationSalesScreenState
     DashBoardSalesScreen(),
     AllApplicationsThirteenHiringMgrScreen(),
     AccountSixteenHiringMgrScreen(),
-     AccountSettingsFifteenHiringMgrScreen(),
+     SettingsSalesManager(),
   ];
 
   @override

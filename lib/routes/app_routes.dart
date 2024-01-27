@@ -1,6 +1,12 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/1_profile_finder_search_screen_local_admin.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/bottom_navigation_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/clients/widgets/clients_home.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/account_bal/account_bal_pri_inv.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/account_pri_inv/account_pri_inv.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/edit_profile/edit_pro_pri_inv_scr.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
 
 import '../presentation/1ProfileFinder/HappyCouplesUI/AddThirtyFourScreen.dart';
@@ -54,6 +60,29 @@ class AppRoutes {
 
   static const String contactDetailsPrivateInvestScreen = '/contact_Details_Private_Invest_Screen';  
 
+  static const String bottomNavigationPrivateInvestigatorScreen = '/bottom_Navigation_PrivateInvestigatorScreen';  
+
+  static const String clientsHome = '/clients_home';  
+
+
+
+  
+  static const String editProPriInvScr = '/edit_Pro_Pri_Inv_Scr'; 
+
+  static const String accountsPriInvScr = '/accounts_Pri_Inv_Scr'; 
+
+
+   
+
+  static const String accountBalPriInvScr = '/account_Bal_Pri_Inv_Scr';  
+
+
+  
+
+  
+  
+  
+  
   static const String eightUploadIDScreen = '/eight_upload_id_screen';
 
   static const String nineThisProfileForWhomScreen =
@@ -158,11 +187,20 @@ class AppRoutes {
   static const String UploadImagesToFirestorescr =
       'UploadImagesToFirestoreScreen';
 
+  // profile manager routes
+  static const String profileFinderSearchLocalAdminScreen = 'profile_Finder_Search_LocalAdminScreen';
+      
+
+
+
+
+      
+
   static Map<String, WidgetBuilder> routes = {
     oneSplashScreen: (context) => OneSplashScreen(),
     twoWelcomeScreen: (context) => TwoWelcomeScreen(),
-    threeSigninScreen: (context) => ThreeSigninScreen(),
-    fourSignUpScreen: (context) => FourSignUpScreen(),
+    // threeSigninScreen: (context) => ThreeSigninScreen(),
+    fourSignUpScreen: (context) => FourSignUpScreen(service: '',),
     // iphone1313ProSixScreen: (context) => Iphone1313ProSixScreen(
     //       timerr: 0,
     //     ),
@@ -170,8 +208,30 @@ class AppRoutes {
     //  NO NEED */
     sevenChooseServiceScreen: (context) => SevenChooseServiceScreen(),
 
-    contactDetailsPrivateInvestScreen: (context) => ContactDetailsPrivateInvestScreen(),
+    contactDetailsPrivateInvestScreen: (context) => ContactDetailsPrivateInvestScreen(service: '',),
 
+    bottomNavigationPrivateInvestigatorScreen: (context) => BottomNavigationPrivateInvestigatorScreen(),
+
+    bottomNavigationPrivateInvestigatorScreen: (context) => BottomNavigationPrivateInvestigatorScreen(),
+
+    clientsHome: (context) => ClientsHome(),
+
+
+    
+
+
+    
+    editProPriInvScr: (context) => EditProPriInvScr(),
+
+    accountBalPriInvScr: (context) => AccountBalPriInvScr(),
+
+    accountsPriInvScr: (context) => AccountsPriInvScr(),
+
+    
+
+    
+    
+    
     
     ///
     //  NO NEED */
@@ -242,6 +302,14 @@ class AppRoutes {
     UploadThirtyOneScreenscr: (context) => const UploadThirtyOneScreen(),
 
     GalleryThirtyThreeScreenscr: (context) => const GalleryThirtyThreeScreen(),
+
+
+
+
+// profile manager routes
+
+profileFinderSearchLocalAdminScreen: (context) =>  ProfileFinderSearchLocalAdminScreen(),
+
 
 // Bottom Navigation Page
     // EveryMaleFourtyEightScreenscr: (context) => EveryMaleFourtyEightScreen(),

@@ -20,12 +20,13 @@ class FiveOtpEnteringScreen extends StatefulWidget {
   final int timerr;
   final String emailid;
   final String userUidafterOtp;
+  final String service;
 
   const FiveOtpEnteringScreen({
     super.key,
     required this.timerr,
     required this.emailid,
-    required this.userUidafterOtp,
+    required this.userUidafterOtp, required this.service,
   });
 
   @override
@@ -105,7 +106,7 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
   TextEditingController otpController = TextEditingController();
 
 
- void otp(String url, String mail) async {
+ void otp( String mail) async {
     var headers = {
       'Context-Type': 'application/json',
     };
@@ -113,15 +114,19 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
 
     var requestBody = {'user_otp': otpController.text};
 
-    var response = await http.post(
+
+
+if (widget.service == 'pm_signup') {
+   var response = await http.post(
       // Uri.parse("$url$mail"),
-      Uri.parse(url),
+
+      
+      Uri.parse('http://${ApiService.ipAddress}/pm_otp/${widget.userUidafterOtp}'),
 
       headers: headers,
       // body: jsonEncode(requestBody),
       body: requestBody,
     );
-
     if (response.statusCode == 200) {
       print('Otp Is Correct');
       print(response.body);
@@ -131,14 +136,14 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
         context,
         MaterialPageRoute(builder: (context) {
           return SixOtpSuccessfulScreen(
-            emailid: mail,
+            emailid: mail, service: widget.service,
           );
         }),
       );
     } else {
       print("errorCode: ${response.statusCode}");
       print(response.body);
-      print(url);
+      // print(url);
       print(requestBody);
 
       Fluttertoast.showToast(
@@ -148,7 +153,96 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
         toastLength: Toast.LENGTH_SHORT,
       );
     }
+}
+
+else if (widget.service == 'pi_signup') {
+
+   var response = await http.post(
+      // Uri.parse("$url$mail"),
+
+      
+      Uri.parse('http://${ApiService.ipAddress}/pi_otp/${widget.userUidafterOtp}'),
+
+      headers: headers,
+      // body: jsonEncode(requestBody),
+      body: requestBody,
+    );
+    if (response.statusCode == 200) {
+      print('Otp Is Correct');
+      print(response.body);
+
+      //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return SixOtpSuccessfulScreen(
+            emailid: mail, service: widget.service,
+          );
+        }),
+      );
+    } else {
+      print("errorCode: ${response.statusCode}");
+      print(response.body);
+      // print(url);
+      print(requestBody);
+
+      Fluttertoast.showToast(
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
+        msg: 'Invalid OTP',
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+
+}
+
+
+
+else if (widget.service == 'sm_signup') {
+
+   var response = await http.post(
+      // Uri.parse("$url$mail"),
+
+      
+      Uri.parse('http://${ApiService.ipAddress}/sm_otp/${widget.userUidafterOtp}'),
+
+      headers: headers,
+      // body: jsonEncode(requestBody),
+      body: requestBody,
+    );
+    if (response.statusCode == 200) {
+      print('Otp Is Correct');
+      print(response.body);
+
+      //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return SixOtpSuccessfulScreen(
+            emailid: mail, service: widget.service,
+          );
+        }),
+      );
+    } else {
+      print("errorCode: ${response.statusCode}");
+      print(response.body);
+      // print(url);
+      print(requestBody);
+
+      Fluttertoast.showToast(
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
+        msg: 'Invalid OTP',
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+
+}
+   
+
+    
   }
+
 
 
   pi_otp({required String otp_value, required String mail }) async {
@@ -157,8 +251,10 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
   // const private_investicator_id = "Y9M0YCN82YA";
   SharedPreferences preferences = await SharedPreferences.getInstance();
     userUid = preferences.getString("uid2").toString();
-  final url = Uri.parse("http://${ApiService.ipAddress}/pi_otp/$userUid");
-  var request = http.MultipartRequest('POST', url);
+    if (widget.service == 'pi_signup') {
+   final url = Uri.parse("http://${ApiService.ipAddress}/pi_signup/$userUid");
+
+    var request = http.MultipartRequest('POST', url);
   request.fields['user_otp'] = otp_value;
   try {
     final response = await request.send();
@@ -171,7 +267,7 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
         context,
         MaterialPageRoute(builder: (context) {
           return SixOtpSuccessfulScreen(
-            emailid: mail,
+            emailid: mail, service: 'pi_signup'
           );
         }),
       );
@@ -180,6 +276,57 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
   } catch (e) {
     print("Do Something When Error Occurs");
   }
+    }
+    else if (widget.service == 'pm_signup') {
+    final   url = Uri.parse("http://${ApiService.ipAddress}/pm_signup/$userUid");
+
+     var request = http.MultipartRequest('POST', url);
+  request.fields['user_otp'] = otp_value;
+  try {
+    final response = await request.send();
+    statusCode = response.statusCode;
+    body = await response.stream.bytesToString();
+    print("Status Code : $statusCode");
+    print("UID : $userUid");
+    print("otp : $otp_value");
+     Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return SixOtpSuccessfulScreen(
+            emailid: mail, service: 'pm_signup'
+          );
+        }),
+      );
+
+    
+  } catch (e) {
+    print("Do Something When Error Occurs");
+  }
+    }
+
+
+  // var request = http.MultipartRequest('POST', url);
+  // request.fields['user_otp'] = otp_value;
+  // try {
+  //   final response = await request.send();
+  //   statusCode = response.statusCode;
+  //   body = await response.stream.bytesToString();
+  //   print("Status Code : $statusCode");
+  //   print("UID : $userUid");
+  //   print("otp : $otp_value");
+  //    Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) {
+  //         return SixOtpSuccessfulScreen(
+  //           emailid: mail, service: widget.service
+  //         );
+  //       }),
+  //     );
+
+    
+  // } catch (e) {
+  //   print("Do Something When Error Occurs");
+  // }
 }
 
 
@@ -372,7 +519,11 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
                     //     child: Text(widget.timerr.toString())),
                     MyElevatedButtonDisableColor(
                         onPressed: () {
-                          pi_otp( otp_value: otpController.text, mail:  widget.emailid.toString());
+                            otp(
+                              widget.emailid);
+
+
+                          // pi_otp( otp_value: otpController.text, mail:  widget.emailid.toString());
                           // pi_otp(otp_value: otpController.text, );
                           
                           // pi_otp('http://${ApiService.ipAddress}/pi_otp/${widget.userUidafterOtp}',

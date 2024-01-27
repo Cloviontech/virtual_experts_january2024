@@ -10,6 +10,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/account/3_account_balance_Local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/6Sales/registeration/pay_you_ver_scr.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/ClCustomWidgets2.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -21,22 +23,20 @@ import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:http/http.dart' as http;
 
+// unused
 
-
-
-class ContactDetailsPrivateInvestScreen extends StatefulWidget {
-  const ContactDetailsPrivateInvestScreen({super.key, required this.service});
-
+class ContactDetailsSalesManagerScreen extends StatefulWidget {
+  const ContactDetailsSalesManagerScreen({super.key, required this.service});
 
   final String service;
 
   @override
-  State<ContactDetailsPrivateInvestScreen> createState() =>
-      _ContactDetailsPrivateInvestScreenState();
+  State<ContactDetailsSalesManagerScreen> createState() =>
+      _ContactDetailsSalesManagerScreenState();
 }
 
-class _ContactDetailsPrivateInvestScreenState
-    extends State<ContactDetailsPrivateInvestScreen> {
+class _ContactDetailsSalesManagerScreenState
+    extends State<ContactDetailsSalesManagerScreen> {
   // User? user = FirebaseAuth.instance.currentUser;
   // String userUid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -51,11 +51,10 @@ class _ContactDetailsPrivateInvestScreenState
 
   TextEditingController AboutMeDataController = TextEditingController();
 
-  String heading = "Contact Details";
+  String heading = "Complete Details";
 
   String? dropdownValue;
   String? tagValue;
-  
 
   final List _detailName = [
     "First Name",
@@ -74,7 +73,7 @@ class _ContactDetailsPrivateInvestScreenState
     "Hiring Manager 3",
     "Hiring Manager 4",
     "Hiring Manager 5",
-    ];
+  ];
 
   UploadDocuments uploadDocuments = UploadDocuments();
 
@@ -172,69 +171,61 @@ class _ContactDetailsPrivateInvestScreenState
 
   late FToast fToast;
 
-  String _hiringManager ='';
+  String _hiringManager = '';
 
   // abjith code st ->
- final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
+  final _firstNameController = TextEditingController();
   final _personalAddressController = TextEditingController();
-  final _personalCityController = TextEditingController();
-  final _personalCountryController = TextEditingController();
-  final _taglineController = TextEditingController();
   // final _hiringManagerController = TextEditingController();
 
-pi_complete_account(
-    {required String fName,
-      required String lName,
+  sm_complete_account(
+      {required String fName,
       required String pAddress,
       required String pCity,
       required String pCountry,
-      required String tagline,
       required String hiringManagerUid}) async {
-  final statusCode;
-  final body;
-  late String userUid;
-  // const private_investicator_id = "Y9M0YCN82YA";
-   SharedPreferences preferences = await SharedPreferences.getInstance();
+    final statusCode;
+    final body;
+    late String userUid;
+    // const private_investicator_id = "Y9M0YCN82YA";
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     userUid = preferences.getString("uid2").toString();
-  final url = Uri.parse("http://${ApiService.ipAddress}/pi_complete_account/$userUid");
-  var request = http.MultipartRequest('POST', url);
-  request.fields['first_name'] = fName;
-  request.fields['last_name'] = lName;
-  request.fields['personal_address'] = pAddress;
-  request.fields['personal_city'] = pCity;
-  request.fields['personal_country'] = pCountry;
-  request.fields['tagline'] = tagline;
-  request.fields['hiring_manager'] = hiringManagerUid;
-  
+    final url =
+        Uri.parse("http://${ApiService.ipAddress}/sm_upload_account/$userUid");
+    var request = http.MultipartRequest('POST', url);
+    request.fields['full_name'] = fName;
+    request.fields['personal_address'] = pAddress;
+    request.fields['personal_city'] = pCity;
+    request.fields['personal_country'] = pCountry;
+    request.fields['hiring_manager'] = hiringManagerUid;
 
-  
-
-for (var element in request.fields.entries) {
-  print('${element.key} : ${element.value}');
-}
-
-  try {
-    final response = await request.send();
-    statusCode = response.statusCode;
-    body = await response.stream.bytesToString();
-    print("Status Code : $statusCode");
-    print("UID : $body");
-    print("userUid : $userUid");
-    if (statusCode == 200 || statusCode == 400 || statusCode == 403) {
-    // if (statusCode == 403) {
-      
-       Navigator.pushNamed(context, AppRoutes.bottomNavigationPrivateInvestigatorScreen);
+    for (var element in request.fields.entries) {
+      print('${element.key} : ${element.value}');
     }
-    
-  } catch (e) {
-    print("Do Something When Error Occurs");
+
+    try {
+      final response = await request.send();
+      statusCode = response.statusCode;
+      body = await response.stream.bytesToString();
+      print("Status Code : $statusCode");
+      print("UID : $body");
+      print("userUid : $userUid");
+      if (statusCode == 200 || statusCode == 400 || statusCode == 403) {
+      // if (statusCode == 200) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  PayYouVerScr(
+                   
+                  )),
+        );
+      }
+    } catch (e) {
+      print("Do Something When Error Occurs");
+    }
   }
-}
 
 // abijith code end
-
-
 
 // {
 // "first_name" : "saran",
@@ -246,16 +237,10 @@ for (var element in request.fields.entries) {
 //   "hiring_manager" : "shiringManagerUid"
 // }
 
-
-
-
-
-
   String countryValue = "";
   String stateValue = "";
-   String cityValue = "";
+  String cityValue = "";
   // String address = "";
-
 
   @override
   void initState() {
@@ -268,7 +253,7 @@ for (var element in request.fields.entries) {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.whiteA700,
-        appBar: ClAppbarLeadArrowBackSuffHeart(
+      appBar: ClAppbarLeadArrowBackSuffHeart(
         testingNextPage: AccountBalanceLocalAdminScreenAccount(),
       ),
       body: SingleChildScrollView(
@@ -279,20 +264,19 @@ for (var element in request.fields.entries) {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 const Center(
-                child: Text(
-                  'Contact Details',
-                  style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18),
+                const Center(
+                  child: Text(
+                    'Complete Details',
+                    style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: DeviceSize.itemHeight / 10,
-              ),
+                SizedBox(
+                  height: DeviceSize.itemHeight / 10,
+                ),
                 WidgetTitleAndTextfield(
-                  
                   textFieldHint: 'Enter',
                   textFieldTitle: _detailName[0] + "*",
                   onChanged: (String? newValue) {
@@ -301,22 +285,20 @@ for (var element in request.fields.entries) {
                     });
                     // uploadAboutMe(_detailName[0], dropdownValue.toString());
                   },
-                  textFieldController: _firstNameController, 
-                  
+                  textFieldController: _firstNameController,
                 ),
-                WidgetTitleAndTextfield(
-                  textFieldHint: 'Enter',
-                  textFieldTitle: _detailName[1] + "*",
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownValue = newValue!;
-                    });
-                    
-                    // uploadAboutMe(_detailName[1], dropdownValue.toString());
-                  },
-                  textFieldController: _lastNameController, 
-                 
-                ),
+                // WidgetTitleAndTextfield(
+                //   textFieldHint: 'Enter',
+                //   textFieldTitle: _detailName[1] + "*",
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //     });
+
+                //     // uploadAboutMe(_detailName[1], dropdownValue.toString());
+                //   },
+                //   textFieldController: _lastNameController,
+                // ),
                 // WidgetTitleAndDropdown(
                 //   DdbTitle: _detailName[2],
                 //   DdbHint: "Select",
@@ -327,7 +309,7 @@ for (var element in request.fields.entries) {
                 //     });
                 //     // uploadAboutMe("Marital Status", dropdownValue.toString());
                 //   },
-                  
+
                 // ),
                 // WidgetTitleAndDropdown(
                 //   DdbTitle: _detailName[3],
@@ -341,10 +323,9 @@ for (var element in request.fields.entries) {
                 //   },
                 // ),
 
-                 CSCPicker(
-
+                CSCPicker(
                   layout: Layout.vertical,
-                  
+
                   ///Enable disable state dropdown [OPTIONAL PARAMETER]
                   // showStates: true,
 
@@ -353,21 +334,21 @@ for (var element in request.fields.entries) {
 
                   ///Enable (get flag with country name) / Disable (Disable flag) / ShowInDropdownOnly (display flag in dropdown only) [OPTIONAL PARAMETER]
                   // flagState: CountryFlag.ENABLE,
-                   flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+                  flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
 
                   ///Dropdown box decoration to style your dropdown selector [OPTIONAL PARAMETER] (USE with disabledDropdownDecoration)
                   dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       color: Colors.white,
                       border:
-                      Border.all(color: Colors.grey.shade300, width: 1)),
+                          Border.all(color: Colors.grey.shade300, width: 1)),
 
                   ///Disabled Dropdown box decoration to style your dropdown selector [OPTIONAL PARAMETER]  (USE with disabled dropdownDecoration)
                   disabledDropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       color: Colors.grey.shade100,
                       border:
-                      Border.all(color: Colors.grey.shade300, width: 1)),
+                          Border.all(color: Colors.grey.shade300, width: 1)),
 
                   ///placeholders for dropdown search field
                   countrySearchPlaceholder: "Country",
@@ -413,27 +394,26 @@ for (var element in request.fields.entries) {
                   searchBarRadius: 10.0,
 
                   ///triggers once country selected in dropdown
-                  onCountryChanged: (country) async{
-                    setState(()  {
+                  onCountryChanged: (country) async {
+                    setState(() {
                       ///store value in country variable
                       countryValue = country;
                     });
                   },
 
                   ///triggers once state selected in dropdown
-                  onStateChanged: (state)  async{
+                  onStateChanged: (state) async {
                     setState(() {
                       stateValue = state!;
                     });
                     // setState(() {
                     //   ///store value in state variable
-                      // stateValue = state!;
+                    // stateValue = state!;
                     // });
 
-    //                 SharedPreferences preferences = await SharedPreferences.getInstance();
+                    //                 SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    // preferences.setString(stateValue, state!);
-                    
+                    // preferences.setString(stateValue, state!);
                   },
 
                   ///triggers once city selected in dropdown
@@ -441,18 +421,18 @@ for (var element in request.fields.entries) {
                     setState(() {
                       cityValue = city!;
                     });
-                  
+
                     // setState(() {
                     //   ///store value in city variable
-                      // cityValue = city!;
+                    // cityValue = city!;
                     // });
                   },
                 ),
 
-                 SizedBox(
+                SizedBox(
                   height: DeviceSize.itemHeight / 10,
                 ),
-                
+
                 WidgetTitleAndTextfielGreyBgAdjHeight(
                   textFieldHint: 'Enter',
                   textFieldTitle: _detailName[4] + "*",
@@ -463,28 +443,26 @@ for (var element in request.fields.entries) {
                     // uploadAboutMe(_detailName[1], dropdownValue.toString());
                   },
                   textFieldController: _personalAddressController,
-                  
-                   maxLines: 5,
+                  maxLines: 5,
                 ),
-                 SizedBox(
+                SizedBox(
                   height: DeviceSize.itemHeight / 100,
                 ),
-                 WidgetTitleAndTextfield(
-                 
-                  textFieldHint: 'Enter',
-                  textFieldTitle: _detailName[5] + "*",
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      tagValue = newValue!;
-                    });
-                    // uploadAboutMe(_detailName[0], dropdownValue.toString());
-                  },
-                  textFieldController: _taglineController,
-                ),
-                  SizedBox(
-                  height: DeviceSize.itemHeight / 100,
-                ),
-                 WidgetTitleAndDropdown(
+                // WidgetTitleAndTextfield(
+                //   textFieldHint: 'Enter',
+                //   textFieldTitle: _detailName[5] + "*",
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       tagValue = newValue!;
+                //     });
+                //     // uploadAboutMe(_detailName[0], dropdownValue.toString());
+                //   },
+                //   textFieldController: _taglineController,
+                // ),
+                // SizedBox(
+                //   height: DeviceSize.itemHeight / 100,
+                // ),
+                WidgetTitleAndDropdown(
                   DdbTitle: _detailName[6],
                   DdbHint: "Select",
                   DbdItems: Dbditems,
@@ -495,7 +473,6 @@ for (var element in request.fields.entries) {
                     });
                     // uploadAboutMe("Marital Status", dropdownValue.toString());
                   },
-                  
                 ),
                 // TextIndigoTitle(
                 //   word: _detailName[5],
@@ -553,7 +530,7 @@ for (var element in request.fields.entries) {
                 // SizedBox(
                 //   height: DeviceSize.itemHeight / 20,
                 // ),
-                 CustomClRectangleCheckboxWithQuestionWidget2(
+                CustomClRectangleCheckboxWithQuestionWidget2(
                   // completed: true,
                   question:
                       'I agree to the Terms of Service and Privacy Policy.',
@@ -611,12 +588,12 @@ for (var element in request.fields.entries) {
                   ),
                   child: TextButton(
                       onPressed: () {
- pi_complete_account(fName: _firstNameController.text, 
- lName: _lastNameController.text, 
- pAddress: _personalAddressController.text, 
- pCity: cityValue, pCountry: countryValue, 
- tagline:_taglineController.text,
-  hiringManagerUid: "_hiringManager");
+                        sm_complete_account(
+                            fName: _firstNameController.text,
+                            pAddress: _personalAddressController.text,
+                            pCity: cityValue,
+                            pCountry: countryValue,
+                            hiringManagerUid: "_hiringManager");
 
                         // Navigator.push(
                         //   context,

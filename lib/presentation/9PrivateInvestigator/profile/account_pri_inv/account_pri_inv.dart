@@ -1,18 +1,34 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:virtual_experts/core/utils/size_utils.dart';
+import 'package:virtual_experts/model_final/pi_my_data.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/account_bal/account_bal_pri_inv.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/edit_profile/edit_pro_pri_inv_scr.dart';
+import 'package:virtual_experts/widgets/CustomWidgetsCl/ClCustomWidgets2.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 
 import '../../../../core/utils/color_constant.dart';
-import '../../../../core/utils/size_utils.dart';
-import '../../../../widgets/CustomWidgetsCl/ClCustomWidgets2.dart';
 import '../../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../1ProfileFinder/PrivateInvestigator/CloseDealFourtyOneScreen.dart';
-import '../account_bal/account_bal_pri_inv.dart';
-import '../edit_profile/edit_pro_pri_inv_scr.dart';
+import 'package:http/http.dart' as http;
 
-class AccountsPriInvScr extends StatelessWidget {
+
+
+
+
+
+class AccountsPriInvScr extends StatefulWidget {
   AccountsPriInvScr({super.key});
 
+  @override
+  State<AccountsPriInvScr> createState() => _AccountsPriInvScrState();
+}
+
+class _AccountsPriInvScrState extends State<AccountsPriInvScr> {
   List<String> officeDetailsQus = [
     'Office Name:',
     'Phone Number:',
@@ -22,6 +38,13 @@ class AccountsPriInvScr extends StatelessWidget {
   ];
 
   List<String> officeDetailsAns = [
+
+    // userList[0].officeName,
+    // userList[0].mobile,
+    // userList[0].email,
+    // userList[0].officeCity,
+    // userList[0].officeAddress,
+    
     'ABCD associate',
     '+971 553776176',
     'jacob@gmail.com',
@@ -45,6 +68,67 @@ class AccountsPriInvScr extends StatelessWidget {
     'Building 304, Office 12, palarivattom, Kochi',
   ];
 
+   static late List<PiMyData> userList;
+   bool _isLoading = true;
+
+
+   Future<void> _fetchData() async {
+
+    
+      late String private_investicator_id;
+   SharedPreferences preferences = await SharedPreferences.getInstance();
+    private_investicator_id = preferences.getString("uid2").toString();
+  
+    final response = await http.get(Uri.parse("http://${ApiService.ipAddress}/pi_my_data/$private_investicator_id"));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      setState(() {
+        _isLoading = false;
+        userList = jsonResponse.map((data) => PiMyData.fromJson(data)).toList();
+      
+        officeDetailsAns = [
+
+    userList[0].officeName,
+    userList[0].mobile,
+    userList[0].email,
+    userList[0].officeCity,
+    userList[0].officeAddress,
+        ];
+
+        personalDetailsAns = [
+
+           userList[0].firstName,
+    userList[0].mobile,
+    userList[0].email,
+    userList[0].personalCity,
+    userList[0].personalAddress,
+    
+  ];
+      
+      
+      });
+
+      debugPrint(userList[0].profilePicture);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+
+
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    // getData();
+    // getPiMyData1();
+    // pi_my_data();
+    _fetchData();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,14 +136,39 @@ class AccountsPriInvScr extends StatelessWidget {
       appBar: ClAppbarLeadArrowBackSuffHeart(
         testingNextPage: const CloseDealFourtyOneScreen(),
       ),
-      body: SingleChildScrollView(
+      body:
+      
+       SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Column(
+          child: 
+          _isLoading ?
+           Center(child: CircularProgressIndicator())
+           :
+          Column(
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+          //     userList != null
+          // ? Expanded(
+          //   child: ListView.builder(
+          //       itemCount: userList.length,
+          //       itemBuilder: (BuildContext context, int index) {
+          //         return ListTile(
+          //           title: Text(userList[index].firstName),
+          //           subtitle: Text(userList[index].email),
+          //         );
+          //       },
+          //     ),
+          // )
+          // : Center(
+          //     child: CircularProgressIndicator(),
+          //   ),
+
+
+              
               Center(
                 child: Text(
                   'Account',
@@ -91,14 +200,35 @@ class AccountsPriInvScr extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.green,
                         ),
-                        child: Image.asset(
-                          'assets/images/Rectangle 946.png',
-                          fit: BoxFit.cover,
+                        child: 
+
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.network(
+                           userList[0].profilePicture.toString(),
+                            fit: BoxFit.cover,
+                            height: 200,
+                            width: double.maxFinite,
+                          ),
+                          
                         ),
+                        
+                        
+                        
+                        // Image.network(userList[0].profilePicture)
+                        
+                        
+                        // Image.asset(
+
+                          
+                        //   'assets/images/Rectangle 946.png',
+                        //   fit: BoxFit.cover,
+                        // ),
                       ),
                       const D10HCustomClSizedBoxWidget(),
                       Text(
-                        'Jacob Jones',
+                        // 'Jacob Jones',
+                        userList[0].firstName ?? "Default",
                         style: TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w700,
@@ -108,6 +238,8 @@ class AccountsPriInvScr extends StatelessWidget {
                       const D10HCustomClSizedBoxWidget(
                         height: 100,
                       ),
+
+                      
                       const Text('Notary, Account'),
                       const D10HCustomClSizedBoxWidget(
                         height: 100,
@@ -117,7 +249,7 @@ class AccountsPriInvScr extends StatelessWidget {
                         children: [
                           const Text('Created on: '),
                           Text(
-                            '20 January, 2022',
+                           userList[0].createdDate ?? '20 January, 2022',
                             style: TextStyle(
                                 fontFamily: 'Roboto',
                                 fontWeight: FontWeight.w700,
@@ -235,6 +367,8 @@ class AccountsPriInvScr extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
+
+                        userList[0].tagline ??
                         'I wIll do best services for you, i will do the all kind of private investigations about your partners with in a week.',
                         style: TextStyle(
                             fontFamily: 'DM Sans',
@@ -298,7 +432,7 @@ class AccountsPriInvScr extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    "  4.2",
+                   userList[0].totalRatings ?? "  4.2",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: DeviceSize.itemWidth / 13,
@@ -457,9 +591,19 @@ class AccountsPriInvScr extends StatelessWidget {
               ),
               const D10HCustomClSizedBoxWidget()
             ],
-          ),
+          )
+          
+         
+
+
         ),
       ),
     );
+
+
+    
   }
+  
+
 }
+

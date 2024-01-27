@@ -8,24 +8,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/model/data_model.dart';
 import 'package:virtual_experts/model_final/modelAllUser.dart';
 import 'package:virtual_experts/model_final/profile_manager_models/all_profile_finders_data.dart';
+import 'package:virtual_experts/model_final/profile_manager_models/pm_my_users_list.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
+import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/1_profile_finder_search_screen_local_admin.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/3_id123456_about_me_local_admin_screen_profile_finder.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/4_reason_reason_for_reject_local_admin_profilefinder.dart';
+import 'package:virtual_experts/presentation/4LocalAdmin/users/users_add_new_user.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 
-class ProfileFinderSearchLocalAdminScreen extends StatefulWidget {
-  ProfileFinderSearchLocalAdminScreen({super.key});
+class UsersLocalAdminScreen extends StatefulWidget {
+  UsersLocalAdminScreen({super.key});
 
   @override
-  State<ProfileFinderSearchLocalAdminScreen> createState() =>
-      _ProfileFinderSearchLocalAdminScreenState();
+  State<UsersLocalAdminScreen> createState() =>
+      _UsersLocalAdminScreenState();
 }
 
-class _ProfileFinderSearchLocalAdminScreenState
-    extends State<ProfileFinderSearchLocalAdminScreen> {
+class _UsersLocalAdminScreenState
+    extends State<UsersLocalAdminScreen> {
   List<String> roles = [
     'Regional Manager',
     'Local Admins',
@@ -87,7 +91,7 @@ class _ProfileFinderSearchLocalAdminScreenState
     return model;
   }
 
-  static List<AllProfFindsData> _allProfFinduserList = [];
+  static List<PmMyUsersDataList> _pmMyUsersDataList = [];
 
   Future<void> _fetchAllProfFindsData() async {
     // late String private_investicator_id;
@@ -100,14 +104,14 @@ class _ProfileFinderSearchLocalAdminScreenState
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
       setState(() {
-        _allProfFinduserList = jsonResponse
-            .map((data) => AllProfFindsData.fromJson(data))
+        _pmMyUsersDataList = jsonResponse
+            .map((data) => PmMyUsersDataList.fromJson(data))
             .toList();
       });
 
       _isLoading = false;
 
-      debugPrint(_allProfFinduserList[0].profilePicture);
+      debugPrint(_pmMyUsersDataList[0].firstName);
       debugPrint(response.statusCode.toString());
       debugPrint(response.body);
     } else {
@@ -115,13 +119,16 @@ class _ProfileFinderSearchLocalAdminScreenState
     }
   }
 
+  
+  TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.clYellowBgColor4,
-      // appBar: ClAppbarLeadGridSuffHeart(
-      //   testingNextPage: ProfileFinderSearchLocalAdminScreen(),
-      // ),
+      appBar: ClAppbarLeadArrowBackSuffHeart (
+        testingNextPage: ProfileFinderSearchLocalAdminScreen(),
+      ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
@@ -135,7 +142,7 @@ class _ProfileFinderSearchLocalAdminScreenState
             children: [
               Center(
                 child: Text(
-                  'Profile Finder',
+                  'Users',
                   style: TextStyle(
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
@@ -144,33 +151,124 @@ class _ProfileFinderSearchLocalAdminScreenState
                 ),
               ),
               D10HCustomClSizedBoxWidget(),
-              Container(
-                height: DeviceSize.itemHeight / 3.8228,
-                child: TextField(
-                  decoration: InputDecoration(
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: SvgPicture.asset(
-                          'assets/images/img_clock_black_900.svg',
+              // Container(
+              //   height: DeviceSize.itemHeight / 3.8228,
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //         prefixIcon: Padding(
+              //           padding: const EdgeInsets.all(15.0),
+              //           child: SvgPicture.asset(
+              //             'assets/images/img_clock_black_900.svg',
+              //           ),
+              //         ),
+              //         suffixIcon: GestureDetector(
+              //           onTap: () {
+              //               Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) {
+              //       return AddNewUserLocalAdminScreen(
+                     
+              //       );
+              //     }),
+              //   );
+              //           },
+              //           child: Padding(
+              //             padding: const EdgeInsets.all(15.0),
+              //             child:
+              //                 SvgPicture.asset('assets/images/img_settings.svg'),
+              //           ),
+              //         ),
+              //         hintText: "Search",
+              //         hintStyle: TextStyle(fontWeight: FontWeight.bold),
+              //         filled: true,
+              //         fillColor: ColorConstant.whiteA700,
+              //         border: OutlineInputBorder(
+              //             borderSide: BorderSide.none,
+              //             borderRadius: BorderRadius.circular(10))),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: DeviceSize.itemHeight / 10,
+              // ),
+
+              // 
+               Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: DeviceSize.itemWidth * 1.5,
+                          height: 50,
+                          child:
+                              // Autocomplete<String>
+                              // (optionsBuilder: (TextEditingValue textEditingValue) {
+                              //   if (textEditingValue.text == '') {
+                              //     return const Iterable<String>.empty();
+                              //   }
+                              //   return listUsers.where((String item){
+                              //     return item.contains(textEditingValue.text.toLowerCase());
+                              //   });
+                              // },
+
+                              // onSelected: (String item) {
+                              //   debugPrint('The $item was selected');
+                              // },
+                              // )
+
+                              TextField(
+                            controller: _searchController,
+                            // onChanged: _onSearchTextChanged,
+                            decoration: InputDecoration(
+                              
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, top: 15, bottom: 20, right: 10),
+                                  child: SvgPicture.asset(
+                                    'assets/images/img_clock_black_900.svg',
+                                    height: 5,
+                                  ),
+                                ),
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: SvgPicture.asset(
+                                      'assets/images/img_settings.svg'),
+                                ),
+                                hintText: "Search",
+                                hintStyle: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 15),
+                                filled: true,
+                                fillColor:
+                                    ColorConstant.whiteA700,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(10))),
+                          ),
                         ),
-                      ),
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child:
-                            SvgPicture.asset('assets/images/img_settings.svg'),
-                      ),
-                      hintText: "Search",
-                      hintStyle: TextStyle(fontWeight: FontWeight.bold),
-                      filled: true,
-                      fillColor: ColorConstant.whiteA700,
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: DeviceSize.itemHeight / 10,
-              ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return  AddNewUserLocalAdminScreen();
+                              }),
+                            );
+                          },
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: ColorConstant.clElevatedButtonColor),
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    // 
+                    D10HCustomClSizedBoxWidget(),
+                    // 
               if (_isLoading)
                 const Center(
                   child: CircularProgressIndicator(),
@@ -188,7 +286,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                             MaterialPageRoute(builder: (context) {
                               return Id123456AboutMeLocalAdminScreen(
                                 profile_finder_user_id:
-                                    _allProfFinduserList[index].uid,
+                                    _pmMyUsersDataList[index].uid.toString(),
                               );
                             }),
                           );
@@ -197,37 +295,39 @@ class _ProfileFinderSearchLocalAdminScreenState
                           color: Colors.white,
                           elevation: 0,
                           child: Container(
-                            height: DeviceSize.itemHeight / 1.2,
+                            // height: DeviceSize.itemHeight / 0.9,
                             // height: double.infinity,
                             width: double.maxFinite,
                             child: Padding(
-                                padding: const EdgeInsets.all(20.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Align(
                                           alignment: Alignment.topCenter,
                                           child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                _allProfFinduserList[index]
-                                                    .profilePicture
-                                                    .toString()),
+                                            // backgroundImage: NetworkImage(
+                                            //     _allProfFinduserList[index]
+                                            //         .profilePicture
+                                            //         .toString()),
                                           ),
                                         ),
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Container(
-                                          width: DeviceSize.itemWidth / 1.3,
+                                        SizedBox(
+                                          // width: DeviceSize.itemWidth / 1.3,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                _allProfFinduserList[index].uid,
+                                                _pmMyUsersDataList[index].uid.toString(),
                                                 style: TextStyle(
                                                     fontFamily: 'Inter',
                                                     // fontWeight: FontWeight.w900,
@@ -238,8 +338,8 @@ class _ProfileFinderSearchLocalAdminScreenState
                                                             15.413),
                                               ),
                                               Text(
-                                                _allProfFinduserList[index]
-                                                    .name
+                                                _pmMyUsersDataList[index].firstName
+                                                   
                                                     .toString(),
                                                 style: TextStyle(
                                                     fontFamily: 'Inter',
@@ -251,7 +351,20 @@ class _ProfileFinderSearchLocalAdminScreenState
                                                             11.413),
                                               ),
                                               Text(
-                                                _allProfFinduserList[index]
+                                                _pmMyUsersDataList[index]
+                                                    .email
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    fontFamily: 'Inter',
+                                                    // fontWeight: FontWeight.w900,
+                                                    color: ColorConstant
+                                                        .clGreyFontColor3,
+                                                    fontSize:
+                                                        DeviceSize.itemWidth /
+                                                            11.413),
+                                              ),
+                                              Text(
+                                                _pmMyUsersDataList[index]
                                                     .mobile
                                                     .toString(),
                                                 style: TextStyle(
@@ -263,21 +376,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                                         DeviceSize.itemWidth /
                                                             11.413),
                                               ),
-                                              Expanded(
-                                                child: Text(
-                                                  _allProfFinduserList[index]
-                                                      .birthCity
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontFamily: 'Inter',
-                                                      // fontWeight: FontWeight.w900,
-                                                      color: ColorConstant
-                                                          .clGreyFontColor3,
-                                                      fontSize:
-                                                          DeviceSize.itemWidth /
-                                                              11.413),
-                                                ),
-                                              ),
+                                            
                                             ],
                                           ),
                                         ),
@@ -285,7 +384,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                     ),
                                     Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.start,
                                       // crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         GestureDetector(
@@ -293,11 +392,11 @@ class _ProfileFinderSearchLocalAdminScreenState
                                             showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                return CustomDialog(
+                                                return UserDialogBox(
                                                   profile_finder_id:
-                                                      _allProfFinduserList[
+                                                      _pmMyUsersDataList[
                                                               index]
-                                                          .uid,
+                                                          .uid.toString(),
                                                 ); // Your custom widget goes here
                                               },
                                             );
@@ -324,9 +423,9 @@ class _ProfileFinderSearchLocalAdminScreenState
                                         ),
                                         Switch(
                                           // value: isSwitched,
-                                          value: _allProfFinduserList[index]
-                                                  .gender ==
-                                              'male',
+                                          value: _pmMyUsersDataList[index]
+                                                  .email ==
+                                              'sundershroff@gmail.com',
                                           // onChanged: (value) {
                                           //   setState(() {
                                           //     // isSwitched = value;
@@ -337,9 +436,9 @@ class _ProfileFinderSearchLocalAdminScreenState
                                           //           builder: (context) {
                                           //         return ReasonForrejectLocalAdminScreen(
                                           //           profile_finder_id:
-                                          //               _allProfFinduserList[
+                                          //               _pmMyUsersDataList[
                                           //                       index]
-                                          //                   .uid,
+                                          //                   .uid.toString(),
                                           //         );
                                           //       }),
                                           //     );
@@ -356,12 +455,13 @@ class _ProfileFinderSearchLocalAdminScreenState
                                       ],
                                     )
                                   ],
-                                )),
+                                ),
+                                ),
                           ),
                         ),
                       );
                     },
-                    itemCount: _allProfFinduserList.length,
+                    itemCount: _pmMyUsersDataList.length,
                   ),
                 ),
             ],
@@ -372,10 +472,14 @@ class _ProfileFinderSearchLocalAdminScreenState
   }
 }
 
-class CustomDialog extends StatelessWidget {
+
+
+
+
+class UserDialogBox extends StatelessWidget {
   final String profile_finder_id;
 
-  CustomDialog({super.key, required this.profile_finder_id});
+  UserDialogBox({super.key, required this.profile_finder_id});
 
   late String profile_manager_id;
 
@@ -414,63 +518,76 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return Id123456AboutMeLocalAdminScreen(
-                    profile_finder_user_id: profile_finder_id,
-                  );
-                }),
-              );
-            },
-            child: ListTile(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              onTap: () => 
+               Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return Id123456AboutMeLocalAdminScreen(
+                      profile_finder_user_id: profile_finder_id,
+                    );
+                  }),
+                ),
               leading: Icon(Icons.visibility),
               title: Text('View Details'),
             ),
-          ),
-          ListTile(
-            onTap: () => pm_approve_my_client_post(profile_finder_id),
-            leading: Icon(
-              Icons.check_circle,
-              color: Colors.green,
+            ListTile(
+              onTap: () => 
+              // pm_approve_my_client_post(profile_finder_id),
+               Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return AddNewUserLocalAdminScreen(
+                     
+                    );
+                  }),
+                ),
+              
+              
+              
+              leading: Icon(
+                Icons.edit,
+                color: Colors.green,
+              ),
+              title: Text(
+                'Edit Account',
+                style: TextStyle(color: Colors.green),
+              ),
             ),
-            title: Text(
-              'Approve',
-              style: TextStyle(color: Colors.green),
+        
+            ListTile(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ReasonForrejectLocalAdminScreen(
+                    profile_finder_id: profile_finder_id,
+                  );
+                }),
+              ),
+              leading: Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+              title: Text(
+                'Delete',
+                style: TextStyle(color: Colors.red),
+              ),
             ),
-          ),
-
-          ListTile(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) {
-                return ReasonForrejectLocalAdminScreen(
-                  profile_finder_id: profile_finder_id,
-                );
-              }),
-            ),
-            leading: Icon(
-              Icons.cancel,
-              color: Colors.red,
-            ),
-            title: Text(
-              'Reject',
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     Navigator.of(context).pop(); // Close the dialog
-          //   },
-          //   child: Text('Close'),
-          // ),
-        ],
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.of(context).pop(); // Close the dialog
+            //   },
+            //   child: Text('Close'),
+            // ),
+          ],
+        ),
       ),
     );
   }
 }
+

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/3_id123456_about_me_local_admin_screen_profile_finder.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
@@ -7,8 +9,8 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
-class FilterIdLocalAdminScreenProfileFinder extends StatelessWidget {
-  FilterIdLocalAdminScreenProfileFinder({super.key});
+class AddNewUserLocalAdminScreen extends StatelessWidget {
+  AddNewUserLocalAdminScreen({super.key});
 
   List<String> adType = [
     "Ad1",
@@ -25,6 +27,8 @@ class FilterIdLocalAdminScreenProfileFinder extends StatelessWidget {
     "Ad4",
     "Ad5",
   ];
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +47,24 @@ class FilterIdLocalAdminScreenProfileFinder extends StatelessWidget {
               children: [
                 Center(
                   child: Text(
-                    'Filter',
+                    'Add New User',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
                 SizedBox(
                   height: DeviceSize.itemHeight / 10,
                 ),
+                
                 WidgetTitleAndTextfieldColorChangeble(
                   onChanged: (vaue) {},
                   textFieldHint: 'Enter',
-                  textFieldTitle: 'ID',
+                  textFieldTitle: 'First Name',
                   // textFieldFillColor: Colors.yellow,
                 ),
                 WidgetTitleAndTextfieldColorChangeble(
                   onChanged: (vaue) {},
                   textFieldHint: 'Enter',
-                  textFieldTitle: 'Name',
+                  textFieldTitle: 'Last Name',
                 ),
                 WidgetTitleAndTextfieldColorChangeble(
                   onChanged: (vaue) {},
@@ -71,21 +76,79 @@ class FilterIdLocalAdminScreenProfileFinder extends StatelessWidget {
                   textFieldHint: 'Enter',
                   textFieldTitle: 'Phone Number',
                 ),
-                WidgetTitleAndDropdownTextfieldFillBgColorChangeble(
-                    DdbTitle: 'Location',
-                    DdbHint: 'Select',
-                    DbdItems: adType,
-                    onChanged: (value) {},
 
-                    
-                    ),
-                WidgetTitleAndDropdownTextfieldFillBgColorChangeble(
-                  DbdItems: _status,
-                  DdbHint: 'Select',
-                  DdbTitle: 'Status',
-                  onChanged: (value) {},
-                  // textfieldfillColorDropdown: Colors.yellow,
-                )
+                CheckboxListTile(value: false,
+                 onChanged: (bool? value){
+                  value = value!;
+                 },
+                 activeColor: Colors.blue,
+                  controlAffinity: ListTileControlAffinity.leading,
+                 checkboxShape: CircleBorder(),
+                 title: Text('Approve And Reject Profiles'),
+                 
+                 ),
+                  CheckboxListTile(value: true,
+                 onChanged: (bool? value){
+                  value = value!;
+                 },
+                 activeColor: Colors.blue,
+                  controlAffinity: ListTileControlAffinity.leading,
+                 checkboxShape: CircleBorder(),
+                 title: Text('Edit Delete Profiles'),
+                 
+                 ),
+                  CheckboxListTile(value: false,
+                 onChanged: (bool? value){
+                  value = value!;
+                 },
+                 activeColor: Colors.blue,
+                  controlAffinity: ListTileControlAffinity.leading,
+                 checkboxShape: CircleBorder(),
+                 title: Text('Access Complaints'),
+                 
+                 ),
+                  CheckboxListTile(value: false,
+                 onChanged: (bool? value){
+                  value = value!;
+                 },
+                 activeColor: Colors.blue,
+                  controlAffinity: ListTileControlAffinity.leading,
+                 checkboxShape: CircleBorder(),
+                 title: Text('Reply to Complaints'),
+                 
+                 ),
+                  CheckboxListTile(value: false,
+                 onChanged: (bool? value){
+                  value = value!;
+                 },
+                 activeColor: Colors.blue,
+                  controlAffinity: ListTileControlAffinity.leading,
+                 checkboxShape: CircleBorder(),
+                 title: Text('Add User'),
+                 
+                 ),
+                  CheckboxListTile(value: false,
+                 onChanged: (bool? value){
+                  value = value!;
+                 },
+                 activeColor: Colors.blue,
+                  controlAffinity: ListTileControlAffinity.leading,
+                 checkboxShape: CircleBorder(),
+                 title: Text('Edit User'),
+                 
+                 ),
+                  CheckboxListTile(value: false,
+                 onChanged: (bool? value){
+                  value = value!;
+                 },
+                 activeColor: Colors.blue,
+                  controlAffinity: ListTileControlAffinity.leading,
+                 checkboxShape: CircleBorder(),
+                 title: Text('Delete User'),
+                 
+                 ),
+                 
+               
               ],
             ),
           ),
@@ -108,7 +171,7 @@ class FilterIdLocalAdminScreenProfileFinder extends StatelessWidget {
                   //     end: Alignment(1, 0.56),
                   //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
                   child: Text(
-                    'Reset',
+                    'Cansel',
                     style: TextStyle(
                         color: ColorConstant.clPurple5,
                         // fontWeight: FontWeight.bold,
@@ -133,7 +196,7 @@ class FilterIdLocalAdminScreenProfileFinder extends StatelessWidget {
                   //     end: Alignment(1, 0.56),
                   //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
                   child: Text(
-                    'Submit',
+                    'Create',
                     style: TextStyle(
                         color: ColorConstant.whiteA700,
                         // fontWeight: FontWeight.bold,

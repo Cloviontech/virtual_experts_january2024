@@ -14,7 +14,10 @@ import 'package:virtual_experts/routes/app_routes.dart';
 import '5screenOtpEntering.dart';
 
 class FourSignUpScreen extends StatefulWidget {
-  const FourSignUpScreen({super.key});
+   FourSignUpScreen({super.key, required this.service});
+
+   static String userUidPriInv = "";
+   final String service;
 
   @override
   State<FourSignUpScreen> createState() => _FourSignUpScreenState();
@@ -231,7 +234,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   
 
     var response = await http.post(
-      Uri.parse('http://${ApiService.ipAddress}/pi_signup/'),
+      // Uri.parse('http://${ApiService.ipAddress}/pi_signup/'),
+      Uri.parse('http://${ApiService.ipAddress}/${widget.service}/'),
+      
       // Uri.parse('http://10.0.2.2:8000/signup/'),
 
       headers: headers,
@@ -245,6 +250,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
         userUid = response.body;
         userUidclean = userUid.substring(1, userUid.length - 1);
         preferences.setString("uid2", userUidclean.toString());
+        FourSignUpScreen.userUidPriInv=userUidclean;
 
       });
       // Navigator.pushNamed(context, AppRoutes.iphone1313ProSixScreen);
@@ -255,7 +261,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
           return FiveOtpEnteringScreen(
             emailid: emailController.text,
             timerr: 3,
-            userUidafterOtp: userUidclean,
+            userUidafterOtp: userUidclean, service: widget.service, 
+
+            // FourSignUpScreen.service == 'pm_signup' ?
+            //   service:  'pm_signup' :  service:  'pm_signup' 
+            
+           
           );
         }),
       );

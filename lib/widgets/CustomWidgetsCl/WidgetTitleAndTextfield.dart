@@ -12,8 +12,9 @@ class WidgetTitleAndTextfield extends StatelessWidget {
   final dynamic onChanged;
   final Icon? suffixIcon;
   final String? initialValueExisitingCust;
+ 
 
-  TextEditingController? textFieldController = TextEditingController();
+  final TextEditingController? textFieldController ;
 
   WidgetTitleAndTextfield(
       {super.key,
@@ -22,7 +23,7 @@ class WidgetTitleAndTextfield extends StatelessWidget {
       required this.onChanged,  
       this.textFieldController, 
       this.suffixIcon, 
-      this.initialValueExisitingCust});
+      this.initialValueExisitingCust, });
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +145,7 @@ extends StatelessWidget {
   final Color textFieldFillColor ;
   final Color? titleFontColor;
 
-  TextEditingController _textFieldController = TextEditingController();
+  TextEditingController? textFieldController = TextEditingController();
 
   WidgetTitleAndTextfieldColorChangeble(
       {super.key,
@@ -153,6 +154,7 @@ extends StatelessWidget {
       required this.onChanged,  
       this.textFieldFillColor = Colors.white, 
       this.titleFontColor,
+      this.textFieldController, 
 
 
       
@@ -175,7 +177,7 @@ extends StatelessWidget {
         ),
         TextField(
             onChanged: onChanged,
-            // controller: _textFieldController,
+            controller: textFieldController,
 
             decoration: InputDecoration(
               contentPadding: EdgeInsets.all(10),

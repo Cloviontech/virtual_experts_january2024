@@ -1,17 +1,22 @@
 // AccountSettingsPriInvScreen
 
 import 'package:flutter/material.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/dashboard_private_admin_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
-import '../../dashboard_private_investigator/dashboard_private_admin_screen.dart';
 
-class AccountSettingsPriInvScreen extends StatelessWidget {
-  AccountSettingsPriInvScreen({super.key});
+class SettingsPrtofileManagerScreen extends StatefulWidget {
+  SettingsPrtofileManagerScreen({super.key});
 
+  @override
+  State<SettingsPrtofileManagerScreen> createState() => _SettingsPrtofileManagerScreenState();
+}
+
+class _SettingsPrtofileManagerScreenState extends State<SettingsPrtofileManagerScreen> {
   List<String> roles = [
     'Regional Manager',
     'Local Admins',
@@ -24,9 +29,9 @@ class AccountSettingsPriInvScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
-        testingNextPage: DashboardPrivateInvestigatorScreen(),
-      ),
+      // appBar: const ClAppbarLeadGridSuffHeart(
+      //   testingNextPage: DashboardPrivateInvestigatorScreen(),
+      // ),
       backgroundColor: ColorConstant.clYellowBgColor4,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -144,10 +149,10 @@ class AccountSettingsPriInvScreen extends StatelessWidget {
               const D10HCustomClSizedBoxWidget(
                 height: 80,
               ),
-              ClListTileInsideCardWidget(roles: roles[0]),
-              ClListTileInsideCardWidget(roles: roles[1]),
-              ClListTileInsideCardWidget(roles: roles[2]),
-              ClListTileInsideCardWidget(roles: roles[3]),
+              // ClListTileInsideCardWidget(roles: roles[0]),
+              // ClListTileInsideCardWidget(roles: roles[1]),
+              // ClListTileInsideCardWidget(roles: roles[2]),
+              // ClListTileInsideCardWidget(roles: roles[3]),
               
             ],
           ),

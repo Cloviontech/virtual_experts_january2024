@@ -3,8 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/model/complex_user.dart';
 import 'package:virtual_experts/model/data_model.dart';
+import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
+import 'package:virtual_experts/model_final/profile_manager_models/all_pms_data.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/HappyCouplesUI/HappyCouplesPackagesThirtySixScreen.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/HappyCouplesUI/imagesHappyCouples.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/PrivateInvestigator/AllInvestigatorThirtyEightScreen.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenScreen.dart';
+import 'package:virtual_experts/presentation/4LocalAdmin/users/users_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
@@ -58,6 +68,58 @@ class _DashboardLocalAdminScreenState extends State<DashboardLocalAdminScreen> {
     "Email ID",
   ];
 
+ late String profile_manager_id;
+
+
+
+//   all_pm_data() async{
+//   // final url = Uri.parse("$link/all_private_investigator_data/");
+//   final response = await http.get(Uri.parse("http://${ApiService.ipAddress}/all_pm_data"));
+//   // final jsonData = jsonDecode(response.body);
+//   print(response.statusCode);
+//   print(jsonDecode(response.body));
+//   print(jsonDecode(response.body).runtimeType);
+// }
+
+
+ static List<AllPmsData> _allPmsData = [];
+
+Future<void> _fetchAllPrManagsData() async {
+    // late String private_investicator_id;
+    //  SharedPreferences preferences = await SharedPreferences.getInstance();
+    //   private_investicator_id = preferences.getString("uid2").toString();
+
+    final response =
+        await http.get(Uri.parse("http://${ApiService.ipAddress}/all_pm_data"));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      setState(() {
+        _allPmsData = jsonResponse
+            .map((data) => AllPmsData.fromJson(data))
+            .toList();
+      });
+
+      _isLoading = false;
+
+      debugPrint(_allPmsData[0].profilePicture);
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.body);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+
+//   pm_my_data() async{
+//   // const profile_manager_id = "3ER38MJ8CT1";
+//   SharedPreferences preferences = await SharedPreferences.getInstance();
+//     profile_manager_id = preferences.getString("uid2").toString();
+//   final response = await http.get(Uri.parse("http://${ApiService.ipAddress}/pm_my_data/$profile_manager_id"));
+//   print(response.statusCode);
+//   print(response.body);
+// }
+
   Future<List<Data>> fetchData() async {
     var url = Uri.parse('https://jsonplaceholder.typicode.com/albums');
     final response = await http.get(url);
@@ -94,11 +156,6 @@ class _DashboardLocalAdminScreenState extends State<DashboardLocalAdminScreen> {
 
   bool _isLoading = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
 
   DataModel? dataFromAPI;
   _getData() async {
@@ -115,13 +172,36 @@ class _DashboardLocalAdminScreenState extends State<DashboardLocalAdminScreen> {
     }
   }
 
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+
+  
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+   
+    _fetchAllPrManagsData();
+  }
+
   @override
   Widget build(BuildContext context) {
     var valuee = 'India';
     return Scaffold(
-      appBar: ClAppbarLeadGridSuffHeart(
-        testingNextPage: DashboardLocalAdminScreen(),
-      ),
+      backgroundColor: ColorConstant.clYellowBgColor4,
+      // appBar: ClAppbarLeadGridSuffHeart(
+      //   testingNextPage: DashboardLocalAdminScreen(),
+      // ),
+
+      
+
+     
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
@@ -166,7 +246,8 @@ class _DashboardLocalAdminScreenState extends State<DashboardLocalAdminScreen> {
                       ),
                     ),
                     title: Text(
-                      '1,800',
+                      // '1,800',
+                      _allPmsData.length.toString(),
                       style: TextStyle(
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w700,
