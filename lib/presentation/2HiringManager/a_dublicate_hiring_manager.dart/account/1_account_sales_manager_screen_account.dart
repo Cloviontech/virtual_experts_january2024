@@ -16,15 +16,15 @@ import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:http/http.dart' as http;
 
-class AccountSalesManagerScreen extends StatefulWidget {
-  const AccountSalesManagerScreen({super.key});
+class AccountHiringManagerScreen extends StatefulWidget {
+  const AccountHiringManagerScreen({super.key});
 
   @override
-  State<AccountSalesManagerScreen> createState() =>
-      _AccountSalesManagerScreenState();
+  State<AccountHiringManagerScreen> createState() =>
+      _AccountHiringManagerScreenState();
 }
 
-class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
+class _AccountHiringManagerScreenState extends State<AccountHiringManagerScreen> {
   late String profile_manager_id;
 
   static List<PmMyData> _pmMyData = [];
@@ -50,13 +50,13 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
   List<String> officeDetailsAns = [];
   List<String> personalDetailsAns = [];
 
-  Future<void> _fetchDataPmMyData() async {
+  Future<void> _fetchDataHmMyData() async {
     // late String private_investicator_id;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     profile_manager_id = preferences.getString("uid2").toString();
 
     final response = await http.get(
-        Uri.parse("http://${ApiService.ipAddress}/pm_my_data/88N7ZZR0Y5C"));
+        Uri.parse("http://${ApiService.ipAddress}/hm_my_data/$profile_manager_id"));
 
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -108,7 +108,7 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchDataPmMyData();
+    _fetchDataHmMyData();
   }
 
   @override
@@ -313,40 +313,40 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
                 ),
               ),
             ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 10,
-              child: MyElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return EditAccountProfileManager();
-                      }),
-                    );
-                  },
-                  borderRadius: BorderRadius.circular(10),
-                  width: double.maxFinite,
-                  backgroundColor: Colors.transparent,
-                  // gradient: LinearGradient(
-                  //     begin: Alignment(0, 0.56),
-                  //     end: Alignment(1, 0.56),
-                  //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                        color: ColorConstant.whiteA700,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: DeviceSize.itemHeight / 12),
-                  )),
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       Expanded(
+      //         flex: 10,
+      //         child: MyElevatedButton(
+      //             onPressed: () {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(builder: (context) {
+      //                   return EditAccountProfileManager();
+      //                 }),
+      //               );
+      //             },
+      //             borderRadius: BorderRadius.circular(10),
+      //             width: double.maxFinite,
+      //             backgroundColor: Colors.transparent,
+      //             // gradient: LinearGradient(
+      //             //     begin: Alignment(0, 0.56),
+      //             //     end: Alignment(1, 0.56),
+      //             //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
+      //             child: Text(
+      //               'Edit Profile',
+      //               style: TextStyle(
+      //                   color: ColorConstant.whiteA700,
+      //                   // fontWeight: FontWeight.bold,
+      //                   fontSize: DeviceSize.itemHeight / 12),
+      //             )),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

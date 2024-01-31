@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/4ScreenSignUp.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
@@ -129,6 +130,17 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
           context,
           MaterialPageRoute(builder: (context) {
             return BottomNavigationSalesScreen(
+             
+            );
+          }),
+        );
+        }
+
+         else if (widget.service == 'hm_signin') {
+           Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return BottomNavigationHmScreen(service: '',
              
             );
           }),
@@ -549,13 +561,13 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                           }),
                                         );
 
-                                          else if (widget.service == 'sm_signin')
+                                          else if (widget.service == 'hm_signin')
 
                                           Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) {
                                             return FourSignUpScreen(
-                                                service: 'sm_signup');
+                                                service: 'hm_signup');
                                           }),
                                         );
                                       },

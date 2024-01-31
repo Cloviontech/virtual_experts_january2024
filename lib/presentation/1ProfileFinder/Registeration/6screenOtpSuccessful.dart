@@ -6,6 +6,9 @@ import 'package:virtual_experts/presentation/1ProfileFinder/PrivateInvestigator/
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/7screenChooseService.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/8screenUploadTheID.dart';
+import 'package:virtual_experts/presentation/4LocalAdmin/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/dashboard_local_admin/dashboard_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/registeration/contact_details_sales_manag.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
@@ -37,10 +40,12 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (BuildContext context) => DashboardLocalAdminScreen()),
+              builder: (BuildContext context) => BottomNavigationLocalAdminScreen()),
         ),
       );
     }
+
+    // BottomNavigationLocalAdminScreen
 
     else if (widget.service == 'pi_signup') {
       Timer(
@@ -58,6 +63,16 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
               builder: (BuildContext context) => ContactDetailsSalesManagerScreen(service: '',)),
+        ),
+      );
+    }
+
+     else if (widget.service == 'hm_signup') {
+      Timer(
+        const Duration(seconds: 3),
+        () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (BuildContext context) => HmUploadTheIDScreen(service: 'hm_signup',)),
         ),
       );
     }

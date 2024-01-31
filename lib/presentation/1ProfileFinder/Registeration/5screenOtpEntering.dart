@@ -197,6 +197,48 @@ else if (widget.service == 'pi_signup') {
 }
 
 
+else if (widget.service == 'hm_signup') {
+
+   var response = await http.post(
+      // Uri.parse("$url$mail"),
+
+      
+      Uri.parse('http://${ApiService.ipAddress}/hm_otp/${widget.userUidafterOtp}'),
+
+      headers: headers,
+      // body: jsonEncode(requestBody),
+      body: requestBody,
+    );
+    if (response.statusCode == 200) {
+      print('Otp Is Correct');
+      print(response.body);
+
+      //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return SixOtpSuccessfulScreen(
+            emailid: mail, service: widget.service,
+          );
+        }),
+      );
+    } else {
+      print("errorCode: ${response.statusCode}");
+      print(response.body);
+      // print(url);
+      print(requestBody);
+
+      Fluttertoast.showToast(
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
+        msg: 'Invalid OTP',
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+
+}
+
+
 
 else if (widget.service == 'sm_signup') {
 

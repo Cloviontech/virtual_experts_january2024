@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Approvals/AllApplicationsThirteenHiringMgrScreen.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/1_account_sales_manager_screen_account.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/settings/widgets/SettingsProfileManagerScreen.dart';
 import 'package:virtual_experts/presentation/6Sales/account/1_account_sales_manager_screen_account.dart';
 import 'package:virtual_experts/presentation/6Sales/dashBoard/DashBoardSalesScreen.dart';
 import 'package:virtual_experts/presentation/6Sales/settings/settings.dart';
@@ -11,21 +13,26 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
-class BottomNavigationSalesScreen extends StatefulWidget {
+class BottomNavigationHmScreen extends StatefulWidget {
+
+
+   final String service;
+
+  const BottomNavigationHmScreen({super.key, required this.service});
   @override
-  State<BottomNavigationSalesScreen> createState() =>
-      _BottomNavigationSalesScreenState();
+  State<BottomNavigationHmScreen> createState() =>
+      _BottomNavigationHmScreenState();
 }
 
-class _BottomNavigationSalesScreenState
-    extends State<BottomNavigationSalesScreen> {
+class _BottomNavigationHmScreenState
+    extends State<BottomNavigationHmScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
     DashBoardSalesScreen(),
     AllApplicationsThirteenHiringMgrScreen(),
-    AccountSalesManagerScreen(),
-     SettingsSalesManager(),
+    AccountHiringManagerScreen(),
+     SettingsHiringManagerScreen(),
   ];
 
   @override
@@ -33,7 +40,7 @@ class _BottomNavigationSalesScreenState
     return Scaffold(
       backgroundColor: ColorConstant.clPurple05,
       appBar: ClAppbarLeadProfilePicSuffHeart(
-        testingNextPage: BottomNavigationSalesScreen(),
+        testingNextPage: BottomNavigationHmScreen(service: '',),
       ),
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
