@@ -7,6 +7,8 @@ import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/3Scree
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/8screenUploadTheID.dart';
 import 'package:virtual_experts/presentation/2HiringManager/BottomNavigationThirteenHiringMgrMainScreen.dart';
 import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/csc_picker.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 
@@ -26,7 +28,9 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
     "Profile Manager",
     "Hiring Manager",
     "Sales Person",
-    "Advertisement",
+    // "Advertisement",
+    "Ad-Provider",
+    "Ad-Distributor",
     "Affiliate Program",
     "Private Investigator"
   ];
@@ -37,7 +41,8 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
     // BottomNavigationThirteenHiringMgrMainScreen(),
     ThreeSigninScreen(service: 'hm_signin',),
     ThreeSigninScreen(service: 'sm_signin',),
-    BottomNavigationSalesScreen(),
+    BottomNavigationAdProviderMainScreen(),
+    BottomNavigationAdDistributorScreen(),
     BottomNavigationThirteenHiringMgrMainScreen(),
     // BottomNavigationSalesScreen(),
     
@@ -53,6 +58,7 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
     ImageConstant.imgUserWhiteA700,
     ImageConstant.imgFilelist3line,
     ImageConstant.imgUser2line,
+    ImageConstant.imgLayoutgridfill,
     ImageConstant.imgLayoutgridfill,
     ImageConstant.imgCheckmark,
     ImageConstant.imgPriInv,
