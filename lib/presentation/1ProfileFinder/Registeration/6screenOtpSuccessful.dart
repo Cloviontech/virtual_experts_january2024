@@ -3,15 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/PrivateInvestigator/AllInvestigatorThirtyEightScreen.dart';
-import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/7screenChooseService.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
-import 'package:virtual_experts/core/utils/size_utils.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/8screenUploadTheID.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/bottom_navigation_local_admin_screen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/dashboard_local_admin/dashboard_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/registeration/contact_details_sales_manag.dart';
-import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
 
 class SixOtpSuccessfulScreen extends StatefulWidget {
   final String emailid;

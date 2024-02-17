@@ -178,10 +178,10 @@ class _AllAdsAdDistributorsAdsScreenState
               adNo: "Ad 01",
               date: "10 January, 2021 | 10:00am",
               status: 'Deactivate',
-              viewsCount: 900,
+              viewsCount: 900.toString(),
               balanceAmount: 100,
-              coins: 5,
-              wallColor : ColorConstant.lightRed1cl,
+              coins: 5.toString(),
+              wallColor : ColorConstant.lightRed1cl, adName: '',
 
             ),
 
@@ -194,10 +194,10 @@ class _AllAdsAdDistributorsAdsScreenState
               adNo: "Ad 02",
               date: "10 January, 2021 | 10:00am",
               status: 'Active',
-              viewsCount: 900,
+              viewsCount: '900',
               balanceAmount: 100,
-              coins: 5,
-               wallColor : ColorConstant.lightgreen1cl,
+              coins: '5',
+               wallColor : ColorConstant.lightgreen1cl, adName: '',
 
             ),
 
@@ -210,10 +210,10 @@ class _AllAdsAdDistributorsAdsScreenState
               adNo: "Ad 03",
               date: "10 January, 2021 | 10:00am",
               status: 'Deactivate',
-              viewsCount: 900,
+              viewsCount: '900',
               balanceAmount: 100,
-              coins: 5,
-               wallColor : ColorConstant.lightPink1cl,
+              coins: '5',
+               wallColor : ColorConstant.lightPink1cl, adName: '',
 
             ),
 

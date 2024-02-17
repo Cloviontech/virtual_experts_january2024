@@ -540,6 +540,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                         //     AppRoutes.fourSignUpScreen);
 
                                         if (widget.service == 'pi_signin') {
+                                          print('service : ${widget.service}');
 
                                         Navigator.push(
                                           context,

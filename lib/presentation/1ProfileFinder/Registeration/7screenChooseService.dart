@@ -6,6 +6,8 @@ import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/3ScreenSignin.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/8screenUploadTheID.dart';
 import 'package:virtual_experts/presentation/2HiringManager/BottomNavigationThirteenHiringMgrMainScreen.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/am_affiliate_markteting_screen_account.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
@@ -28,29 +30,22 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
     "Profile Manager",
     "Hiring Manager",
     "Sales Person",
-    // "Advertisement",
     "Ad-Provider",
     "Ad-Distributor",
-    "Affiliate Program",
+    "Affiliate Marketing",
     "Private Investigator"
   ];
 
   List<Widget> Navigation = [
     ThreeSigninScreen(service: 'pm_signin',),
-    // EightUploadTheIDScreen(),
-    // BottomNavigationThirteenHiringMgrMainScreen(),
     ThreeSigninScreen(service: 'hm_signin',),
     ThreeSigninScreen(service: 'sm_signin',),
-    BottomNavigationAdProviderMainScreen(),
-    BottomNavigationAdDistributorScreen(),
-    BottomNavigationThirteenHiringMgrMainScreen(),
-    // BottomNavigationSalesScreen(),
-    
-    // "Advertisement",
-    // "Affiliate Program",
-    // ContactDetailsPrivateInvestScreen(),
+    ThreeSigninScreen(service: 'ap_signin',),
+    ThreeSigninScreen(service: 'ad_signin',),
+    // ThreeSigninScreen(service: 'af_m_signin',),
+    BottomNavigationAffiliateMarketingScreen(),
+    // ThreeSigninScreen(service: 'pi_signin',),
     ThreeSigninScreen(service: 'pi_signin',),
-    // CscPicker()
 
   ];
 

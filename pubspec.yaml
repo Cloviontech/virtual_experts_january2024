@@ -38,7 +38,7 @@ dependencies:
   flutter_bloc: 
   cached_network_image: ^3.2.3
   flutter_svg: 
-  dotted_border: 
+  dotted_border: ^2.1.0 
   smooth_page_indicator: 
   intl: 
   url_launcher: 

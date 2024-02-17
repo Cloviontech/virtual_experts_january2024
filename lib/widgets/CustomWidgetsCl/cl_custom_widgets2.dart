@@ -710,26 +710,343 @@ class ClCardAndListtileWidget extends StatelessWidget {
   }
 }
 
+// class AdDistributorBannerControl extends StatelessWidget {
+//   String adNo;
+//   String date;
+//   String? status;
+//   int? viewsCount;
+//   int? balanceAmount;
+//   int? coins;
+//   Color? wallColor;
+//   final bool isSwitched;
+
+//   AdDistributorBannerControl({
+//     super.key,
+//     this.adNo = "Test",
+//     this.date = '10 January, 2021 | 10:00am',
+//     this.status = 'Deactivate',
+//     this.viewsCount = 900,
+//     this.balanceAmount = 100,
+//     this.coins = 4,
+//     this.wallColor = Colors.orangeAccent,
+//     required this.isSwitched,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // var lightRed1cl = ColorConstant.lightRed1cl;
+//     return Container(
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(10),
+//         color: Colors.white,
+//       ),
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Stack(
+//             alignment: Alignment.center,
+//             children: [
+//               Container(
+//                 decoration: BoxDecoration(
+//                   borderRadius: BorderRadius.only(
+//                       topLeft: Radius.circular(8),
+//                       topRight: Radius.circular(8)),
+//                   color: wallColor,
+//                 ),
+//                 height: 200,
+//               ),
+//               // SvgPicture.asset('assets/images/Rectangle1005.svg'),
+//               SvgPicture.asset('assets/images/Frame.svg')
+//             ],
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(20.0),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(
+//                   adNo.toString(),
+//                   style: TextStyle(
+//                       fontFamily: 'Roboto',
+//                       fontWeight: FontWeight.w700,
+//                       color: ColorConstant.blueGray900,
+//                       fontSize: DeviceSize.itemWidth / 10),
+//                 ),
+//                 Text(
+//                   'Banner Ad',
+//                   style: TextStyle(
+//                       fontFamily: 'Roboto',
+//                       fontWeight: FontWeight.w500,
+//                       color: ColorConstant.blueGray900,
+//                       fontSize: DeviceSize.itemWidth / 14),
+//                 ),
+//                 Text(
+//                   date.toString(),
+//                   style: TextStyle(
+//                       fontFamily: 'Roboto',
+//                       fontWeight: FontWeight.w400,
+//                       color: ColorConstant.blueGray900,
+//                       fontSize: DeviceSize.itemWidth / 14),
+//                 ),
+//                 Row(
+//                   children: [
+//                     Text(
+//                       "Status: ",
+//                       style: TextStyle(
+//                           fontFamily: 'Roboto',
+//                           fontWeight: FontWeight.w400,
+//                           color: ColorConstant.blueGray900,
+//                           fontSize: DeviceSize.itemWidth / 14),
+//                     ),
+//                     Text(
+//                       status.toString(),
+//                       style: TextStyle(
+//                           fontFamily: 'DM Sans',
+//                           fontWeight: FontWeight.w400,
+//                           color: ColorConstant.orangeColor1cl,
+//                           fontSize: DeviceSize.itemWidth / 14),
+//                     ),
+//                   ],
+//                 ),
+//                 D10HCustomClSizedBoxWidget(
+//                   height: 10,
+//                 ),
+//                 Container(
+//                   width: double.maxFinite,
+//                   // height: DeviceSize.itemHeight/3,
+//                   decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(5),
+//                       border:
+//                           Border.all(color: ColorConstant.gray300, width: 2)),
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(10.0),
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                           viewsCount.toString(),
+//                           style: TextStyle(
+//                               fontFamily: 'Roboto',
+//                               fontWeight: FontWeight.w700,
+//                               color: ColorConstant.orangeColor1cl,
+//                               fontSize: DeviceSize.itemWidth / 10),
+//                         ),
+//                         Text(
+//                           'Views',
+//                           style: TextStyle(
+//                               fontFamily: 'Roboto',
+//                               fontWeight: FontWeight.w400,
+//                               color: ColorConstant.gray600,
+//                               fontSize: DeviceSize.itemWidth / 14),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//                 D10HCustomClSizedBoxWidget(
+//                   height: 20,
+//                 ),
+//                 Container(
+//                   width: double.maxFinite,
+//                   // height: DeviceSize.itemHeight/3,
+//                   decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(5),
+//                       border:
+//                           Border.all(color: ColorConstant.gray300, width: 2)),
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(10.0),
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Text(
+//                           balanceAmount.toString(),
+//                           style: TextStyle(
+//                               fontFamily: 'Roboto',
+//                               fontWeight: FontWeight.w700,
+//                               color: ColorConstant.deepPurpleA200,
+//                               fontSize: DeviceSize.itemWidth / 10),
+//                         ),
+//                         Text(
+//                           'Balance Amount',
+//                           style: TextStyle(
+//                               fontFamily: 'Roboto',
+//                               fontWeight: FontWeight.w400,
+//                               color: ColorConstant.gray600,
+//                               fontSize: DeviceSize.itemWidth / 14),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//                 D10HCustomClSizedBoxWidget(
+//                   height: 20,
+//                 ),
+//                 Container(
+//                   width: double.maxFinite,
+//                   // height: DeviceSize.itemHeight/3,
+//                   decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(5),
+//                       border:
+//                           Border.all(color: ColorConstant.gray300, width: 2)),
+//                   child: Padding(
+//                     padding: const EdgeInsets.all(10.0),
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         Row(
+//                           children: [
+//                             Text(
+//                               coins.toString(),
+//                               style: TextStyle(
+//                                   fontFamily: 'Roboto',
+//                                   fontWeight: FontWeight.w700,
+//                                   color: ColorConstant.orangeColor1cl,
+//                                   fontSize: DeviceSize.itemWidth / 10),
+//                             ),
+//                             Text(' '),
+//                             SvgPicture.asset('assets/images/Vectordiamond.svg'),
+//                           ],
+//                         ),
+//                         Text(
+//                           'Coin (0.5/views)',
+//                           style: TextStyle(
+//                               fontFamily: 'Roboto',
+//                               fontWeight: FontWeight.w400,
+//                               color: ColorConstant.gray600,
+//                               fontSize: DeviceSize.itemWidth / 14),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//                 D10HCustomClSizedBoxWidget(
+//                   height: 20,
+//                 ),
+//                 Row(
+//                   children: [
+//                     FlutterSwitch(
+//                       height: 20.0,
+//                       width: 40.0,
+//                       padding: 4.0,
+//                       toggleSize: 15.0,
+//                       borderRadius: 10.0,
+//                       activeColor: ColorConstant.clGreen,
+//                       value: isSwitched,
+//                       onToggle: (value) {
+//                         // setState(() {
+//                         // isSwitched = value;
+//                         // });
+//                       },
+//                     ),
+//                     SizedBox(
+//                       width: 10,
+//                     ),
+//                     Text(
+//                       'Close Ad',
+//                       style: TextStyle(
+//                           fontFamily: 'Roboto',
+//                           fontWeight: FontWeight.w400,
+//                           color: ColorConstant.red400,
+//                           fontSize: DeviceSize.itemWidth / 14),
+//                     ),
+//                   ],
+//                 ),
+//                 D10HCustomClSizedBoxWidget(
+//                   height: 20,
+//                 ),
+//                 Row(
+//                   children: [
+//                     Expanded(
+//                       flex: 8,
+//                       child: Container(
+//                         // width: double.maxFinite,
+//                         // height: DeviceSize.itemHeight/3,
+//                         decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(10),
+//                             border: Border.all(
+//                                 color: ColorConstant.deepPurpleA200, width: 1)),
+//                         child: Padding(
+//                           padding: const EdgeInsets.all(10.0),
+//                           child: Text(
+//                             'Copy Ad ID',
+//                             textAlign: TextAlign.center,
+//                             style: TextStyle(
+//                                 fontFamily: 'Roboto',
+//                                 fontWeight: FontWeight.w500,
+//                                 color: ColorConstant.deepPurpleA200,
+//                                 fontSize: DeviceSize.itemWidth / 10),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       width: 10,
+//                     ),
+//                     Expanded(
+//                       flex: 8,
+//                       child: Container(
+//                         // width: double.maxFinite,
+//                         // height: DeviceSize.itemHeight/3,
+//                         decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(10),
+//                             border: Border.all(
+//                                 color: ColorConstant.deepPurpleA200, width: 1)),
+//                         child: Padding(
+//                           padding: const EdgeInsets.all(10.0),
+//                           child: Text(
+//                             'Visibility',
+//                             textAlign: TextAlign.center,
+//                             style: TextStyle(
+//                                 fontFamily: 'Roboto',
+//                                 fontWeight: FontWeight.w500,
+//                                 color: ColorConstant.deepPurpleA200,
+//                                 fontSize: DeviceSize.itemWidth / 10),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//                 D10HCustomClSizedBoxWidget(
+//                   height: 20,
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+
 class AdDistributorBannerControl extends StatelessWidget {
   String adNo;
+  String adName;
   String date;
   String? status;
-  int? viewsCount;
+  String? viewsCount;
   int? balanceAmount;
-  int? coins;
+  String? views;
+  String? coins;
   Color? wallColor;
+  String? idCard;
   final bool isSwitched;
+
 
   AdDistributorBannerControl({
     super.key,
     this.adNo = "Test",
     this.date = '10 January, 2021 | 10:00am',
     this.status = 'Deactivate',
-    this.viewsCount = 900,
+    this.viewsCount ='0',
     this.balanceAmount = 100,
-    this.coins = 4,
+    this.coins,
     this.wallColor = Colors.orangeAccent,
     required this.isSwitched,
+    required this.adName,
+    this.idCard,
   });
 
   @override
@@ -749,15 +1066,19 @@ class AdDistributorBannerControl extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(8)),
                   color: wallColor,
                 ),
                 height: 200,
+                child: Center(
+                  child: idCard != null?
+                  Image.network(idCard!,fit: BoxFit.fill,):SvgPicture.asset('assets/images/Frame.svg'),
+                ),
               ),
-              // SvgPicture.asset('assets/images/Rectangle1005.svg'),
-              SvgPicture.asset('assets/images/Frame.svg')
+              // idCard != null?
+              // Image.network(idCard!,fit: BoxFit.fill,):SvgPicture.asset('assets/images/Frame.svg')
             ],
           ),
           Padding(
@@ -774,7 +1095,7 @@ class AdDistributorBannerControl extends StatelessWidget {
                       fontSize: DeviceSize.itemWidth / 10),
                 ),
                 Text(
-                  'Banner Ad',
+                  adName,
                   style: TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w500,
@@ -809,16 +1130,15 @@ class AdDistributorBannerControl extends StatelessWidget {
                     ),
                   ],
                 ),
-                D10HCustomClSizedBoxWidget(
-                  height: 10,
+                const D10HCustomClSizedBoxWidget(
+                  height: 50,
                 ),
                 Container(
                   width: double.maxFinite,
-                  // height: DeviceSize.itemHeight/3,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border:
-                          Border.all(color: ColorConstant.gray300, width: 2)),
+                      Border.all(color: ColorConstant.gray300, width: 2)),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
@@ -844,8 +1164,8 @@ class AdDistributorBannerControl extends StatelessWidget {
                     ),
                   ),
                 ),
-                D10HCustomClSizedBoxWidget(
-                  height: 20,
+                const D10HCustomClSizedBoxWidget(
+                  height: 60,
                 ),
                 Container(
                   width: double.maxFinite,
@@ -853,7 +1173,7 @@ class AdDistributorBannerControl extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border:
-                          Border.all(color: ColorConstant.gray300, width: 2)),
+                      Border.all(color: ColorConstant.gray300, width: 2)),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
@@ -879,8 +1199,8 @@ class AdDistributorBannerControl extends StatelessWidget {
                     ),
                   ),
                 ),
-                D10HCustomClSizedBoxWidget(
-                  height: 20,
+                const D10HCustomClSizedBoxWidget(
+                  height: 60,
                 ),
                 Container(
                   width: double.maxFinite,
@@ -888,7 +1208,7 @@ class AdDistributorBannerControl extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border:
-                          Border.all(color: ColorConstant.gray300, width: 2)),
+                      Border.all(color: ColorConstant.gray300, width: 2)),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
@@ -904,8 +1224,8 @@ class AdDistributorBannerControl extends StatelessWidget {
                                   color: ColorConstant.orangeColor1cl,
                                   fontSize: DeviceSize.itemWidth / 10),
                             ),
-                            Text(' '),
-                            SvgPicture.asset('assets/images/Vectordiamond.svg'),
+                            const SizedBox(width: 5),
+                            SvgPicture.asset('assets/images/Vectordiamond.svg',height: 15,width: 15,),
                           ],
                         ),
                         Text(
@@ -920,8 +1240,8 @@ class AdDistributorBannerControl extends StatelessWidget {
                     ),
                   ),
                 ),
-                D10HCustomClSizedBoxWidget(
-                  height: 20,
+                const D10HCustomClSizedBoxWidget(
+                  height: 30,
                 ),
                 Row(
                   children: [
@@ -939,7 +1259,7 @@ class AdDistributorBannerControl extends StatelessWidget {
                         // });
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
@@ -952,13 +1272,13 @@ class AdDistributorBannerControl extends StatelessWidget {
                     ),
                   ],
                 ),
-                D10HCustomClSizedBoxWidget(
-                  height: 20,
+                const D10HCustomClSizedBoxWidget(
+                  height: 30,
                 ),
                 Row(
                   children: [
                     Expanded(
-                      flex: 8,
+                      flex: 1,
                       child: Container(
                         // width: double.maxFinite,
                         // height: DeviceSize.itemHeight/3,
@@ -980,11 +1300,11 @@ class AdDistributorBannerControl extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
-                      flex: 8,
+                      flex: 1,
                       child: Container(
                         // width: double.maxFinite,
                         // height: DeviceSize.itemHeight/3,
@@ -1009,7 +1329,7 @@ class AdDistributorBannerControl extends StatelessWidget {
                   ],
                 ),
                 D10HCustomClSizedBoxWidget(
-                  height: 20,
+                  height: 10,
                 ),
               ],
             ),
@@ -1019,6 +1339,7 @@ class AdDistributorBannerControl extends StatelessWidget {
     );
   }
 }
+
 
 class dashboardCardAdDistributorCustomWidgetCl extends StatelessWidget {
   dashboardCardAdDistributorCustomWidgetCl({

@@ -20,16 +20,13 @@ ThemeData _baseTheme = ThemeData(
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
-  Widget build(BuildContext context) 
-  
+  Widget build(BuildContext context)
   {   
     return MaterialApp(
       theme: _baseTheme,
       title: 'marriyoo_virtual_experts',
       debugShowCheckedModeBanner: false,
-
       initialRoute: AppRoutes.oneSplashScreen,
       routes: AppRoutes.routes,
     );

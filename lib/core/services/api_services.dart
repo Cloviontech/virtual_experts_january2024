@@ -2,8 +2,8 @@ import 'package:virtual_experts/model_final/modelAllUser.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServices {
-  static const String ipAddress = "10.0.2.2:8000";
-  // static const String ipAddress = "192.168.1.2:8000";
+  // static const String ipAddress = "10.0.2.2:8000";
+  static const String ipAddress = "192.168.1.2:8000";
 
   Future<List<UserModel>?> getUsers() async {
     try {
