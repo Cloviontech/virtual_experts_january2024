@@ -146,7 +146,7 @@ class _AdProviderAdsScreenState
                           borderRadius: BorderRadius.circular(8),
                           color: ColorConstant.clElevatedButtonColor),
                       child: SvgPicture.asset(
-                        'assets/images/plus.svg',
+                        'assets/images/plus.svg', 
                       ),
                     ),
                   ),

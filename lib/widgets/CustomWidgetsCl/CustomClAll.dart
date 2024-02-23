@@ -725,6 +725,103 @@ class CustomClCheckboxWithQueCenAnsWidget extends StatelessWidget {
   }
 }
 
+
+
+class CustomClCheckboxWithQueCenAnsWidgetWithAnswer extends StatelessWidget {
+   CustomClCheckboxWithQueCenAnsWidgetWithAnswer({
+    super.key,
+    required this.question,
+    required this.completed,  this.onTap,
+
+  });
+
+  final String question;
+  final bool completed;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // SizedBox(
+        //   height: MediaQuery.of(context).size.height / 100,
+        // ),
+        Container(
+          decoration: BoxDecoration(
+              color: ColorConstant.whiteA700,
+              borderRadius: BorderRadius.circular(8)),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      border: const Border.fromBorderSide(BorderSide.none),
+                      color: ColorConstant.whiteA700,
+                      shape: BoxShape.circle),
+                  height: 20,
+                  width: 20,
+                  child: Checkbox(
+                    // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+
+                    value: completed,
+                    onChanged: (value) {},
+                    //  side: BorderSide.none,
+                    shape: const CircleBorder(side: BorderSide.none),
+                    side: const BorderSide(color: Colors.green),
+                    activeColor: Colors.green,
+                    // checkColor: Colors.black,
+                  ),
+                ),
+                SizedBox(
+                  width: DeviceSize.itemWidth / 20,
+                ),
+                Expanded(
+                    child: Text(
+                  question,
+                  style: TextStyle(
+                    // color: ColorConstant.clPurple6,
+                    fontWeight: FontWeight.bold,
+                    fontSize: MediaQuery.of(context).size.height / 50,
+                  ),
+                )),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 100,
+        ),
+        GestureDetector(
+          onTap: 
+            onTap,
+          
+          child: Container(
+            height: DeviceSize.itemHeight / 6,
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: ColorConstant.whiteA700,
+                border: Border.all(
+                    color: ColorConstant.clElevatedButtonColor, width: 2)),
+            child: Center(
+                child: Text(
+              "View Answer",
+              style: TextStyle(
+                color: ColorConstant.clPurpleFontColor,
+                // fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            )),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class CustomClRectangleCheckboxWithQuestionWidget extends StatelessWidget {
   const CustomClRectangleCheckboxWithQuestionWidget({
     super.key,

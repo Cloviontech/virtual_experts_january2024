@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/3ScreenSignin.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/7screenChooseService.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/account/not_used_2_Edit_profile_local_admin_screen_Account.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/account/pm_edit_profile_profile_manager/edit_pro_prof_manag_scr.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/account/pm_acc_bal/pm_account_bal.dart';
@@ -105,6 +107,18 @@ class _AccountAffiliateMarketingScreenAccountState
     _pmMyData[0].createdDate.toString();
   }
 
+  // 
+    String? _service = '';
+
+  void getServiceOfUser() async {
+    SharedPreferences SharedPrefservice = await SharedPreferences.getInstance();
+    setState(() {
+      _service = SharedPrefservice.getString('serviceOfUser');
+
+      print('serviceOfUser : $_service');
+    });
+  }
+
 
 
  
@@ -113,6 +127,7 @@ class _AccountAffiliateMarketingScreenAccountState
   @override
   void initState() {
     super.initState();
+    getServiceOfUser();
     _fetchDataPmMyData();
   }
 
@@ -151,6 +166,17 @@ class _AccountAffiliateMarketingScreenAccountState
               ),
               SizedBox(
                 height: DeviceSize.itemHeight / 10,
+              ),
+               Center(
+                child: Text(
+                  // '${_service}',
+                 '${SevenChooseServiceScreen.sharedPreffService}',
+                  style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w700,
+                      color: ColorConstant.blueGray900,
+                      fontSize: 18),
+                ),
               ),
               Card(
                 elevation: 0,

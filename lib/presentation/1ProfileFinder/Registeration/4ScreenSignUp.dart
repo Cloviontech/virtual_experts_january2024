@@ -8,7 +8,9 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/3ScreenSignin.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 
 import '5screenOtpEntering.dart';
@@ -196,8 +198,15 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   //   }
   // }
 
+   void putServiceOfUser() async {
+     SharedPreferences SharedPrefservice = await SharedPreferences.getInstance();
+   SharedPrefservice.clear();
+
+        SharedPrefservice.setString("serviceOfUser", widget.service);
+  }
+
   void signup() async {
-    // print('Sign up method');
+    print('Sign up method start');
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
 
@@ -235,7 +244,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
 
     var response = await http.post(
       // Uri.parse('http://${ApiService.ipAddress}/pi_signup/'),
-      Uri.parse('http://${ApiService.ipAddress}/${widget.service}/'),
+      Uri.parse('http://${ApiServices.ipAddress}/${widget.service}/'),
       
       // Uri.parse('http://10.0.2.2:8000/signup/'),
 
@@ -243,6 +252,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
       // body: jsonEncode(requestBody),
       body: requestBody,
     );
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
 
@@ -282,6 +292,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   @override
   void initState() {
     countryCode = '+91';
+    putServiceOfUser();
   
     super.initState();
   }
@@ -333,8 +344,10 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
+
                               ),
                             ),
+                            Text(widget.service),
 
                             const Text("Emaill ID*"),
                             Padding(

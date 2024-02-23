@@ -20,6 +20,10 @@ import '../../9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
 class SevenChooseServiceScreen extends StatefulWidget {
   const SevenChooseServiceScreen({super.key});
 
+   static String? sharedPreffService = '';
+
+  
+
   @override
   State<SevenChooseServiceScreen> createState() =>
       _SevenChooseServiceScreenState();
@@ -36,16 +40,25 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
     "Private Investigator"
   ];
 
+  List <String> _services = [
+    'pm_signin',
+    'hm_signin',
+    'sm_signin',
+     'ad_pro_signin',
+     'ad_dis_signin',
+     'am_signin',
+     'pi_signin',
+  ];
+
   List<Widget> Navigation = [
     ThreeSigninScreen(service: 'pm_signin',),
     ThreeSigninScreen(service: 'hm_signin',),
     ThreeSigninScreen(service: 'sm_signin',),
-    ThreeSigninScreen(service: 'ap_signin',),
-    ThreeSigninScreen(service: 'ad_signin',),
-    // ThreeSigninScreen(service: 'af_m_signin',),
-    BottomNavigationAffiliateMarketingScreen(),
-    // ThreeSigninScreen(service: 'pi_signin',),
-    ThreeSigninScreen(service: 'pi_signin',),
+    const ThreeSigninScreen(service: 'ad_pro_signin',),
+    const ThreeSigninScreen(service: 'ad_dis_signin',),
+    ThreeSigninScreen(service: 'am_signin',),
+    // BottomNavigationAffiliateMarketingScreen(),
+    ThreeSigninScreen(service: 'pi_signin',)
 
   ];
 
@@ -60,6 +73,41 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
   ];
 
   final List<bool> _selected = List.generate(20, (Index) => false);
+
+
+  
+  // String? serviceOfUser = '';
+
+   void getServiceOfUser() async {
+    SharedPreferences SharedPrefservice = await SharedPreferences.getInstance();
+    setState(() {
+     SevenChooseServiceScreen.sharedPreffService = SharedPrefservice.getString('serviceOfUser');
+
+      print('serviceOfUser : ${SevenChooseServiceScreen.sharedPreffService}');
+    });
+  }
+  
+
+
+  moveToNextScreen (int index) async {
+    SharedPreferences SharedPrefservice = await SharedPreferences.getInstance();
+   SharedPrefservice.clear();
+
+        SharedPrefservice.setString("serviceOfUser", _services[index]);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Navigation[index]));
+                     
+
+  }
+
+
+  @override
+  void initState() {
+    getServiceOfUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,10 +165,13 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
                       ),
                       // onTap: () => setState(() => _selected[index] = !_selected[index]),
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Navigation[index]));
+                        moveToNextScreen(index);
+                        getServiceOfUser();
+                        //   SharedPrefservice.setString("uid2", userUidclean.toString());
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => Navigation[index]));
                       },
                     ),
                   );

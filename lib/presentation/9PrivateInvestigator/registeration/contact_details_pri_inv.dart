@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/account/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
@@ -197,7 +199,7 @@ pi_complete_account(
   // const private_investicator_id = "Y9M0YCN82YA";
    SharedPreferences preferences = await SharedPreferences.getInstance();
     userUid = preferences.getString("uid2").toString();
-  final url = Uri.parse("http://${ApiService.ipAddress}/pi_complete_account/$userUid");
+  final url = Uri.parse("http://${ApiService.ipAddress}/${widget.service}/$userUid");
   var request = http.MultipartRequest('POST', url);
   request.fields['first_name'] = fName;
   request.fields['last_name'] = lName;
@@ -216,13 +218,14 @@ for (var element in request.fields.entries) {
 
   try {
     final response = await request.send();
+   
     statusCode = response.statusCode;
     body = await response.stream.bytesToString();
     print("Status Code : $statusCode");
     print("UID : $body");
     print("userUid : $userUid");
-    if (statusCode == 200 || statusCode == 400 || statusCode == 403) {
-    // if (statusCode == 403) {
+    // if (statusCode == 200 || statusCode == 400 || statusCode == 403) {
+    if (statusCode == 200) {
       
        Navigator.pushNamed(context, AppRoutes.bottomNavigationPrivateInvestigatorScreen);
     }
@@ -257,10 +260,29 @@ for (var element in request.fields.entries) {
   // String address = "";
 
 
+  
+
+  List<String> hiringManager = [];
+  
+  Future<void>hiringManagerUid() async {
+    var url = "http://${ApiServices.ipAddress}/all_hm_data";
+    var response = await http.get(Uri.parse(url));
+    var allData = jsonDecode(response.body);
+    for(var i=0; i<allData.length;i++){
+      setState(() {
+        hiringManager.add(allData[i]['uid']);
+      });
+    }
+
+  }
+
+
   @override
   void initState() {
     fToast = FToast();
     // fToast.init(context);
+
+    hiringManagerUid();
     super.initState();
   }
 
@@ -291,6 +313,7 @@ for (var element in request.fields.entries) {
               SizedBox(
                 height: DeviceSize.itemHeight / 10,
               ),
+              Text(widget.service),
                 WidgetTitleAndTextfield(
                   
                   textFieldHint: 'Enter',
@@ -487,7 +510,7 @@ for (var element in request.fields.entries) {
                  WidgetTitleAndDropdown(
                   DdbTitle: _detailName[6],
                   DdbHint: "Select",
-                  DbdItems: Dbditems,
+                  DbdItems: hiringManager,
                   onChanged: (String? newValue) {
                     setState(() {
                       // dropdownValue = newValue!;
@@ -616,7 +639,7 @@ for (var element in request.fields.entries) {
  pAddress: _personalAddressController.text, 
  pCity: cityValue, pCountry: countryValue, 
  tagline:_taglineController.text,
-  hiringManagerUid: "_hiringManager");
+  hiringManagerUid: _hiringManager);
 
                         // Navigator.push(
                         //   context,

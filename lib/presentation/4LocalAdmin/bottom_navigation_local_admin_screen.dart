@@ -10,6 +10,7 @@ import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen
 import 'package:virtual_experts/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenScreen.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/account/1_account_local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/4LocalAdmin/complaints/AllComplaints.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/1_account_local_admin_screen_account.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/dashboard_local_admin/dashboard_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/1_profile_finder_search_screen_local_admin.dart';
@@ -302,11 +303,21 @@ class _BottomNavigationLocalAdminScreenState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        "Complaints",
-                        style: TextStyle(color: Colors.white),
+                    GestureDetector(
+                      onTap: () {
+                           Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return AllComplaintsScreen();
+                  }),
+                );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Complaints",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                     GestureDetector(

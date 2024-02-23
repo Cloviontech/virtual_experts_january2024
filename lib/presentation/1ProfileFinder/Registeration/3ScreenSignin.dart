@@ -3,9 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/4ScreenSignUp.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/7screenChooseService.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/bottom_navigation_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,6 +26,7 @@ class ThreeSigninScreen extends StatefulWidget {
   static late String userUidAccess;
 
   final String service;
+
 
   @override
   State<ThreeSigninScreen> createState() => _ThreeSigninScreenState();
@@ -75,7 +80,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
     var response = await http.post(
       Uri.parse("http://${ApiService.ipAddress}/${widget.service}/"),
       // Uri.parse("http://${ApiService.ipAddress}/pm_signin/"),
-      
+
       // headers: headers,
       body: requestBody,
     );
@@ -103,53 +108,70 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
       print(preferences.getString("uid2").toString());
 
       if (widget.service == 'pi_signin') {
+
+         Navigator.pushNamed(context, AppRoutes.bottomNavigationPrivateInvestigatorScreen);
+   
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) {
+        //     return ContactDetailsPrivateInvestScreen(
+        //       service: 'pi_complete_account',
+        //     );
+        //   }),
+        // );
+      } else if (widget.service == 'pm_signin') {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return ContactDetailsPrivateInvestScreen(
-              service: 'pi_complete_account',
+            return BottomNavigationLocalAdminScreen();
+          }),
+        );
+      } else if (widget.service == 'sm_signin') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return BottomNavigationSalesScreen();
+          }),
+        );
+      } else if (widget.service == 'hm_signin') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return BottomNavigationHmScreen(
+              service: '',
             );
           }),
         );
       }
 
-        else if (widget.service == 'pm_signin') {
-           Navigator.push(
+      //
+
+      else if (widget.service == 'ad_pro_signin') {
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return BottomNavigationLocalAdminScreen(
-             
-            );
+            return BottomNavigationAdProviderMainScreen();
           }),
         );
-        }
-
-
-         else if (widget.service == 'sm_signin') {
-           Navigator.push(
+      } else if (widget.service == 'ad_dis_signin') {
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return BottomNavigationSalesScreen(
-             
-            );
+            return BottomNavigationAdDistributorScreen();
           }),
         );
-        }
-
-         else if (widget.service == 'hm_signin') {
-           Navigator.push(
+      } else if (widget.service == 'am_signin') {
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return BottomNavigationHmScreen(service: '',
-             
-            );
+            return BottomNavigationAffiliateMarketingScreen();
           }),
         );
-        }
+      }
 
-      // Navigator.pushNamed(context, AppRoutes.contactDetailsPrivateInvestScreen); //permanent
-      //  Navigator.pushNamed(
-      //         context, AppRoutes.FourteenScreenBottomNavigationscr);  // Temperory for testing use only
+      //
+
+      //
     } else {
       print(response.statusCode);
       print(response.body);
@@ -174,7 +196,64 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
 //       });
 // }
 
+  // SevenChooseServiceScreen
+
+  // String _service = SevenChooseServiceScreen.getServiceOfUser.toString();
+ 
+ 
+
+  // List<String> _services = [
+  //   'pm_signin',
+  //   'hm_signin',
+  //   'sm_signin',
+  //   'ad_pro_signin',
+  //   'ad_dis_signin',
+  //   'am_signin'
+  //       'pi_signin',
+  // ];
+
+  // List<Widget> _Navigation = [
+  //   BottomNavigationLocalAdminScreen(),
+  //   BottomNavigationHmScreen(
+  //     service: '',
+  //   ),
+  //   BottomNavigationSalesScreen(),
+  //   BottomNavigationAdProviderMainScreen(),
+  //   BottomNavigationAdDistributorScreen(),
+  //   BottomNavigationAffiliateMarketingScreen(),
+  //   ContactDetailsPrivateInvestScreen(
+  //     service: 'pi_complete_account',
+  //   ),
+
+  //   const ThreeSigninScreen(
+  //     service: 'ad_pro_signin',
+  //   ),
+  //   const ThreeSigninScreen(
+  //     service: 'ad_dis_signin',
+  //   ),
+  //   ThreeSigninScreen(
+  //     service: 'am_signin',
+  //   ),
+  //   // BottomNavigationAffiliateMarketingScreen(),
+  //   ThreeSigninScreen(
+  //     service: 'pi_signin',
+  //   ),
+  // ];
+
+  // _moveToNextScreen(int index) async {
+  //   SharedPreferences SharedPrefservice = await SharedPreferences.getInstance();
+
+  //   SharedPrefservice.setString("serviceOfUser", _services[index]);
+  //   Navigator.push(
+  //       context, MaterialPageRoute(builder: (context) => _Navigation[index]));
+  // }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +286,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                             padding: EdgeInsets.only(
                                 top:
                                     MediaQuery.of(context).size.height / 11.85),
-                            child: const Center(
+                            child: Center(
                               child: Column(
                                 // mainAxisAlignment: MainAxisAlignment.center,
                                 // crossAxisAlignment: CrossAxisAlignment.end,
@@ -225,6 +304,12 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                   Padding(
                                     padding: EdgeInsets.only(top: 10),
                                     child: Text("You've been missed."),
+                                  ),
+                                  Text(
+                                    '${SevenChooseServiceScreen.sharedPreffService}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
                                   ),
                                 ],
                               ),
@@ -542,35 +627,67 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                         if (widget.service == 'pi_signin') {
                                           print('service : ${widget.service}');
 
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) {
-                                            return FourSignUpScreen(
-                                                service: 'pi_signup');
-                                          }),
-                                        );
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return FourSignUpScreen(
+                                                  service: 'pi_signup');
+                                            }),
+                                          );
+                                        } else if (widget.service ==
+                                            'pm_signin') {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return FourSignUpScreen(
+                                                  service: 'pm_signup');
+                                            }),
+                                          );
+                                        } else if (widget.service ==
+                                            'hm_signin') {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return FourSignUpScreen(
+                                                  service: 'hm_signup');
+                                            }),
+                                          );
+                                        } else if (widget.service ==
+                                            'ad_pro_signin') {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return FourSignUpScreen(
+                                                  service: 'ad_pro_signup');
+                                            }),
+                                          );
+                                        } else if (widget.service ==
+                                            'ad_dis_signin') {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return FourSignUpScreen(
+                                                  service: 'ad_dis_signup');
+                                            }),
+                                          );
                                         }
 
-
-                                        else if (widget.service == 'pm_signin')
-
+                                        else if (widget.service ==
+                                            'am_signin') {
                                           Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) {
-                                            return FourSignUpScreen(
-                                                service: 'pm_signup');
-                                          }),
-                                        );
-
-                                          else if (widget.service == 'hm_signin')
-
-                                          Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) {
-                                            return FourSignUpScreen(
-                                                service: 'hm_signup');
-                                          }),
-                                        );
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return FourSignUpScreen(
+                                                  service: 'am_signup');
+                                            }),
+                                          );
+                                        }
                                       },
                                       child: SizedBox(
                                         // color: Colors.white,
@@ -605,291 +722,291 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
 
         if (orientation == Orientation.landscape) {
           return Stack(children: [
-            SingleChildScrollView(
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      // image: SvgPicture.asset('assets/images/img_background.svg'),
+            // SingleChildScrollView(
+            //   child: Container(
+            //     decoration: const BoxDecoration(
+            //       image: DecorationImage(
+            //           // image: SvgPicture.asset('assets/images/img_background.svg'),
 
-                      image:
-                          AssetImage('assets/images/img_background_first.png'),
-                      fit: BoxFit.fill),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 25, right: 25, top: 10, bottom: 0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 70),
-                          child: Center(
-                            child: Column(
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              // crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Sign In",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Text("You've been missed."),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 60),
-                              child: Text(
-                                "User Name/Email ID",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 10,
-                                    ),
-                                    child: TextFormField(
-                                      autofillHints: const [
-                                        AutofillHints.email
-                                      ],
-                                      controller: emailController,
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "example@demo.com",
-                                          hintStyle: const TextStyle(
-                                              color: Colors.black),
-                                          suffixIcon: Padding(
-                                            padding: const EdgeInsets.all(13.0),
-                                            child: SvgPicture.asset(
-                                              'assets/images/img_user.svg',
-                                            ),
-                                          )),
-                                    )),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Text(
-                                "Password",
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 10,
-                                  ),
-                                  child: TextFormField(
-                                    autofillHints: const [
-                                      AutofillHints.password
-                                    ],
-                                    obscureText: _passwordVisible,
-                                    controller: passwordController,
-                                    decoration: InputDecoration(
-                                        suffixIcon: IconButton(
-                                            icon: Icon(_passwordVisible
-                                                ? Icons.visibility_off
-                                                : Icons.visibility),
-                                            onPressed: () {
-                                              setState(() {
-                                                _passwordVisible =
-                                                    !_passwordVisible;
-                                              });
-                                            }),
-                                        suffixIconColor: Colors.black,
-                                        border: InputBorder.none,
-                                        hintText: "********"),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 30),
-                          child: Center(
-                            child: Text(
-                              "Forgot Password",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.underline,
-                                  decorationThickness: 2
-                                  // decorationStyle: TextDecorationStyle.dashed,
-                                  ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (passwordController.text != null) {
-                                // signIn(emailController.text.toString(),
-                                //     passwordController.text.toString());
-                                // login();
-                              } else {
-                                // _showToast(context, "Enter Password");
-                                Fluttertoast.showToast(
-                                  backgroundColor: Colors.green,
-                                  textColor: Colors.white,
-                                  msg: 'Enter Password',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                );
-                              }
-                              // Navigator.pushNamed(
-                              //     context, AppRoutes.FourteenScreenscr);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  gradient: const LinearGradient(colors: [
-                                    Color.fromARGB(255, 25, 50, 192),
-                                    Color.fromARGB(255, 25, 50, 192),
-                                    // Colors.indigo,
-                                    Colors.purple,
-                                    Color.fromARGB(255, 219, 110, 238),
-                                  ]),
-                                  borderRadius: BorderRadius.circular(8)),
-                              height: 50,
-                              // width: 296,
-                              child: const Center(
-                                  child: Text(
-                                "Sign In",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 20),
-                          child: Center(
-                            child: Text(
-                              "Sign In with",
-                              style: TextStyle(
-                                  // fontWeight: FontWeight.bold
-                                  ),
-                              // textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: SvgPicture.asset(
-                                        'assets/images/img_icons8google1.svg'),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SvgPicture.asset(
-                                  // 'assets/images/img_facebook_deep_purple_a200.svg'),
+            //           image:
+            //               AssetImage('assets/images/img_background_first.png'),
+            //           fit: BoxFit.fill),
+            //     ),
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(
+            //           left: 25, right: 25, top: 10, bottom: 0),
+            //       child: Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //           children: [
+            //             const Padding(
+            //               padding: EdgeInsets.only(top: 70),
+            //               child: Center(
+            //                 child: Column(
+            //                   // mainAxisAlignment: MainAxisAlignment.center,
+            //                   // crossAxisAlignment: CrossAxisAlignment.end,
+            //                   children: [
+            //                     Text(
+            //                       "Sign In",
+            //                       style: TextStyle(
+            //                           fontWeight: FontWeight.bold,
+            //                           fontSize: 18),
+            //                     ),
+            //                     Padding(
+            //                       padding: EdgeInsets.only(top: 10),
+            //                       child: Text("You've been missed."),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             ),
+            //             Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 const Padding(
+            //                   padding: EdgeInsets.only(top: 60),
+            //                   child: Text(
+            //                     "User Name/Email ID",
+            //                     style: TextStyle(
+            //                       color: Colors.grey,
+            //                     ),
+            //                   ),
+            //                 ),
+            //                 Padding(
+            //                   padding: const EdgeInsets.only(top: 8),
+            //                   child: Container(
+            //                     height: 40,
+            //                     decoration: BoxDecoration(
+            //                         color: Colors.grey.shade100,
+            //                         borderRadius: BorderRadius.circular(8)),
+            //                     child: Padding(
+            //                         padding: const EdgeInsets.only(
+            //                           left: 10,
+            //                         ),
+            //                         child: TextFormField(
+            //                           autofillHints: const [
+            //                             AutofillHints.email
+            //                           ],
+            //                           controller: emailController,
+            //                           decoration: InputDecoration(
+            //                               border: InputBorder.none,
+            //                               hintText: "example@demo.com",
+            //                               hintStyle: const TextStyle(
+            //                                   color: Colors.black),
+            //                               suffixIcon: Padding(
+            //                                 padding: const EdgeInsets.all(13.0),
+            //                                 child: SvgPicture.asset(
+            //                                   'assets/images/img_user.svg',
+            //                                 ),
+            //                               )),
+            //                         )),
+            //                   ),
+            //                 ),
+            //                 const Padding(
+            //                   padding: EdgeInsets.only(top: 20),
+            //                   child: Text(
+            //                     "Password",
+            //                     style: TextStyle(color: Colors.grey),
+            //                   ),
+            //                 ),
+            //                 Padding(
+            //                   padding: const EdgeInsets.only(top: 8),
+            //                   child: Container(
+            //                     height: 40,
+            //                     decoration: BoxDecoration(
+            //                         color: Colors.grey.shade100,
+            //                         borderRadius: BorderRadius.circular(8)),
+            //                     child: Padding(
+            //                       padding: const EdgeInsets.only(
+            //                         left: 10,
+            //                       ),
+            //                       child: TextFormField(
+            //                         autofillHints: const [
+            //                           AutofillHints.password
+            //                         ],
+            //                         obscureText: _passwordVisible,
+            //                         controller: passwordController,
+            //                         decoration: InputDecoration(
+            //                             suffixIcon: IconButton(
+            //                                 icon: Icon(_passwordVisible
+            //                                     ? Icons.visibility_off
+            //                                     : Icons.visibility),
+            //                                 onPressed: () {
+            //                                   setState(() {
+            //                                     _passwordVisible =
+            //                                         !_passwordVisible;
+            //                                   });
+            //                                 }),
+            //                             suffixIconColor: Colors.black,
+            //                             border: InputBorder.none,
+            //                             hintText: "********"),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //             const Padding(
+            //               padding: EdgeInsets.only(top: 30),
+            //               child: Center(
+            //                 child: Text(
+            //                   "Forgot Password",
+            //                   style: TextStyle(
+            //                       color: Colors.black,
+            //                       decoration: TextDecoration.underline,
+            //                       decorationThickness: 2
+            //                       // decorationStyle: TextDecorationStyle.dashed,
+            //                       ),
+            //                 ),
+            //               ),
+            //             ),
+            //             Padding(
+            //               padding: const EdgeInsets.only(top: 20),
+            //               child: GestureDetector(
+            //                 onTap: () {
+            //                   if (passwordController.text != null) {
+            //                     // signIn(emailController.text.toString(),
+            //                     //     passwordController.text.toString());
+            //                     // login();
+            //                   } else {
+            //                     // _showToast(context, "Enter Password");
+            //                     Fluttertoast.showToast(
+            //                       backgroundColor: Colors.green,
+            //                       textColor: Colors.white,
+            //                       msg: 'Enter Password',
+            //                       toastLength: Toast.LENGTH_SHORT,
+            //                     );
+            //                   }
+            //                   // Navigator.pushNamed(
+            //                   //     context, AppRoutes.FourteenScreenscr);
+            //                 },
+            //                 child: Container(
+            //                   decoration: BoxDecoration(
+            //                       gradient: const LinearGradient(colors: [
+            //                         Color.fromARGB(255, 25, 50, 192),
+            //                         Color.fromARGB(255, 25, 50, 192),
+            //                         // Colors.indigo,
+            //                         Colors.purple,
+            //                         Color.fromARGB(255, 219, 110, 238),
+            //                       ]),
+            //                       borderRadius: BorderRadius.circular(8)),
+            //                   height: 50,
+            //                   // width: 296,
+            //                   child: const Center(
+            //                       child: Text(
+            //                     "Sign In",
+            //                     style: TextStyle(
+            //                         color: Colors.white,
+            //                         fontWeight: FontWeight.bold),
+            //                   )),
+            //                 ),
+            //               ),
+            //             ),
+            //             const Padding(
+            //               padding: EdgeInsets.only(top: 20),
+            //               child: Center(
+            //                 child: Text(
+            //                   "Sign In with",
+            //                   style: TextStyle(
+            //                       // fontWeight: FontWeight.bold
+            //                       ),
+            //                   // textAlign: TextAlign.end,
+            //                 ),
+            //               ),
+            //             ),
+            //             Padding(
+            //               padding: const EdgeInsets.only(top: 10),
+            //               child: Row(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Padding(
+            //                     padding: const EdgeInsets.all(8.0),
+            //                     child: Container(
+            //                       height: 40,
+            //                       width: 40,
+            //                       decoration: const BoxDecoration(
+            //                         color: Colors.white,
+            //                         shape: BoxShape.circle,
+            //                       ),
+            //                       child: Padding(
+            //                         padding: const EdgeInsets.all(12.0),
+            //                         child: SvgPicture.asset(
+            //                             'assets/images/img_icons8google1.svg'),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                   Padding(
+            //                     padding: const EdgeInsets.all(8.0),
+            //                     child: SvgPicture.asset(
+            //                       // 'assets/images/img_facebook_deep_purple_a200.svg'),
 
-                                  'assets/images/img_floatingicon.svg',
-                                  height: 40,
-                                ),
-                              ),
-                              // git config --global user.email "you@example.com"
-                              // git config --global user.name "Your Name"
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: SvgPicture.asset(
-                                        'assets/images/img_applefill.svg'),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 50),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "Don't Have Account Already?",
-                                  style: TextStyle(),
-                                  // textAlign: TextAlign.end,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, AppRoutes.threeSigninScreen);
-                                    },
-                                    child: const SizedBox(
-                                      // color: Colors.white,
-                                      height: 30,
-                                      child: Center(
-                                        child: Text(
-                                          "Sign Up",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Color.fromARGB(
-                                                  255, 69, 49, 245)),
-                                          // textAlign: TextAlign.end,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ]),
-                ),
-              ),
-            )
+            //                       'assets/images/img_floatingicon.svg',
+            //                       height: 40,
+            //                     ),
+            //                   ),
+            //                   // git config --global user.email "you@example.com"
+            //                   // git config --global user.name "Your Name"
+            //                   Padding(
+            //                     padding: const EdgeInsets.all(8.0),
+            //                     child: Container(
+            //                       height: 40,
+            //                       width: 40,
+            //                       decoration: const BoxDecoration(
+            //                         color: Colors.white,
+            //                         shape: BoxShape.circle,
+            //                       ),
+            //                       child: Padding(
+            //                         padding: const EdgeInsets.all(12.0),
+            //                         child: SvgPicture.asset(
+            //                             'assets/images/img_applefill.svg'),
+            //                       ),
+            //                     ),
+            //                   )
+            //                 ],
+            //               ),
+            //             ),
+            //             Padding(
+            //               padding: const EdgeInsets.only(top: 10, bottom: 50),
+            //               child: Center(
+            //                 child: Row(
+            //                   mainAxisAlignment: MainAxisAlignment.center,
+            //                   children: [
+            //                     const Text(
+            //                       "Don't Have Account Already?",
+            //                       style: TextStyle(),
+            //                       // textAlign: TextAlign.end,
+            //                     ),
+            //                     Padding(
+            //                       padding: const EdgeInsets.only(left: 10),
+            //                       child: InkWell(
+            //                         onTap: () {
+            //                           Navigator.pushNamed(
+            //                               context, AppRoutes.threeSigninScreen);
+            //                         },
+            //                         child: const SizedBox(
+            //                           // color: Colors.white,
+            //                           height: 30,
+            //                           child: Center(
+            //                             child: Text(
+            //                               "Sign Up",
+            //                               style: TextStyle(
+            //                                   fontWeight: FontWeight.bold,
+            //                                   color: Color.fromARGB(
+            //                                       255, 69, 49, 245)),
+            //                               // textAlign: TextAlign.end,
+            //                             ),
+            //                           ),
+            //                         ),
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             ),
+            //           ]),
+            //     ),
+            //   ),
+            // )
           ]);
         }
 

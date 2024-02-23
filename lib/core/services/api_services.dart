@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 
 class ApiServices {
   // static const String ipAddress = "10.0.2.2:8000";
-  static const String ipAddress = "192.168.1.2:8000";
+  // static const String ipAddress = "192.168.1.4:8000";
+  static const String ipAddress = "192.168.18.53:8000";
 
   Future<List<UserModel>?> getUsers() async {
     try {

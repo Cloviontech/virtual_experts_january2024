@@ -4,17 +4,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
-// 
+//
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/6screenOtpSuccessful.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:otp_fields/otp_fields.dart';
 // import 'package:virtual_experts/core/app_export.dart';
 import 'package:http/http.dart' as http;
 import '../MatchingList/1screen_advertisement.dart';
-
-
-
-
 
 class FiveOtpEnteringScreen extends StatefulWidget {
   final int timerr;
@@ -26,7 +22,8 @@ class FiveOtpEnteringScreen extends StatefulWidget {
     super.key,
     required this.timerr,
     required this.emailid,
-    required this.userUidafterOtp, required this.service,
+    required this.userUidafterOtp,
+    required this.service,
   });
 
   @override
@@ -43,7 +40,6 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
   bool isOtpEmpty = true;
 
   late String userUid;
-  
 
   @override
   void initState() {
@@ -105,8 +101,7 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
 
   TextEditingController otpController = TextEditingController();
 
-
- void otp( String mail) async {
+  void otp(String mail) async {
     var headers = {
       'Context-Type': 'application/json',
     };
@@ -114,264 +109,310 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
 
     var requestBody = {'user_otp': otpController.text};
 
+    if (widget.service == 'pm_signup') {
+      var response = await http.post(
+        // Uri.parse("$url$mail"),
 
+        Uri.parse(
+            'http://${ApiService.ipAddress}/pm_otp/${widget.userUidafterOtp}'),
 
-if (widget.service == 'pm_signup') {
-   var response = await http.post(
-      // Uri.parse("$url$mail"),
-
-      
-      Uri.parse('http://${ApiService.ipAddress}/pm_otp/${widget.userUidafterOtp}'),
-
-      headers: headers,
-      // body: jsonEncode(requestBody),
-      body: requestBody,
-    );
-    if (response.statusCode == 200) {
-      print('Otp Is Correct');
-      print(response.body);
-
-      //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return SixOtpSuccessfulScreen(
-            emailid: mail, service: widget.service,
-          );
-        }),
+        headers: headers,
+        // body: jsonEncode(requestBody),
+        body: requestBody,
       );
-    } else {
-      print("errorCode: ${response.statusCode}");
-      print(response.body);
-      // print(url);
-      print(requestBody);
+      if (response.statusCode == 200) {
+        print('Otp Is Correct');
+        print(response.body);
 
-      Fluttertoast.showToast(
-        backgroundColor: Colors.orange,
-        textColor: Colors.white,
-        msg: 'Invalid OTP',
-        toastLength: Toast.LENGTH_SHORT,
+        //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SixOtpSuccessfulScreen(
+              emailid: mail,
+              service: widget.service,
+            );
+          }),
+        );
+      } else {
+        print("errorCode: ${response.statusCode}");
+        print(response.body);
+        // print(url);
+        print(requestBody);
+
+        Fluttertoast.showToast(
+          backgroundColor: Colors.orange,
+          textColor: Colors.white,
+          msg: 'Invalid OTP',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    } else if (widget.service == 'pi_signup') {
+      var response = await http.post(
+        // Uri.parse("$url$mail"),
+
+        Uri.parse(
+            'http://${ApiService.ipAddress}/pi_otp/${widget.userUidafterOtp}'),
+
+        headers: headers,
+        // body: jsonEncode(requestBody),
+        body: requestBody,
       );
+      if (response.statusCode == 200) {
+        print('Otp Is Correct');
+        print(response.body);
+
+        //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SixOtpSuccessfulScreen(
+              emailid: mail,
+              service: widget.service,
+            );
+          }),
+        );
+      } else {
+        print("errorCode: ${response.statusCode}");
+        print(response.body);
+        // print(url);
+        print(requestBody);
+
+        Fluttertoast.showToast(
+          backgroundColor: Colors.orange,
+          textColor: Colors.white,
+          msg: 'Invalid OTP',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    } else if (widget.service == 'hm_signup') {
+      var response = await http.post(
+        // Uri.parse("$url$mail"),
+
+        Uri.parse(
+            'http://${ApiService.ipAddress}/hm_otp/${widget.userUidafterOtp}'),
+
+        headers: headers,
+        // body: jsonEncode(requestBody),
+        body: requestBody,
+      );
+      if (response.statusCode == 200) {
+        print('Otp Is Correct');
+        print(response.body);
+
+        //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SixOtpSuccessfulScreen(
+              emailid: mail,
+              service: widget.service,
+            );
+          }),
+        );
+      } else {
+        print("errorCode: ${response.statusCode}");
+        print(response.body);
+        // print(url);
+        print(requestBody);
+
+        Fluttertoast.showToast(
+          backgroundColor: Colors.orange,
+          textColor: Colors.white,
+          msg: 'Invalid OTP',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    } else if (widget.service == 'ad_pro_signup') {
+      print("as_pro_signup : ${widget.service}");
+      var response = await http.post(
+        Uri.parse(
+            'http://${ApiService.ipAddress}/ad_pro_otp/${widget.userUidafterOtp}'),
+        // Uri.parse('http://${ApiService.ipAddress}/ad_pro_otp/${widget.userUidafterOtp}'),
+        headers: headers,
+        body: requestBody,
+      );
+      if (response.statusCode == 200) {
+        print('Otp Is Correct');
+        print(response.body);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SixOtpSuccessfulScreen(
+              emailid: mail,
+              service: widget.service,
+            );
+          }),
+        );
+      } else {
+        print("errorCode: ${response.statusCode}");
+        print(response.body);
+        print(requestBody);
+
+        Fluttertoast.showToast(
+          backgroundColor: Colors.orange,
+          textColor: Colors.white,
+          msg: 'Invalid OTP',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    } else if (widget.service == 'sm_signup') {
+      var response = await http.post(
+        // Uri.parse("$url$mail"),
+
+        Uri.parse(
+            'http://${ApiService.ipAddress}/sm_otp/${widget.userUidafterOtp}'),
+
+        headers: headers,
+        // body: jsonEncode(requestBody),
+        body: requestBody,
+      );
+      if (response.statusCode == 200) {
+        print('Otp Is Correct');
+        print(response.body);
+
+        //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SixOtpSuccessfulScreen(
+              emailid: mail,
+              service: widget.service,
+            );
+          }),
+        );
+      } else {
+        print("errorCode: ${response.statusCode}");
+        print(response.body);
+        // print(url);
+        print(requestBody);
+
+        Fluttertoast.showToast(
+          backgroundColor: Colors.orange,
+          textColor: Colors.white,
+          msg: 'Invalid OTP',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
     }
-}
-
-else if (widget.service == 'pi_signup') {
-
-   var response = await http.post(
-      // Uri.parse("$url$mail"),
-
-      
-      Uri.parse('http://${ApiService.ipAddress}/pi_otp/${widget.userUidafterOtp}'),
-
-      headers: headers,
-      // body: jsonEncode(requestBody),
-      body: requestBody,
-    );
-    if (response.statusCode == 200) {
-      print('Otp Is Correct');
-      print(response.body);
-
-      //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return SixOtpSuccessfulScreen(
-            emailid: mail, service: widget.service,
-          );
-        }),
-      );
-    } else {
-      print("errorCode: ${response.statusCode}");
-      print(response.body);
-      // print(url);
-      print(requestBody);
-
-      Fluttertoast.showToast(
-        backgroundColor: Colors.orange,
-        textColor: Colors.white,
-        msg: 'Invalid OTP',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
-
-}
-
-
-else if (widget.service == 'hm_signup') {
-
-   var response = await http.post(
-      // Uri.parse("$url$mail"),
-
-      
-      Uri.parse('http://${ApiService.ipAddress}/hm_otp/${widget.userUidafterOtp}'),
-
-      headers: headers,
-      // body: jsonEncode(requestBody),
-      body: requestBody,
-    );
-    if (response.statusCode == 200) {
-      print('Otp Is Correct');
-      print(response.body);
-
-      //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return SixOtpSuccessfulScreen(
-            emailid: mail, service: widget.service,
-          );
-        }),
-      );
-    } else {
-      print("errorCode: ${response.statusCode}");
-      print(response.body);
-      // print(url);
-      print(requestBody);
-
-      Fluttertoast.showToast(
-        backgroundColor: Colors.orange,
-        textColor: Colors.white,
-        msg: 'Invalid OTP',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
-
-}
-
-
-
-else if (widget.service == 'sm_signup') {
-
-   var response = await http.post(
-      // Uri.parse("$url$mail"),
-
-      
-      Uri.parse('http://${ApiService.ipAddress}/sm_otp/${widget.userUidafterOtp}'),
-
-      headers: headers,
-      // body: jsonEncode(requestBody),
-      body: requestBody,
-    );
-    if (response.statusCode == 200) {
-      print('Otp Is Correct');
-      print(response.body);
-
-      //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return SixOtpSuccessfulScreen(
-            emailid: mail, service: widget.service,
-          );
-        }),
-      );
-    } else {
-      print("errorCode: ${response.statusCode}");
-      print(response.body);
-      // print(url);
-      print(requestBody);
-
-      Fluttertoast.showToast(
-        backgroundColor: Colors.orange,
-        textColor: Colors.white,
-        msg: 'Invalid OTP',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    }
-
-}
-   
 
     
+else if (widget.service == 'am_signup') {
+
+   var response = await http.post(
+      // Uri.parse("$url$mail"),
+
+      
+      Uri.parse('http://${ApiService.ipAddress}/am_otp/${widget.userUidafterOtp}'),
+
+      headers: headers,
+      // body: jsonEncode(requestBody),
+      body: requestBody,
+    );
+    if (response.statusCode == 200) {
+      print('Otp Is Correct');
+      print(response.body);
+
+      //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return SixOtpSuccessfulScreen(
+            emailid: mail, service: widget.service,
+          );
+        }),
+      );
+    } else {
+      print("errorCode: ${response.statusCode}");
+      print(response.body);
+      // print(url);
+      print(requestBody);
+
+      Fluttertoast.showToast(
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
+        msg: 'Invalid OTP',
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+
+}
   }
 
-
-
-  pi_otp({required String otp_value, required String mail }) async {
-  final statusCode;
-  final body;
-  // const private_investicator_id = "Y9M0YCN82YA";
-  SharedPreferences preferences = await SharedPreferences.getInstance();
+  pi_otp({required String otp_value, required String mail}) async {
+    final statusCode;
+    final body;
+    // const private_investicator_id = "Y9M0YCN82YA";
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     userUid = preferences.getString("uid2").toString();
     if (widget.service == 'pi_signup') {
-   final url = Uri.parse("http://${ApiService.ipAddress}/pi_signup/$userUid");
+      final url =
+          Uri.parse("http://${ApiService.ipAddress}/pi_signup/$userUid");
 
-    var request = http.MultipartRequest('POST', url);
-  request.fields['user_otp'] = otp_value;
-  try {
-    final response = await request.send();
-    statusCode = response.statusCode;
-    body = await response.stream.bytesToString();
-    print("Status Code : $statusCode");
-    print("UID : $userUid");
-    print("otp : $otp_value");
-     Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return SixOtpSuccessfulScreen(
-            emailid: mail, service: 'pi_signup'
-          );
-        }),
-      );
+      var request = http.MultipartRequest('POST', url);
+      request.fields['user_otp'] = otp_value;
+      try {
+        final response = await request.send();
+        statusCode = response.statusCode;
+        body = await response.stream.bytesToString();
+        print("Status Code : $statusCode");
+        print("UID : $userUid");
+        print("otp : $otp_value");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SixOtpSuccessfulScreen(emailid: mail, service: 'pi_signup');
+          }),
+        );
+      } catch (e) {
+        print("Do Something When Error Occurs");
+      }
+    } else if (widget.service == 'pm_signup') {
+      final url =
+          Uri.parse("http://${ApiService.ipAddress}/pm_signup/$userUid");
 
-    
-  } catch (e) {
-    print("Do Something When Error Occurs");
-  }
-    }
-    else if (widget.service == 'pm_signup') {
-    final   url = Uri.parse("http://${ApiService.ipAddress}/pm_signup/$userUid");
-
-     var request = http.MultipartRequest('POST', url);
-  request.fields['user_otp'] = otp_value;
-  try {
-    final response = await request.send();
-    statusCode = response.statusCode;
-    body = await response.stream.bytesToString();
-    print("Status Code : $statusCode");
-    print("UID : $userUid");
-    print("otp : $otp_value");
-     Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return SixOtpSuccessfulScreen(
-            emailid: mail, service: 'pm_signup'
-          );
-        }),
-      );
-
-    
-  } catch (e) {
-    print("Do Something When Error Occurs");
-  }
+      var request = http.MultipartRequest('POST', url);
+      request.fields['user_otp'] = otp_value;
+      try {
+        final response = await request.send();
+        statusCode = response.statusCode;
+        body = await response.stream.bytesToString();
+        print("Status Code : $statusCode");
+        print("UID : $userUid");
+        print("otp : $otp_value");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SixOtpSuccessfulScreen(emailid: mail, service: 'pm_signup');
+          }),
+        );
+      } catch (e) {
+        print("Do Something When Error Occurs");
+      }
     }
 
+    // var request = http.MultipartRequest('POST', url);
+    // request.fields['user_otp'] = otp_value;
+    // try {
+    //   final response = await request.send();
+    //   statusCode = response.statusCode;
+    //   body = await response.stream.bytesToString();
+    //   print("Status Code : $statusCode");
+    //   print("UID : $userUid");
+    //   print("otp : $otp_value");
+    //    Navigator.push(
+    //       context,
+    //       MaterialPageRoute(builder: (context) {
+    //         return SixOtpSuccessfulScreen(
+    //           emailid: mail, service: widget.service
+    //         );
+    //       }),
+    //     );
 
-  // var request = http.MultipartRequest('POST', url);
-  // request.fields['user_otp'] = otp_value;
-  // try {
-  //   final response = await request.send();
-  //   statusCode = response.statusCode;
-  //   body = await response.stream.bytesToString();
-  //   print("Status Code : $statusCode");
-  //   print("UID : $userUid");
-  //   print("otp : $otp_value");
-  //    Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) {
-  //         return SixOtpSuccessfulScreen(
-  //           emailid: mail, service: widget.service
-  //         );
-  //       }),
-  //     );
-
-    
-  // } catch (e) {
-  //   print("Do Something When Error Occurs");
-  // }
-}
-
-
+    // } catch (e) {
+    //   print("Do Something When Error Occurs");
+    // }
+  }
 
 //   void otp(String url, String mail) async {
 
@@ -379,7 +420,6 @@ else if (widget.service == 'sm_signup') {
 //     userUid = preferences.getString("uid2").toString();
 // //
 
-      
 //     var headers = {
 //       'Context-Type': 'application/json',
 //     };
@@ -561,15 +601,13 @@ else if (widget.service == 'sm_signup') {
                     //     child: Text(widget.timerr.toString())),
                     MyElevatedButtonDisableColor(
                         onPressed: () {
-                            otp(
-                              widget.emailid);
-
+                          otp(widget.emailid);
 
                           // pi_otp( otp_value: otpController.text, mail:  widget.emailid.toString());
                           // pi_otp(otp_value: otpController.text, );
-                          
+
                           // pi_otp('http://${ApiService.ipAddress}/pi_otp/${widget.userUidafterOtp}',
-                              // widget.emailid);
+                          // widget.emailid);
 
                           //  otp('http://54.211.84.169:8000/otp/L5VO6EMM8F9', widget.id.toString());
 

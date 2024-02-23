@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/ad_pro_all_ads_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/DashBoard/dashBoardAdProvider.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Approvals/AllApplicationsThirteenHiringMgrScreen.dart';
+import 'package:virtual_experts/presentation/unUsedTestingScreen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
@@ -20,9 +22,9 @@ class _BottomNavigationAdProviderMainScreenState
 
   static final List<Widget> _pages = <Widget>[
     DashboardAdProviderScreen(),
-    AllApplicationsThirteenHiringMgrScreen(),
-    AccountSixteenHiringMgrScreen(),
-     AccountSettingsFifteenHiringMgrScreen(),
+    const AdProviderAdsScreen(),
+    const UnUsedTestingScreen(),
+     const UnUsedTestingScreen(),
   ];
 
   @override

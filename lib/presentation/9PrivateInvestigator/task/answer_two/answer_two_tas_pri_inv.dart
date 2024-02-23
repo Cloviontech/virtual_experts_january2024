@@ -13,7 +13,7 @@ class AnswerTwoTasPriInv extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorConstant.clYellowBgColor4,
       appBar: ClAppbarLeadArrowBackSuffHeart(
-        testingNextPage: const AddAnsTasPriInvScr(),
+        testingNextPage:  AddAnsTasPriInvScr(indexQues: 0, indexClientNo: 0,),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

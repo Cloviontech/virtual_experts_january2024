@@ -13,7 +13,7 @@ class PendingDetTasPriInv extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorConstant.clYellowBgColor4,
       appBar: ClAppbarLeadArrowBackSuffHeart(
-        testingNextPage: const AnswerOneTasPriInv(),
+        testingNextPage: const AnswerOneTasPriInv(indexQues: 0, indexClientNo: 0,),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

@@ -351,12 +351,18 @@ class WidgetTitleAndTextfielGreyBgAdjHeight extends StatelessWidget {
 
   TextEditingController? textFieldController = TextEditingController();
 
+  // 
+   Function? validator;
+
   WidgetTitleAndTextfielGreyBgAdjHeight({
     super.key,
     required this.textFieldTitle,
     required this.textFieldHint,
     required this.onChanged, required this.maxLines,
      this.textFieldController, 
+     
+    this.validator,
+
   });
 
   @override
@@ -377,31 +383,26 @@ class WidgetTitleAndTextfielGreyBgAdjHeight extends StatelessWidget {
         ),
         Container(
           // height: 200,
-          child: TextField(
-            controller: textFieldController,
-            // expands: true,
-            maxLines: maxLines,
-            minLines: null,
-              onChanged: onChanged,
-              // controller: _textFieldController,
-
+          child:   TextFormField(
+              controller: textFieldController,
+              autofocus: true,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10),
-                hintText: textFieldHint,
-                hintStyle: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                    // color: ColorConstant.clGreyFontColor3,
-                    fontSize: DeviceSize.itemWidth / 13.413),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 0, color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(10)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(10)),
-                filled: true, //<-- SEE HERE
-                fillColor: ColorConstant.gray100,
-              )),
+                  border:  OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xfff4f4f4),
+                  hintText: textFieldHint,
+                  hintStyle: const TextStyle(fontSize: 15,fontWeight: FontWeight.w400,color: Colors.grey),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15)
+              ),
+              maxLines: 5,
+              minLines: 4,
+              validator: (String? value){
+                return validator!(value);
+              },
+            ),
         ),
         SizedBox(
           height: 20,

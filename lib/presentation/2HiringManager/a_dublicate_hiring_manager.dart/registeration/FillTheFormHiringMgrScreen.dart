@@ -148,7 +148,7 @@ class _FillTheFormHiringMgrScreenState
   //   });
   // }
 
-  var collection = FirebaseFirestore.instance.collection('ProfileInfo');
+  // var collection = FirebaseFirestore.instance.collection('ProfileInfo');
 
   PlatformFile? pickedFile;
 
@@ -210,7 +210,7 @@ class _FillTheFormHiringMgrScreenState
                 ),
                  WidgetTitleAndTextfielGreyBgAdjHeight(
                   textFieldHint: 'Enter',
-                  textFieldTitle: _detailName[4] + "*",
+                  textFieldTitle: _detailName[3] + "*",
                   onChanged: (String? newValue) {
                     setState(() {
                       dropdownValue = newValue!;
@@ -288,7 +288,10 @@ class _FillTheFormHiringMgrScreenState
                          Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return ContactDetailsElevenHiringMgrScreen();
+                    return 
+                    // HmQualificationScreen()
+                    ContactDetailsElevenHiringMgrScreen()
+                    ;
                   }), 
                 );
                       },
