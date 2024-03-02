@@ -141,7 +141,7 @@ extends StatelessWidget {
   final String textFieldTitle;
 
   final String textFieldHint;
-  final dynamic onChanged;
+  final dynamic? onChanged;
   final Color textFieldFillColor ;
   final Color? titleFontColor;
 
@@ -151,7 +151,7 @@ extends StatelessWidget {
       {super.key,
       required this.textFieldTitle,
       required this.textFieldHint,
-      required this.onChanged,  
+       this.onChanged,  
       this.textFieldFillColor = Colors.white, 
       this.titleFontColor,
       this.textFieldController, 

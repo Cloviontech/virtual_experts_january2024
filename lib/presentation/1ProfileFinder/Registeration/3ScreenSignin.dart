@@ -10,7 +10,7 @@ import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navig
 import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
-import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/pi_complete_account.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../model_final/modelAllUser.dart';
@@ -86,6 +86,12 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
     );
 
     if (response.statusCode == 200) {
+
+      preferences.setString("id",response.body.replaceAll("\"", ""));
+
+preferences.setString("emailid",emailController.text);
+  
+
       print(response.statusCode);
       print('Login Successfully');
 

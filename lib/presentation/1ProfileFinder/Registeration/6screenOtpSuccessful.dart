@@ -5,12 +5,15 @@ import 'package:lottie/lottie.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/PrivateInvestigator/AllInvestigatorThirtyEightScreen.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/8screenUploadTheID.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/ContactDetailsElevenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/4LocalAdmin/bottom_navigation_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4LocalAdmin/registeration/complete_profile_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/registeration/am_complete_profile_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/registeration/contact_details_sales_manag.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
-import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/registeration/CompleteProfileRegisterationAdProviderScreen.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/pi_complete_account.dart';
 
 class SixOtpSuccessfulScreen extends StatefulWidget {
   final String emailid;
@@ -39,7 +42,7 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (BuildContext context) => BottomNavigationLocalAdminScreen()),
+              builder: (BuildContext context) => const PmCompleteAccountScreen()),
         ),
       );
     }
@@ -51,7 +54,7 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (BuildContext context) => ContactDetailsPrivateInvestScreen(service: 'pi_complete_account')),
+              builder: (BuildContext context) => const PiCompleteAccountScreen()),
         ),
       );
     }
@@ -61,7 +64,7 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (BuildContext context) => ContactDetailsSalesManagerScreen(service: '',)),
+              builder: (BuildContext context) => const ContactDetailsSalesManagerScreen(service: '',)),
         ),
       );
     }
@@ -71,7 +74,7 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (BuildContext context) => HmUploadTheIDScreen(service: 'hm_signup',)),
+              builder: (BuildContext context) => const HmCompleteAccountScreen()),
         ),
       );
     }
@@ -81,7 +84,12 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (BuildContext context) => BottomNavigationAdProviderMainScreen()),
+              builder: (BuildContext context) => 
+              
+              AdProCompleteAccountScreen()
+              // BottomNavigationAdProviderMainScreen()
+              
+              ),
         ),
       );
     }
@@ -92,7 +100,7 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
           MaterialPageRoute(
               builder: (BuildContext context) => 
 
-              AmQualificationScreen(),              
+              const AmQualificationScreen(),              
               // BottomNavigationAffiliateMarketingScreen()
               
               ),

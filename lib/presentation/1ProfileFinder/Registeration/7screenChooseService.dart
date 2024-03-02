@@ -14,7 +14,7 @@ import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomN
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/csc_picker.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 
-import '../../9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
+import '../../9PrivateInvestigator/registeration/pi_complete_account.dart';
 // import 'package:marriyo_17_may/presentation/NotUsingCodeIphone_13_13_pro_twelve_screen/NotUsingCodeIphone_13_13_pro_twelve_screen.dart';
 
 class SevenChooseServiceScreen extends StatefulWidget {

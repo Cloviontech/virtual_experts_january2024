@@ -290,7 +290,7 @@ class _FillTheFormHiringMgrScreenState
                   MaterialPageRoute(builder: (context) {
                     return 
                     // HmQualificationScreen()
-                    ContactDetailsElevenHiringMgrScreen()
+                    HmCompleteAccountScreen()
                     ;
                   }), 
                 );

@@ -7,7 +7,7 @@ import 'package:virtual_experts/presentation/9PrivateInvestigator/clients/widget
 import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/account_bal/account_bal_pri_inv.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/account_pri_inv/account_pri_inv.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/edit_profile/edit_pro_pri_inv_scr.dart';
-import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/contact_details_pri_inv.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/pi_complete_account.dart';
 
 import '../presentation/1ProfileFinder/HappyCouplesUI/AddThirtyFourScreen.dart';
 import '../presentation/1ProfileFinder/HappyCouplesUI/HappyCouplesPackagesThirtySixScreen.dart';
@@ -208,7 +208,7 @@ class AppRoutes {
     //  NO NEED */
     sevenChooseServiceScreen: (context) => SevenChooseServiceScreen(),
 
-    contactDetailsPrivateInvestScreen: (context) => ContactDetailsPrivateInvestScreen(service: '',),
+    contactDetailsPrivateInvestScreen: (context) => PiCompleteAccountScreen(),
 
     bottomNavigationPrivateInvestigatorScreen: (context) => BottomNavigationPrivateInvestigatorScreen(),
 

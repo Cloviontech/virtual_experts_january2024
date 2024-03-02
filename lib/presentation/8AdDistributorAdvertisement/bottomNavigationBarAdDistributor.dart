@@ -5,6 +5,8 @@ import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/1Ad
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/DashBoard/dashboard_ad_distributor.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Settings/settings_ad_distributor.dart';
+import 'package:virtual_experts/presentation/unUsedTestingScreen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
@@ -22,8 +24,8 @@ class _BottomNavigationAdDistributorScreenState
   static final List<Widget> _pages = <Widget>[
     DashBoardAdDistributorScreen(),
     AllAdsAdDistributorsAdsScreen(),
-    AccountSixteenHiringMgrScreen(),
-     AccountSettingsFifteenHiringMgrScreen(),
+     const UnUsedTestingScreen(),
+     settings_ad_distributor(),
   ];
 
   @override

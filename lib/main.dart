@@ -76,8 +76,6 @@ class MyApp extends StatelessWidget {
                     return SuccessStoryThirtyFiveScreen(index: 0,);
                   }),
                 );
-
-
   // 
 
    Fluttertoast.showToast(
