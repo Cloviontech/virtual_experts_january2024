@@ -1021,8 +1021,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:virtual_experts/core/utils/color_constant.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/dashboard/hm_dashboard_screen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/dashboard_local_admin/dashboard_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/dashboard_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/DashBoard/dashboard_ad_distributor.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/dashboard_private_admin_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -1147,7 +1148,7 @@ List<String> work_type = [
 
   }
 
-Future<void> profileUpload(DashBoardHiringManagerScreen dashBoardHiringManagerScreen)async {
+Future<void> profileUpload(BottomNavigationHmScreen bottomNavigationHmScreen)async {
   // var uri = "http://${ApiServices.ipAddress}/ad_pro_upload_account/$userId";
   var uri = "http://${ApiServices.ipAddress}/hm_upload_account/$userId";
   print(userId);
@@ -1197,7 +1198,7 @@ Future<void> profileUpload(DashBoardHiringManagerScreen dashBoardHiringManagerSc
   print(response.statusCode);
   if(response.statusCode == 200){
     print("ad pro data add successfully : ${response.statusCode}");
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> dashBoardHiringManagerScreen));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> bottomNavigationHmScreen));
     // push;
   }
 }
@@ -1890,7 +1891,7 @@ Future<void> profileUpload(DashBoardHiringManagerScreen dashBoardHiringManagerSc
                           // profileUpload(DashboardPrivateInvestigatorScreen());
                         if((_formKey.currentState?.validate()??false) && degreeCertificate != null && experienceCertificate !=null && gstCertificate !=null && panCard !=null){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>const BottomNavigationAdProviderMainScreen()));
-                          profileUpload(DashBoardHiringManagerScreen());
+                          profileUpload(BottomNavigationHmScreen(service: '',));
                         }
                         else {
                           setState(() {

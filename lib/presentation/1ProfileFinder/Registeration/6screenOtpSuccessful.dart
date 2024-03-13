@@ -6,13 +6,14 @@ import 'package:virtual_experts/presentation/1ProfileFinder/PrivateInvestigator/
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/8screenUploadTheID.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/ContactDetailsElevenHiringMgrScreen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/bottom_navigation_local_admin_screen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/registeration/complete_profile_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/bottom_navigation_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/registeration/complete_profile_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/registeration/am_complete_profile_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/registeration/contact_details_sales_manag.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/registeration/CompleteProfileRegisterationAdProviderScreen.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/registeration/CompleteProfileRegisterationAdProviderScreen.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/pi_complete_account.dart';
 
 class SixOtpSuccessfulScreen extends StatefulWidget {
@@ -87,6 +88,21 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
               builder: (BuildContext context) => 
               
               AdProCompleteAccountScreen()
+              // BottomNavigationAdProviderMainScreen()
+              
+              ),
+        ),
+      );
+    }
+
+    else if (widget.service == 'ad_dis_signup') {
+      Timer(
+        const Duration(seconds: 3),
+        () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (BuildContext context) => 
+              
+              AdDisCompleteAccountScreen()
               // BottomNavigationAdProviderMainScreen()
               
               ),

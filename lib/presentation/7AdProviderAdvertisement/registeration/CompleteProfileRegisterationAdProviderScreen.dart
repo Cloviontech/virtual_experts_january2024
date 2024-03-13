@@ -254,7 +254,7 @@ import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/dashboard/hm_dashboard_screen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/dashboard_local_admin/dashboard_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/dashboard_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/DashBoard/dashboard_ad_distributor.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/dashboard_private_admin_screen.dart';

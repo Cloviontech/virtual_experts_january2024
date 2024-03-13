@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/1_profile_finder_search_screen_local_admin.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/1_pm_profile_finder_search_screen.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/clients/widgets/clients_home.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/profile/account_bal/account_bal_pri_inv.dart';

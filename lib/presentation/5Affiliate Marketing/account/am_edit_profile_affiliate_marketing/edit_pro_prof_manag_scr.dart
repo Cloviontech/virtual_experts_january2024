@@ -8,8 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/account/1_account_local_admin_screen_account.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/account/3_account_balance_Local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/account/1_account_local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/account/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -196,7 +196,7 @@ class _EditAccountAffiliateMarketingState extends State<EditAccountAffiliateMark
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) {
-          return AccountLocalAdminScreenAccount();
+          return PmAccountScreen();
         }),
       );
       }

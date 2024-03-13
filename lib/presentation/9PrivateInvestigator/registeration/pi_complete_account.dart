@@ -755,7 +755,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:http/http.dart' as http;
-import 'package:virtual_experts/presentation/4LocalAdmin/dashboard_local_admin/dashboard_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/dashboard_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/dashboard_private_admin_screen.dart';
 import '../../../core/utils/color_constant.dart';
 import '../../../widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -883,7 +884,7 @@ List<String> work_type = [
 
   }
 
-Future<void> profileUpload(DashboardPrivateInvestigatorScreen dashboardPrivateInvestigatorScreen)async {
+Future<void> profileUpload(BottomNavigationPrivateInvestigatorScreen bottomNavigationPrivateInvestigatorScreen)async {
   // var uri = "http://${ApiServices.ipAddress}/ad_pro_upload_account/$userId";
   var uri = "http://${ApiServices.ipAddress}/pi_complete_account/$userId";
   print(userId);
@@ -937,7 +938,7 @@ Future<void> profileUpload(DashboardPrivateInvestigatorScreen dashboardPrivateIn
   print(response.statusCode);
   if(response.statusCode == 200){
     print("ad pro data add successfully : ${response.statusCode}");
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> dashboardPrivateInvestigatorScreen));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> bottomNavigationPrivateInvestigatorScreen));
     // push;
   }
 }
@@ -1630,7 +1631,7 @@ Future<void> profileUpload(DashboardPrivateInvestigatorScreen dashboardPrivateIn
                           // profileUpload(DashboardPrivateInvestigatorScreen());
                         if((_formKey.currentState?.validate()??false) && degreeCertificate != null && experienceCertificate !=null && gstCertificate !=null && panCard !=null){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>const BottomNavigationAdProviderMainScreen()));
-                          profileUpload(DashboardPrivateInvestigatorScreen());
+                          profileUpload(BottomNavigationPrivateInvestigatorScreen());
                         }
                         else {
                           setState(() {

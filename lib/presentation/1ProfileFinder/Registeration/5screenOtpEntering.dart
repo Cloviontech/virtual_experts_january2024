@@ -223,7 +223,9 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
           toastLength: Toast.LENGTH_SHORT,
         );
       }
-    } else if (widget.service == 'ad_pro_signup') {
+    } 
+    
+    else if (widget.service == 'ad_pro_signup') {
       print("as_pro_signup : ${widget.service}");
       var response = await http.post(
         Uri.parse(
@@ -256,7 +258,44 @@ class _FiveOtpEnteringScreenState extends State<FiveOtpEnteringScreen> {
           toastLength: Toast.LENGTH_SHORT,
         );
       }
-    } else if (widget.service == 'sm_signup') {
+    } 
+
+    else if (widget.service == 'ad_dis_signup') {
+      print("as_pro_signup : ${widget.service}");
+      var response = await http.post(
+        Uri.parse(
+            'http://${ApiService.ipAddress}/ad_dis_otp/${widget.userUidafterOtp}'),
+        // Uri.parse('http://${ApiService.ipAddress}/ad_pro_otp/${widget.userUidafterOtp}'),
+        headers: headers,
+        body: requestBody,
+      );
+      if (response.statusCode == 200) {
+        print('Otp Is Correct');
+        print(response.body);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return SixOtpSuccessfulScreen(
+              emailid: mail,
+              service: widget.service,
+            );
+          }),
+        );
+      } else {
+        print("errorCode: ${response.statusCode}");
+        print(response.body);
+        print(requestBody);
+
+        Fluttertoast.showToast(
+          backgroundColor: Colors.orange,
+          textColor: Colors.white,
+          msg: 'Invalid OTP',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    } 
+    
+    else if (widget.service == 'sm_signup') {
       var response = await http.post(
         // Uri.parse("$url$mail"),
 

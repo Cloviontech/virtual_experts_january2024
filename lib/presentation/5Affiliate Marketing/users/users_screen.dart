@@ -11,10 +11,11 @@ import 'package:virtual_experts/model_final/profile_manager_models/all_profile_f
 import 'package:virtual_experts/model_final/profile_manager_models/pm_my_users_list.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/1_profile_finder_search_screen_local_admin.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/3_id123456_about_me_local_admin_screen_profile_finder.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/4_reason_reason_for_reject_local_admin_profilefinder.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/users/users_add_new_user.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/1_pm_profile_finder_search_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/3_pm_id123456_about_me_pm_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/4_pm_reason_for_reject_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/users/pm_users_add_new_user.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/users/users_add_new_user.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
@@ -248,7 +249,7 @@ class _UsersLocalAdminScreenState
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return  AddNewUserLocalAdminScreen();
+                                return  PmAddNewUserScreen();
                               }),
                             );
                           },

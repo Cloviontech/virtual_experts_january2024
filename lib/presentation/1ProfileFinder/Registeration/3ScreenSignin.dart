@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/4ScreenSignUp.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/7screenChooseService.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/forgot_password/forgot_password_screen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/BottomNavigationBarSales.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/bottom_navigation_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
@@ -26,7 +28,6 @@ class ThreeSigninScreen extends StatefulWidget {
   static late String userUidAccess;
 
   final String service;
-
 
   @override
   State<ThreeSigninScreen> createState() => _ThreeSigninScreenState();
@@ -78,7 +79,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
     print(widget.service);
 
     var response = await http.post(
-      Uri.parse("http://${ApiService.ipAddress}/${widget.service}/"),
+      Uri.parse("http://${ApiServices.ipAddress}/${widget.service}/"),
       // Uri.parse("http://${ApiService.ipAddress}/pm_signin/"),
 
       // headers: headers,
@@ -86,11 +87,9 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
     );
 
     if (response.statusCode == 200) {
+      preferences.setString("id", response.body.replaceAll("\"", ""));
 
-      preferences.setString("id",response.body.replaceAll("\"", ""));
-
-preferences.setString("emailid",emailController.text);
-  
+      preferences.setString("emailid", emailController.text);
 
       print(response.statusCode);
       print('Login Successfully');
@@ -114,9 +113,9 @@ preferences.setString("emailid",emailController.text);
       print(preferences.getString("uid2").toString());
 
       if (widget.service == 'pi_signin') {
+        Navigator.pushNamed(
+            context, AppRoutes.bottomNavigationPrivateInvestigatorScreen);
 
-         Navigator.pushNamed(context, AppRoutes.bottomNavigationPrivateInvestigatorScreen);
-   
         // Navigator.push(
         //   context,
         //   MaterialPageRoute(builder: (context) {
@@ -205,8 +204,6 @@ preferences.setString("emailid",emailController.text);
   // SevenChooseServiceScreen
 
   // String _service = SevenChooseServiceScreen.getServiceOfUser.toString();
- 
- 
 
   // List<String> _services = [
   //   'pm_signin',
@@ -442,28 +439,38 @@ preferences.setString("emailid",emailController.text);
                             ],
                           ),
                           // Text(widget.service),
-                          const Center(
-                            child: Text("Forgot Password",
-                                style: TextStyle(
-                                    color: Colors.transparent,
-                                    decorationColor: Colors.grey,
-                                    shadows: [
-                                      Shadow(
-                                          color: Colors.black,
-                                          offset: Offset(0, -2))
-                                    ],
-                                    decoration: TextDecoration.underline,
-                                    decorationThickness: 3)
+                          GestureDetector(
+                            onTap: () {
+                               print('Service in signin Page: ${widget.service}');
+                               Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return ForgotPasswordScreen(service: widget.service);
+                              }),
+                            );},
+                            child: const Center(
+                              child: Text("Forgot Password",
+                                  style: TextStyle(
+                                      color: Colors.transparent,
+                                      decorationColor: Colors.grey,
+                                      shadows: [
+                                        Shadow(
+                                            color: Colors.black,
+                                            offset: Offset(0, -2))
+                                      ],
+                                      decoration: TextDecoration.underline,
+                                      decorationThickness: 3)
 
-                                // TextStyle(
-                                //     color: Colors.black,
-                                //     decoration: TextDecoration.underline,
-                                //     decorationThickness: 1,
+                                  // TextStyle(
+                                  //     color: Colors.black,
+                                  //     decoration: TextDecoration.underline,
+                                  //     decorationThickness: 1,
 
-                                //     // textBaseline: TextBaseline.ideographic,
-                                //     // decorationStyle: TextDecorationStyle.dashed,
-                                //     ),
-                                ),
+                                  //     // textBaseline: TextBaseline.ideographic,
+                                  //     // decorationStyle: TextDecorationStyle.dashed,
+                                  //     ),
+                                  ),
+                            ),
                           ),
                           // Padding(
                           //   padding: const EdgeInsets.only(top: 0),
@@ -681,9 +688,7 @@ preferences.setString("emailid",emailController.text);
                                                   service: 'ad_dis_signup');
                                             }),
                                           );
-                                        }
-
-                                        else if (widget.service ==
+                                        } else if (widget.service ==
                                             'am_signin') {
                                           Navigator.push(
                                             context,

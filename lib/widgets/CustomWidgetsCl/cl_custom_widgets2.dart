@@ -1023,7 +1023,7 @@ class ClCardAndListtileWidget extends StatelessWidget {
 
 class AdDistributorBannerControl extends StatelessWidget {
   String adNo;
-  String adName;
+  String? adName;
   String date;
   String? status;
   String? viewsCount;
@@ -1045,7 +1045,7 @@ class AdDistributorBannerControl extends StatelessWidget {
     this.coins,
     this.wallColor = Colors.orangeAccent,
     required this.isSwitched,
-    required this.adName,
+     this.adName,
     this.idCard,
   });
 
@@ -1095,7 +1095,7 @@ class AdDistributorBannerControl extends StatelessWidget {
                       fontSize: DeviceSize.itemWidth / 10),
                 ),
                 Text(
-                  adName,
+                  adName.toString(),
                   style: TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w500,

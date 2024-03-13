@@ -7,7 +7,7 @@ import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model_final/ad_provider_models/all_ads_model.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/3_id123456_about_me_local_admin_screen_profile_finder.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/3_pm_id123456_about_me_pm_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/users/ad_pro_users_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
@@ -98,10 +98,11 @@ class _AdProAddNewUserScreenState extends State<AdProAddNewUserScreen> {
     
       if (response.statusCode == 200) {
         print('user created succesfully');
+        Navigator.pop(context);
       // Navigator.push(
       //   context,
       //   MaterialPageRoute(builder: (context) {
-      //     return AccountLocalAdminScreenAccount();
+      //     return PmAccountScreen();
       //   }),
       // );
       }

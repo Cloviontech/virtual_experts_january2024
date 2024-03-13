@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/utils/color_constant.dart';
 import '../../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../../widgets/CustomWidgetsCl/CustomWidgets.dart';
-import '../../../4LocalAdmin/profile_finder_local-admin/2_filter_id_screen_local_admin.dart';
+import '../../../4ProfileManager/pm_profile_finder/2_pm_filter_id_screen.dart';
 
 class SettingsPriInvHome extends StatelessWidget {
   const SettingsPriInvHome({super.key});

@@ -10,18 +10,15 @@ import 'package:virtual_experts/presentation/1ProfileFinder/HappyCouplesUI/Happy
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenScreen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/account/1_account_local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/account/1_account_local_admin_screen_account.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/1_account_local_admin_screen_account.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/dashboard_local_admin/dashboard_local_admin_screen.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/1_profile_finder_search_screen_local_admin.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/profile_finder_local-admin/2_filter_id_screen_local_admin.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/dashboard_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/1_pm_profile_finder_search_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/2_pm_filter_id_screen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/settings/settings.dart';
-import 'package:virtual_experts/presentation/4LocalAdmin/settings/widgets/SettingsProfileManagerScreen.dart';
 import 'package:http/http.dart' as http;
-import 'package:virtual_experts/presentation/4LocalAdmin/users/users_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/af_m_acc_bal/af_m_account_bal.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/am_affiliate_markteting_screen_account.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/settings/settings.dart';
@@ -144,7 +141,7 @@ class _BottomNavigationAffiliateMarketingScreenState
                 color: _selectedIndex == 0
                     ? ColorConstant.deepPurpleA200
                     : Colors.grey.shade300),
-            label: 'Account',
+            label: 'Dashboard',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
@@ -152,8 +149,20 @@ class _BottomNavigationAffiliateMarketingScreenState
                 color: _selectedIndex == 1
                     ? ColorConstant.deepPurpleA200
                     : Colors.grey.shade300),
-            label: 'Commission',
+            label: 'Task',
           ),
+           BottomNavigationBarItem(
+            icon: 
+
+            // SvgPicture.asset(
+            //     'assets/images/img_user_deep_purple_a200_24x23.svg',
+            Icon(Icons.person_outline,  color: _selectedIndex == 1
+                    ? ColorConstant.deepPurpleA200
+                    : Colors.grey.shade300),
+                     label: 'Account',
+               ),
+           
+          
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/images/icons8-settings.svg',

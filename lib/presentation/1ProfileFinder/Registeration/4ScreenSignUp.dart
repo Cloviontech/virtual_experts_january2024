@@ -253,6 +253,8 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
       body: requestBody,
     );
     print(response.statusCode);
+    print(response.body);
+    
 
     if (response.statusCode == 200) {
 

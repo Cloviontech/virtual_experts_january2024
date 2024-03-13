@@ -19,6 +19,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:http/http.dart' as http;
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import '../../../core/utils/color_constant.dart';
 import '../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
@@ -65,6 +66,16 @@ class _AmQualificationScreenState extends State<AmQualificationScreen> {
   String? personalSelectedCityValue;
   String? selectedHiringManager;
   String? selectedSalesManager;
+  String? workType;
+
+  
+  
+List<String> work_type = [
+  "Personal",
+  "Official",
+ 
+];
+  
 
 
 
@@ -130,19 +141,19 @@ class _AmQualificationScreenState extends State<AmQualificationScreen> {
 
   }
 
-Future<void> profileUpload(BottomNavigationAdProviderMainScreen bottomNavigationAdProviderMainScreen)async {
+Future<void> profileUpload(BottomNavigationAffiliateMarketingScreen bottomNavigationAffiliateMarketingScreen)async {
   // var uri = "http://${ApiServices.ipAddress}/ad_pro_upload_account/$userId";
-  var uri = "http://${ApiServices.ipAddress}/ad_pro_upload_account/$userId";
+  var uri = "http://${ApiServices.ipAddress}/am_upload_account/$userId";
   print(userId);
   var request = http.MultipartRequest('POST',Uri.parse(uri));
   // Data Send MultipartRequest
   request.fields.addAll({
-    "office_name" : _officeNameController.text.trim(),
-    "office_country":countryName.toString(),
-    "office_city": selectedCityValue.toString(),
-    "office_address":_officeAddressController.text.trim(),
-    'first_name': _firstNameController.text.trim(),
-    'last_name':_lastNameController.text.trim(),
+    // "office_name" : _officeNameController.text.trim(),
+    // "office_country":countryName.toString(),
+    // "office_city": selectedCityValue.toString(),
+    // "office_address":_officeAddressController.text.trim(),
+    'full_name': _firstNameController.text.trim(),
+    // 'last_name':_lastNameController.text.trim(),
     "personal_country":personalCountryName.toString(),
     "personal_city" : personalSelectedCityValue.toString(),
     "personal_address": _personAddressController.text.trim(),
@@ -160,8 +171,8 @@ Future<void> profileUpload(BottomNavigationAdProviderMainScreen bottomNavigation
     "gst_number" : _gstNumberController.text.trim(),
     "company_pan_no" : _companyPanNumberController.text.trim(),
     "arn_no" : _arnNumberController.text.trim(),
-    "sales_manager" : selectedSalesManager.toString(),
-    "work_type":"uddheuhd",
+    "sales_manager" : selectedSalesManager.toString(),    
+    "work_type": workType.toString(), 
 
   }
   );
@@ -175,9 +186,11 @@ Future<void> profileUpload(BottomNavigationAdProviderMainScreen bottomNavigation
       .add(await http.MultipartFile.fromPath('pan_card', panCard!));
   http.StreamedResponse response = await request.send();
   print(response.statusCode);
+  print(response);
+  
   if(response.statusCode == 200){
-    print("ad pro data add successfully : ${response.statusCode}");
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>bottomNavigationAdProviderMainScreen));
+    print("am data add successfully : ${response.statusCode}");
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>bottomNavigationAffiliateMarketingScreen));
     // push;
   }
 }
@@ -635,15 +648,34 @@ Future<void> profileUpload(BottomNavigationAdProviderMainScreen bottomNavigation
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(errorExperienceCertificate!,style: const TextStyle(fontSize: 12,color: Color(0xffB52415)),),
                 ):const Text(""),
-                const SizedBox(height: 15),
-                _buildTextField(tittle:'Type',hintText:'Select At Any One',controller:_typeController,validator: (value){
-                  if(value == null || value.isEmpty){
-                    print("Please Select At Any One");
-                    return "Please Select At Any One";
-                  }
-                  return null;
-                }),
-                const SizedBox(height: 15),
+
+
+                // const SizedBox(height: 15),
+                // _buildTextField(tittle:'Type',hintText:'Select At Any One',controller:_typeController,validator: (value){
+                //   if(value == null || value.isEmpty){
+                //     print("Please Select At Any One");
+                //     return "Please Select At Any One";
+                //   }
+                //   return null;
+                // }),
+
+
+                   WidgetTitleAndDropdown(
+                  DdbTitle: "Work Type*",
+                  DdbHint: "Select",
+                  DbdItems: work_type,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      workType = newValue!;
+                    });
+                    // uploadAboutMe("Physical Status", dropdownValue.toString());
+                  },
+                ),
+
+                workType == "Personal" ? SizedBox()
+                :
+
+
                 _buildTextField(tittle:'GST Number',hintText:'Enter Your GST Number',controller:_gstNumberController,validator: (value){
                   if(value == null || value.isEmpty){
                     print("Please Type Your GST Number");
@@ -832,7 +864,7 @@ Future<void> profileUpload(BottomNavigationAdProviderMainScreen bottomNavigation
                       onPressed: (){
                         if((_formKey.currentState?.validate()??false) && degreeCertificate != null && experienceCertificate !=null && gstCertificate !=null && panCard !=null){
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>const BottomNavigationAdProviderMainScreen()));
-                          profileUpload(BottomNavigationAdProviderMainScreen());
+                          profileUpload(BottomNavigationAffiliateMarketingScreen());
                         }
                         else {
                           setState(() {

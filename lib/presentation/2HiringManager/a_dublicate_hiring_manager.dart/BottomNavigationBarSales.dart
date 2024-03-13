@@ -5,6 +5,7 @@ import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixte
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Approvals/AllApplicationsThirteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/1_account_sales_manager_screen_account.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/dashboard/hm_dashboard_screen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/settings/widgets/SettingsProfileManagerScreen.dart';
 import 'package:virtual_experts/presentation/6Sales/account/1_account_sales_manager_screen_account.dart';
 import 'package:virtual_experts/presentation/6Sales/dashBoard/DashBoardSalesScreen.dart';
@@ -29,7 +30,7 @@ class _BottomNavigationHmScreenState
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    DashBoardSalesScreen(),
+    DashBoardHiringManagerScreen(),
     AllApplicationsThirteenHiringMgrScreen(),
     AccountHiringManagerScreen(),
      SettingsHiringManagerScreen(),

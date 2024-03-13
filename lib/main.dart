@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return SuccessStoryThirtyFiveScreen(index: 0,);
+                    return SuccessStoryThirtyFiveScreen();
                   }),
                 );
   // 
