@@ -16,7 +16,7 @@ import '../../../widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
 import '../../2HiringManager/a_dublicate_hiring_manager.dart/registeration/ContactDetailsElevenHiringMgrScreen.dart';
 import '../../7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
-import '../../8AdDistributorAdvertisement/DashBoard/dashboard_ad_distributor.dart';
+import '../../8AdDistributorAdvertisement/not_used_dashBoard/dashboard_ad_distributor.dart';
 
 class QualificationScreen extends StatefulWidget {
   const QualificationScreen({super.key});

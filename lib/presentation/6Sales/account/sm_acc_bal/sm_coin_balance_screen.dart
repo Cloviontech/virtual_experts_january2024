@@ -8,14 +8,14 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
-class PmAccBalScr extends StatefulWidget {
-  const PmAccBalScr({super.key});
+class SmCoinBalScr extends StatefulWidget {
+  const SmCoinBalScr({super.key});
 
   @override
-  State<PmAccBalScr> createState() => _PmAccBalScrState();
+  State<SmCoinBalScr> createState() => _SmCoinBalScrState();
 }
 
-class _PmAccBalScrState extends State<PmAccBalScr> {
+class _SmCoinBalScrState extends State<SmCoinBalScr> {
   List<String> roles = [
     'Regional Manager',
     'Local Admins',
@@ -57,7 +57,7 @@ class _PmAccBalScrState extends State<PmAccBalScr> {
     return Scaffold(
       backgroundColor: ColorConstant.clYellowBgColor4,
       appBar: const ClAppbarLeadGridSuffHeart(
-        testingNextPage: PmAccBalScr(),
+        testingNextPage: SmCoinBalScr(),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -90,7 +90,9 @@ class _PmAccBalScrState extends State<PmAccBalScr> {
                 shadowColor: Colors.white,
                 elevation: 0,
                 child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 20),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 20),
                   leading: Container(
                     padding: const EdgeInsets.all(13),
                     // height: DeviceSize.itemHeight,
@@ -98,23 +100,26 @@ class _PmAccBalScrState extends State<PmAccBalScr> {
                       shape: BoxShape.circle,
                       color: ColorConstant.whiteA700,
                     ),
-                    child: SvgPicture.asset(
-                      'assets/images/img_camera_wallet.svg',
-                      height: DeviceSize.itemHeight / 3,
-                    ),
+                    child: Icon(Icons.point_of_sale)
+                    
+                    // SvgPicture.asset(
+                    //   'assets/images/img_camera_wallet.svg',
+                    //   height: DeviceSize.itemHeight / 3,
+                    // ),
                   ),
                   title: Text(
-                    '₹ 2,500',
+                    '100',
                     style: TextStyle(
                         fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w700,
                         color: ColorConstant.clGreen,
-                        fontSize: 10),
+                        fontSize: 30
+                        ),
                   ),
                   minLeadingWidth: 1,
                   minVerticalPadding: 1,
                   subtitle: Text(
-                    'Account Balance',
+                    'Total Emera Coins',
                     style: TextStyle(
                         fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w400,
@@ -143,7 +148,7 @@ class _PmAccBalScrState extends State<PmAccBalScr> {
                   minVerticalPadding: 1,
                   subtitle: Center(
                     child: Text(
-                      'Withdraw To Account',
+                      'Redeem Emera Coin',
                       style: TextStyle(
                           fontFamily: 'DM Sans',
                           fontWeight: FontWeight.w400,
@@ -156,7 +161,7 @@ class _PmAccBalScrState extends State<PmAccBalScr> {
               const D10HCustomClSizedBoxWidget(),
 
               Text(
-                'Transaction History',
+                'Coin Transaction History',
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w700,

@@ -9,7 +9,8 @@ import 'package:virtual_experts/presentation/1ProfileFinder/Profile/12screenProf
 import 'package:virtual_experts/presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenScreen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/complaints/AllComplaints.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Account/ad_pro_account_screen.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/ad_pro_all_ads_screen.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads%20copy/AdProAdsScreen.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/not_used_ad_pro_all_ads_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/DashBoard/dashBoardAdProvider.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
@@ -69,7 +70,7 @@ bool Loading = true;
 
   static final List<Widget> _pages = <Widget>[
     const AdProDashboardScreen(),
-    const AdProviderAdsScreen(),
+     AdProAllAdsScreen(id: '', name: '', adType: '', adStatus: '',),
     const AdProAccountScreen(),
       settings_ad_provider(),
   ];

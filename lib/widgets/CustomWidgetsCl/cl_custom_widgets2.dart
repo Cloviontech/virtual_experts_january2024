@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
@@ -13,6 +15,7 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_tags/simple_tags.dart';
+import 'package:http/http.dart' as http;
 
 class TextContainerTwoLineWidgetCustomCl extends StatelessWidget {
   const TextContainerTwoLineWidgetCustomCl({
@@ -462,11 +465,8 @@ class ClListTileInsideCardWidget extends StatelessWidget {
   }
 }
 
-class ClListviewBuilderTableWidget extends
- StatefulWidget {
-
-
-   ClListviewBuilderTableWidget({
+class ClListviewBuilderTableWidget extends StatefulWidget {
+  ClListviewBuilderTableWidget({
     super.key,
     required this.officeDetailsQus,
     required this.officeDetailsAns,
@@ -476,10 +476,12 @@ class ClListviewBuilderTableWidget extends
   final List<String> officeDetailsAns;
 
   @override
-  State<ClListviewBuilderTableWidget> createState() => _ClListviewBuilderTableWidgetState();
+  State<ClListviewBuilderTableWidget> createState() =>
+      _ClListviewBuilderTableWidgetState();
 }
 
-class _ClListviewBuilderTableWidgetState extends State<ClListviewBuilderTableWidget> {
+class _ClListviewBuilderTableWidgetState
+    extends State<ClListviewBuilderTableWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -487,7 +489,9 @@ class _ClListviewBuilderTableWidgetState extends State<ClListviewBuilderTableWid
           borderRadius: BorderRadius.circular(8), color: Colors.white),
       height: widget.officeDetailsQus.length * 60,
       child: ListView.builder(
-        // scrollDirection:ScrollController(),
+          controller: ScrollController(),
+          shrinkWrap: true,
+          physics: BouncingScrollPhysics(),
           itemCount: widget.officeDetailsQus.length,
           itemBuilder: (context, Index) {
             return ListTile(
@@ -1020,326 +1024,413 @@ class ClCardAndListtileWidget extends StatelessWidget {
 //   }
 // }
 
-
-class AdDistributorBannerControl extends StatelessWidget {
+class AdDistributorBannerControl extends StatefulWidget {
   String adNo;
   String? adName;
   String date;
   String? status;
   String? viewsCount;
   int? balanceAmount;
-  String? views;
   String? coins;
   Color? wallColor;
   String? idCard;
-  final bool isSwitched;
-
+  bool? isSwitched;
 
   AdDistributorBannerControl({
     super.key,
     this.adNo = "Test",
     this.date = '10 January, 2021 | 10:00am',
     this.status = 'Deactivate',
-    this.viewsCount ='0',
+    this.viewsCount = '0',
     this.balanceAmount = 100,
     this.coins,
     this.wallColor = Colors.orangeAccent,
-    required this.isSwitched,
-     this.adName,
+    this.isSwitched,
+    this.adName,
     this.idCard,
   });
 
   @override
+  State<AdDistributorBannerControl> createState() =>
+      _AdDistributorBannerControlState();
+}
+
+class _AdDistributorBannerControlState
+    extends State<AdDistributorBannerControl> {
+  String? views;
+
+  // bool switchValue = AdDistributorBannerControl.isSwitched;
+
+  changeCloseAdSwitchvalue() {
+    // widget.isSwitched == true
+    //     ?
+         setState(() {
+            widget.isSwitched =  !widget.isSwitched!;
+          });
+        // : setState(() {
+        //     widget.isSwitched = true;
+        //   });
+  }
+
+  Future<void> CloseAd () async {
+
+
+    late String userId;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userId = preferences.getString("uid2").toString();
+
+    print('user Id : $userId');
+    print('Ad Id : ${widget.adNo}');
+    
+
+    final url = 'http://${ApiServices.ipAddress}/ad_dis_status_close/${widget.adNo}';
+
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+
+      // request.fields['submit'] = widget.adNo;
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        // Successfully posted data
+        print('Ad Closed successfully');
+        setState(() {
+            widget.isSwitched = true;
+
+             widget.status = 'Closed';
+
+
+          });
+
+      } else {
+        
+        print('Failed to post data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception while posting data: $e');
+    }
+  }
+
+
+   void _copyToClipboard(BuildContext context, String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Copied "$text" to clipboard'),
+      ),
+    );
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     // var lightRed1cl = ColorConstant.lightRed1cl;
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8)),
-                  color: wallColor,
-                ),
-                height: 200,
-                child: Center(
-                  child: idCard != null?
-                  Image.network(idCard!,fit: BoxFit.fill,):SvgPicture.asset('assets/images/Frame.svg'),
-                ),
-              ),
-              // idCard != null?
-              // Image.network(idCard!,fit: BoxFit.fill,):SvgPicture.asset('assets/images/Frame.svg')
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return SingleChildScrollView(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              alignment: Alignment.center,
               children: [
-                Text(
-                  adNo.toString(),
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w700,
-                      color: ColorConstant.blueGray900,
-                      fontSize: DeviceSize.itemWidth / 10),
-                ),
-                Text(
-                  adName.toString(),
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w500,
-                      color: ColorConstant.blueGray900,
-                      fontSize: DeviceSize.itemWidth / 14),
-                ),
-                Text(
-                  date.toString(),
-                  style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                      color: ColorConstant.blueGray900,
-                      fontSize: DeviceSize.itemWidth / 14),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Status: ",
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          color: ColorConstant.blueGray900,
-                          fontSize: DeviceSize.itemWidth / 14),
-                    ),
-                    Text(
-                      status.toString(),
-                      style: TextStyle(
-                          fontFamily: 'DM Sans',
-                          fontWeight: FontWeight.w400,
-                          color: ColorConstant.orangeColor1cl,
-                          fontSize: DeviceSize.itemWidth / 14),
-                    ),
-                  ],
-                ),
-                const D10HCustomClSizedBoxWidget(
-                  height: 50,
-                ),
                 Container(
-                  width: double.maxFinite,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border:
-                      Border.all(color: ColorConstant.gray300, width: 2)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          viewsCount.toString(),
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w700,
-                              color: ColorConstant.orangeColor1cl,
-                              fontSize: DeviceSize.itemWidth / 10),
-                        ),
-                        Text(
-                          'Views',
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w400,
-                              color: ColorConstant.gray600,
-                              fontSize: DeviceSize.itemWidth / 14),
-                        ),
-                      ],
-                    ),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        topRight: Radius.circular(8)),
+                    color: widget.wallColor,
+                  ),
+                  height: 200,
+                  child: Center(
+                    child: widget.idCard != null
+                        ? Image.network(
+                            widget.idCard!,
+                            fit: BoxFit.fill,
+                          )
+                        : SvgPicture.asset('assets/images/Frame.svg'),
                   ),
                 ),
-                const D10HCustomClSizedBoxWidget(
-                  height: 60,
-                ),
-                Container(
-                  width: double.maxFinite,
-                  // height: DeviceSize.itemHeight/3,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border:
-                      Border.all(color: ColorConstant.gray300, width: 2)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          balanceAmount.toString(),
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w700,
-                              color: ColorConstant.deepPurpleA200,
-                              fontSize: DeviceSize.itemWidth / 10),
-                        ),
-                        Text(
-                          'Balance Amount',
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w400,
-                              color: ColorConstant.gray600,
-                              fontSize: DeviceSize.itemWidth / 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const D10HCustomClSizedBoxWidget(
-                  height: 60,
-                ),
-                Container(
-                  width: double.maxFinite,
-                  // height: DeviceSize.itemHeight/3,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border:
-                      Border.all(color: ColorConstant.gray300, width: 2)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              coins.toString(),
-                              style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w700,
-                                  color: ColorConstant.orangeColor1cl,
-                                  fontSize: DeviceSize.itemWidth / 10),
-                            ),
-                            const SizedBox(width: 5),
-                            SvgPicture.asset('assets/images/Vectordiamond.svg',height: 15,width: 15,),
-                          ],
-                        ),
-                        Text(
-                          'Coin (0.5/views)',
-                          style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w400,
-                              color: ColorConstant.gray600,
-                              fontSize: DeviceSize.itemWidth / 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const D10HCustomClSizedBoxWidget(
-                  height: 30,
-                ),
-                Row(
-                  children: [
-                    FlutterSwitch(
-                      height: 20.0,
-                      width: 40.0,
-                      padding: 4.0,
-                      toggleSize: 15.0,
-                      borderRadius: 10.0,
-                      activeColor: ColorConstant.clGreen,
-                      value: isSwitched,
-                      onToggle: (value) {
-                        // setState(() {
-                        // isSwitched = value;
-                        // });
-                      },
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Close Ad',
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          color: ColorConstant.red400,
-                          fontSize: DeviceSize.itemWidth / 14),
-                    ),
-                  ],
-                ),
-                const D10HCustomClSizedBoxWidget(
-                  height: 30,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        // width: double.maxFinite,
-                        // height: DeviceSize.itemHeight/3,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: ColorConstant.deepPurpleA200, width: 1)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Copy Ad ID',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w500,
-                                color: ColorConstant.deepPurpleA200,
-                                fontSize: DeviceSize.itemWidth / 10),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        // width: double.maxFinite,
-                        // height: DeviceSize.itemHeight/3,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: ColorConstant.deepPurpleA200, width: 1)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Visibility',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w500,
-                                color: ColorConstant.deepPurpleA200,
-                                fontSize: DeviceSize.itemWidth / 10),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                D10HCustomClSizedBoxWidget(
-                  height: 10,
-                ),
+                // idCard != null?
+                // Image.network(idCard!,fit: BoxFit.fill,):SvgPicture.asset('assets/images/Frame.svg')
               ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.adNo.toString(),
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w700,
+                        color: ColorConstant.blueGray900,
+                        fontSize: DeviceSize.itemWidth / 10),
+                  ),
+                  Text(
+                    widget.adName.toString(),
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w500,
+                        color: ColorConstant.blueGray900,
+                        fontSize: DeviceSize.itemWidth / 14),
+                  ),
+                  Text(
+                    widget.date.toString(),
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w400,
+                        color: ColorConstant.blueGray900,
+                        fontSize: DeviceSize.itemWidth / 14),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Status: ",
+                        style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w400,
+                            color: ColorConstant.blueGray900,
+                            fontSize: DeviceSize.itemWidth / 14),
+                      ),
+                      Text(
+                        widget.status.toString(),
+                        style: TextStyle(
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.w400,
+                            color: ColorConstant.orangeColor1cl,
+                            fontSize: DeviceSize.itemWidth / 14),
+                      ),
+                    ],
+                  ),
+                  const D10HCustomClSizedBoxWidget(
+                    height: 50,
+                  ),
+                  Container(
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border:
+                            Border.all(color: ColorConstant.gray300, width: 2)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.viewsCount.toString(),
+                            style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w700,
+                                color: ColorConstant.orangeColor1cl,
+                                fontSize: DeviceSize.itemWidth / 10),
+                          ),
+                          Text(
+                            'Views',
+                            style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                                color: ColorConstant.gray600,
+                                fontSize: DeviceSize.itemWidth / 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const D10HCustomClSizedBoxWidget(
+                    height: 60,
+                  ),
+                  Container(
+                    width: double.maxFinite,
+                    // height: DeviceSize.itemHeight/3,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border:
+                            Border.all(color: ColorConstant.gray300, width: 2)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.balanceAmount.toString(),
+                            style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w700,
+                                color: ColorConstant.deepPurpleA200,
+                                fontSize: DeviceSize.itemWidth / 10),
+                          ),
+                          Text(
+                            'Balance Amount',
+                            style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                                color: ColorConstant.gray600,
+                                fontSize: DeviceSize.itemWidth / 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const D10HCustomClSizedBoxWidget(
+                    height: 60,
+                  ),
+                  Container(
+                    width: double.maxFinite,
+                    // height: DeviceSize.itemHeight/3,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border:
+                            Border.all(color: ColorConstant.gray300, width: 2)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                widget.coins.toString(),
+                                style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w700,
+                                    color: ColorConstant.orangeColor1cl,
+                                    fontSize: DeviceSize.itemWidth / 10),
+                              ),
+                              const SizedBox(width: 5),
+                              SvgPicture.asset(
+                                'assets/images/Vectordiamond.svg',
+                                height: 15,
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                          Text(
+                            'Coin (0.5/views)',
+                            style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w400,
+                                color: ColorConstant.gray600,
+                                fontSize: DeviceSize.itemWidth / 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const D10HCustomClSizedBoxWidget(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      FlutterSwitch(
+                        height: 20.0,
+                        width: 40.0,
+                        padding: 4.0,
+                        toggleSize: 15.0,
+                        borderRadius: 10.0,
+                        activeColor: ColorConstant.clGreen,
+                        value: widget.isSwitched!,
+                        onToggle: (value) {
+                          changeCloseAdSwitchvalue();
+                          CloseAd();
+                          // setState(() {
+                          // isSwitched = value;
+                          // });
+                        },
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Close Ad',
+                        style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w400,
+                            color: ColorConstant.red400,
+                            fontSize: DeviceSize.itemWidth / 14),
+                      ),
+                    ],
+                  ),
+                  const D10HCustomClSizedBoxWidget(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          // width: double.maxFinite,
+                          // height: DeviceSize.itemHeight/3,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color: ColorConstant.deepPurpleA200, width: 1)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                _copyToClipboard(context, widget.adNo);
+                              },
+                              child: Text(
+                                'Copy Ad ID',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorConstant.deepPurpleA200,
+                                    fontSize: DeviceSize.itemWidth / 10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          // width: double.maxFinite,
+                          // height: DeviceSize.itemHeight/3,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color: ColorConstant.deepPurpleA200, width: 1)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Visibility',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w500,
+                                  color: ColorConstant.deepPurpleA200,
+                                  fontSize: DeviceSize.itemWidth / 10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  D10HCustomClSizedBoxWidget(
+                    height: 10,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
 
 class dashboardCardAdDistributorCustomWidgetCl extends StatelessWidget {
   dashboardCardAdDistributorCustomWidgetCl({
@@ -1443,34 +1534,32 @@ class drop_down_cl extends StatelessWidget {
 
 class CustomClChoiceChip extends StatefulWidget {
   CustomClChoiceChip(
-      {super.key, required this.valuePrimary, this.dataInput, this.title, this.subTitle, this.sharedPreffID});
+      {super.key,
+      required this.valuePrimary,
+      this.dataInput,
+      this.title,
+      this.subTitle,
+      this.sharedPreffID});
 
   int valuePrimary;
   final List? dataInput;
   final String? title;
   final String? subTitle;
   final String? sharedPreffID;
-  
 
   @override
   State<CustomClChoiceChip> createState() => _CustomClChoiceChipState();
 }
 
 class _CustomClChoiceChipState extends State<CustomClChoiceChip> {
- 
   saveToSharedPrefferences(String? nameOfID, String valueToSave) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     preferences.setString(nameOfID!, valueToSave);
   }
 
-  
-
   // int selectedBackup = widget.valuePrimary;
- 
- 
- 
- 
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -1497,7 +1586,9 @@ class _CustomClChoiceChipState extends State<CustomClChoiceChip> {
                     widget.subTitle!,
                     style: const TextStyle(fontWeight: FontWeight.w400),
                   ),
-                  D10HCustomClSizedBoxWidget(height: 20,),
+                  D10HCustomClSizedBoxWidget(
+                    height: 20,
+                  ),
                 ],
               ),
         widget.title == null ? SizedBox() : SizedBox(height: 1),
@@ -1536,8 +1627,8 @@ class _CustomClChoiceChipState extends State<CustomClChoiceChip> {
                   setState(() {
                     widget.valuePrimary = (selected ? indexx : null)!;
 
-                    saveToSharedPrefferences(
-                                  widget.sharedPreffID, widget.dataInput![widget.valuePrimary]);
+                    saveToSharedPrefferences(widget.sharedPreffID,
+                        widget.dataInput![widget.valuePrimary]);
                   });
                 },
               );

@@ -223,6 +223,38 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         );
       }
     }
+
+    // 
+    
+    else if (widget.service == 'sm_signin') {
+      final responsepass = await http.post(
+        Uri.parse('http://${ApiServices.ipAddress}/sales_forget_password/'),
+        body: requestBody,
+      );
+
+      if (responsepass.statusCode == 200) {
+        print(responsepass.body);
+        preferences.setString("id", responsepass.body.replaceAll("\"", ""));
+        print(preferences.getString('id'));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ForgotPasswordOtpEnteringScreen(
+              service: 'sm_signin',
+              emailid: forgotPasswordResetController.text,
+            );
+          }),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('OTP sent successfully')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to send OTP')),
+        );
+      }
+    }
   }
 
  

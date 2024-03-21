@@ -9,7 +9,7 @@ import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/forgot
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
-import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/6Sales/bottom_navigation/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/pi_complete_account.dart';
@@ -88,8 +88,12 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
 
     if (response.statusCode == 200) {
       preferences.setString("id", response.body.replaceAll("\"", ""));
+      preferences.setString("uid2", response.body.replaceAll("\"", ""));
+      
 
       preferences.setString("emailid", emailController.text);
+       preferences.setString("userEmail", emailController.text);
+
 
       print(response.statusCode);
       print('Login Successfully');
@@ -110,6 +114,9 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
       setState(() {
         ThreeSigninScreen.userUidAccess = _userUidSignInClean;
       });
+
+        // Navigator.pop(context);
+
       print(preferences.getString("uid2").toString());
 
       if (widget.service == 'pi_signin') {
@@ -173,7 +180,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
           }),
         );
       }
-
+    
       //
 
       //
@@ -696,6 +703,18 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                                 builder: (context) {
                                               return FourSignUpScreen(
                                                   service: 'am_signup');
+                                            }),
+                                          );
+                                        }
+
+                                        else if (widget.service ==
+                                            'sm_signin') {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                              return FourSignUpScreen(
+                                                  service: 'sm_signup');
                                             }),
                                           );
                                         }

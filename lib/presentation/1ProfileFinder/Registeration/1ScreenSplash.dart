@@ -19,7 +19,7 @@ class _OneSplashScreenState extends State<OneSplashScreen> {
 
   _navigateToHome() async {
     await Future.delayed(const Duration(milliseconds: 3000), () {});
-
+ Navigator.pop(context);
     Navigator.push(
                   context,
                   PageTransition(

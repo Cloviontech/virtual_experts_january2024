@@ -2586,3 +2586,61 @@ class _MatchingListImageHorizontalListViewState
     );
   }
 }
+
+
+
+// display name and data
+class customDisplayDataWidget extends StatefulWidget {
+  final String? name;
+  final String? value;
+  const customDisplayDataWidget({
+    super.key,
+    this.name,
+    this.value,
+  });
+
+  @override
+  State<customDisplayDataWidget> createState() =>
+      _customDisplayDataWidgetState();
+}
+
+class _customDisplayDataWidgetState extends State<customDisplayDataWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+              border: Border.all(color: ColorConstant.deepPurpleA200),
+              borderRadius: BorderRadius.circular(10)),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.name.toString(),
+                  style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.bold,
+                      color: ColorConstant.gray800,
+                      fontSize: 14),
+                ),
+                Text(
+                  widget.value.toString(),
+                  style: TextStyle(
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w400,
+                      color: ColorConstant.gray800,
+                      fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+        ),
+        D10HCustomClSizedBoxWidget()
+      ],
+    );
+  }
+}

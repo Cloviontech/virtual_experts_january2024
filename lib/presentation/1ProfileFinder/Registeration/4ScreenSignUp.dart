@@ -264,6 +264,8 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
         preferences.setString("uid2", userUidclean.toString());
         FourSignUpScreen.userUidPriInv=userUidclean;
 
+        preferences.setString("userEmail", emailController.text);
+
       });
       // Navigator.pushNamed(context, AppRoutes.iphone1313ProSixScreen);
       // ignore: use_build_context_synchronously

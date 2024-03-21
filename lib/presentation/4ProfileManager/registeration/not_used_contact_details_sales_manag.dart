@@ -15,7 +15,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/3_account_balance_Local_admin_screen_account.dart';
-import 'package:virtual_experts/presentation/6Sales/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/6Sales/bottom_navigation/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/6Sales/registeration/pay_you_ver_scr.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/ClCustomWidgets2.dart';

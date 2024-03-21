@@ -112,6 +112,8 @@ class WidgetTitleAndDropdownTextfieldFillBgColorChangeble
   final Color textfieldfillColorDropdown;
   final Color? titleFontColor;
 
+  final String? initialValue;
+
   const WidgetTitleAndDropdownTextfieldFillBgColorChangeble({
     super.key,
     required this.DdbTitle,
@@ -119,7 +121,8 @@ class WidgetTitleAndDropdownTextfieldFillBgColorChangeble
     required this.DbdItems,
     required this.onChanged,
     this.textfieldfillColorDropdown = Colors.white,
-    this.titleFontColor,
+    this.titleFontColor, 
+    this.initialValue,
   });
 
   @override
@@ -157,7 +160,8 @@ class _WidgetTitleAndDropdownTextfieldFillBgColorChangebleState
             // color: Colors.grey.shade100,
             color: widget.textfieldfillColorDropdown,
           ),
-          child: DropdownButtonFormField(
+          child: DropdownButtonFormField<String>(
+            value: widget.initialValue,
             decoration: InputDecoration(
                 border: InputBorder.none, contentPadding: EdgeInsets.all(10)
                 // labelText: "Select"
@@ -394,7 +398,7 @@ class WidgetTitleAndCustomActionIconTextfieldFillBgColorChangeble
   final Color textfieldfillColorDropdown;
   final Color? titleFontColor;
 
-  final String? imageAction;
+  final Icon? imageAction;
 
   const WidgetTitleAndCustomActionIconTextfieldFillBgColorChangeble({
     super.key,
@@ -436,7 +440,8 @@ class _WidgetTitleAndCustomActionIconTextfieldFillBgColorChangebleState
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w400,
               color: widget.titleFontColor,
-              fontSize: DeviceSize.itemWidth / 11.413),
+              // fontSize: DeviceSize.itemWidth / 11.413,
+              ),
         ),
         const SizedBox(
           height: 10,
@@ -461,7 +466,11 @@ class _WidgetTitleAndCustomActionIconTextfieldFillBgColorChangebleState
             hint: Text(widget.DdbHint),
             // value: dropdownValue,
             // icon: widget.iconAction,
-            icon: SvgPicture.asset(widget.imageAction.toString()),
+            icon: widget.imageAction,
+            
+            // SvgPicture.asset(widget.imageAction.toString()
+            
+            
             iconSize: 24,
             // elevation: 16,
 

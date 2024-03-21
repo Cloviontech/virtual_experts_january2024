@@ -8,8 +8,7 @@ import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_m
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/dashboard/hm_dashboard_screen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/settings/widgets/SettingsProfileManagerScreen.dart';
 import 'package:virtual_experts/presentation/6Sales/account/1_account_sales_manager_screen_account.dart';
-import 'package:virtual_experts/presentation/6Sales/dashBoard/DashBoardSalesScreen.dart';
-import 'package:virtual_experts/presentation/6Sales/settings/settings.dart';
+import 'package:virtual_experts/presentation/6Sales/dashBoard/not_used_DashBoardSalesScreen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';

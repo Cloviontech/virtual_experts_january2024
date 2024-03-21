@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/1_account_local_admin_screen_account.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/3_account_balance_Local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/6Sales/account/1_account_sales_manager_screen_account.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -21,15 +22,14 @@ import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:http/http.dart' as http;
 
-class EditAccountProfileManager extends StatefulWidget {
-  EditAccountProfileManager({super.key});
+class SmEditAccountScreen extends StatefulWidget {
+  SmEditAccountScreen({super.key});
 
   @override
-  State<EditAccountProfileManager> createState() =>
-      _EditAccountProfileManagerState();
+  State<SmEditAccountScreen> createState() => _SmEditAccountScreenState();
 }
 
-class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
+class _SmEditAccountScreenState extends State<SmEditAccountScreen> {
   List<String> adType = [
     "Ad1",
     "Ad2",
@@ -70,6 +70,8 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
   PlatformFile? pickedFile;
 
   late FToast fToast;
+
+  bool agree_terms = false;
 
   final _officeNameController = TextEditingController();
   final _officeAddressController = TextEditingController();
@@ -119,11 +121,8 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
     });
   }
 
-  pm_edit_account({
-    required String officeName,
-    required String officeCountry,
-    required String officeCity,
-    required String officeAddress,
+  sm_edit_account({
+    
     required String fName,
     required String lName,
     required String personalCountry,
@@ -141,12 +140,12 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
     final body1;
     const profile_finder_id = "VHNK85TM5TV";
     // const private_investicator_id = "Y9M0YCN82YA";
-    late String profile_manager_id;
+    late String sales_manager_id;
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    profile_manager_id = preferences.getString("uid2").toString();
+    sales_manager_id = preferences.getString("uid2").toString();
 
     final url = Uri.parse(
-        "http://${ApiService.ipAddress}/pm_edit_account/$profile_manager_id");
+        "http://${ApiService.ipAddress}/sm_edit_data/$sales_manager_id");
     var request = http.MultipartRequest('POST', url);
     // var request1 = http.MultipartRequest('POST', pi_client);
     // request.fields['pf_id'] = profile_finder_id;
@@ -154,12 +153,12 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
 
     // request1.fields['pf_id'] = profile_finder_id;
     // request1.fields['pi_id'] = private_investicator_id;
-    request.fields['office_name'] = officeName;
-    request.fields['office_country'] = officeCountry;
-    request.fields['office_city'] = officeCity;
-    request.fields['office_address'] = officeAddress;
-    request.fields['first_name'] = fName;
-    request.fields['last_name'] = lName;
+    // request.fields['office_name'] = officeName;
+    // request.fields['office_country'] = officeCountry;
+    // request.fields['office_city'] = officeCity;
+    // request.fields['office_address'] = officeAddress;
+    request.fields['full_name'] = fName;
+    // request.fields['last_name'] = lName;
     request.fields['personal_country'] = personalCountry;
     request.fields['personal_city'] = personalCity;
     request.fields['personal_address'] = personalAddress;
@@ -193,12 +192,14 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
       //  Navigator.pushNamed(context, AppRoutes.accountsPriInvScr);
 
       if (response.statusCode == 200) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return PmAccountScreen();
-        }),
-      );
+
+        print(response.statusCode);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return AccountSalesManagerScreen();
+          }),
+        );
       }
     } catch (e) {
       print("Do Something When Error Occurs");
@@ -268,7 +269,7 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
             children: [
               const Center(
                 child: Text(
-                  'Edit Profile',
+                  'Edit Profile sm',
                   style: TextStyle(
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w700,
@@ -278,13 +279,13 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
               SizedBox(
                 height: DeviceSize.itemHeight / 10,
               ),
-              WidgetTitleAndTextfieldColorChangeble(
-                textFieldController: _officeNameController,
-                onChanged: (vaue) {},
-                textFieldHint: 'Enter',
-                textFieldTitle: 'Office Name',
-                // textFieldFillColor: Colors.yellow,
-              ),
+              // WidgetTitleAndTextfieldColorChangeble(
+              //   textFieldController: _officeNameController,
+              //   onChanged: (vaue) {},
+              //   textFieldHint: 'Enter',
+              //   textFieldTitle: 'Office Name',
+              //   // textFieldFillColor: Colors.yellow,
+              // ),
               // WidgetTitleAndDropdownTextfieldFillBgColorChangeble(
               //     DdbTitle: 'Country',
               //     DdbHint: 'Select',
@@ -296,118 +297,118 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
               //     DbdItems: adType,
               //     onChanged: (value) {}),
 
-              CSCPicker(
-                layout: Layout.vertical,
+              // CSCPicker(
+              //   layout: Layout.vertical,
 
-                ///Enable disable state dropdown [OPTIONAL PARAMETER]
-                // showStates: true,
+              //   ///Enable disable state dropdown [OPTIONAL PARAMETER]
+              //   // showStates: true,
 
-                // /// Enable disable city drop down [OPTIONAL PARAMETER]
-                // showCities: true,
+              //   // /// Enable disable city drop down [OPTIONAL PARAMETER]
+              //   // showCities: true,
 
-                ///Enable (get flag with country name) / Disable (Disable flag) / ShowInDropdownOnly (display flag in dropdown only) [OPTIONAL PARAMETER]
-                // flagState: CountryFlag.ENABLE,
-                flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+              //   ///Enable (get flag with country name) / Disable (Disable flag) / ShowInDropdownOnly (display flag in dropdown only) [OPTIONAL PARAMETER]
+              //   // flagState: CountryFlag.ENABLE,
+              //   flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
 
-                ///Dropdown box decoration to style your dropdown selector [OPTIONAL PARAMETER] (USE with disabledDropdownDecoration)
-                dropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey.shade300, width: 1)),
+              //   ///Dropdown box decoration to style your dropdown selector [OPTIONAL PARAMETER] (USE with disabledDropdownDecoration)
+              //   dropdownDecoration: BoxDecoration(
+              //       borderRadius: BorderRadius.all(Radius.circular(10)),
+              //       color: Colors.white,
+              //       border: Border.all(color: Colors.grey.shade300, width: 1)),
 
-                ///Disabled Dropdown box decoration to style your dropdown selector [OPTIONAL PARAMETER]  (USE with disabled dropdownDecoration)
-                disabledDropdownDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.grey.shade100,
-                    border: Border.all(color: Colors.grey.shade300, width: 1)),
+              //   ///Disabled Dropdown box decoration to style your dropdown selector [OPTIONAL PARAMETER]  (USE with disabled dropdownDecoration)
+              //   disabledDropdownDecoration: BoxDecoration(
+              //       borderRadius: BorderRadius.all(Radius.circular(10)),
+              //       color: Colors.grey.shade100,
+              //       border: Border.all(color: Colors.grey.shade300, width: 1)),
 
-                ///placeholders for dropdown search field
-                countrySearchPlaceholder: "Country",
-                stateSearchPlaceholder: "State",
-                citySearchPlaceholder: "City",
+              //   ///placeholders for dropdown search field
+              //   countrySearchPlaceholder: "Country",
+              //   stateSearchPlaceholder: "State",
+              //   citySearchPlaceholder: "City",
 
-                ///labels for dropdown
-                countryDropdownLabel: "Country*",
-                stateDropdownLabel: "State*",
-                cityDropdownLabel: "City*",
+              //   ///labels for dropdown
+              //   countryDropdownLabel: "Country*",
+              //   stateDropdownLabel: "State*",
+              //   cityDropdownLabel: "City*",
 
-                ///Default Country
-                defaultCountry: CscCountry.India,
+              //   ///Default Country
+              //   defaultCountry: CscCountry.India,
 
-                ///Disable country dropdown (Note: use it with default country)
-                //disableCountry: true,
+              //   ///Disable country dropdown (Note: use it with default country)
+              //   //disableCountry: true,
 
-                ///Country Filter [OPTIONAL PARAMETER]
-                // countryFilter: [CscCountry.India,CscCountry.United_States,CscCountry.Canada],
+              //   ///Country Filter [OPTIONAL PARAMETER]
+              //   // countryFilter: [CscCountry.India,CscCountry.United_States,CscCountry.Canada],
 
-                ///selected item style [OPTIONAL PARAMETER]
-                selectedItemStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                ),
+              //   ///selected item style [OPTIONAL PARAMETER]
+              //   selectedItemStyle: TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 14,
+              //   ),
 
-                ///DropdownDialog Heading style [OPTIONAL PARAMETER]
-                dropdownHeadingStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold),
+              //   ///DropdownDialog Heading style [OPTIONAL PARAMETER]
+              //   dropdownHeadingStyle: TextStyle(
+              //       color: Colors.black,
+              //       fontSize: 17,
+              //       fontWeight: FontWeight.bold),
 
-                ///DropdownDialog Item style [OPTIONAL PARAMETER]
-                dropdownItemStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                ),
+              //   ///DropdownDialog Item style [OPTIONAL PARAMETER]
+              //   dropdownItemStyle: TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 14,
+              //   ),
 
-                ///Dialog box radius [OPTIONAL PARAMETER]
-                dropdownDialogRadius: 10.0,
+              //   ///Dialog box radius [OPTIONAL PARAMETER]
+              //   dropdownDialogRadius: 10.0,
 
-                ///Search bar radius [OPTIONAL PARAMETER]
-                searchBarRadius: 10.0,
+              //   ///Search bar radius [OPTIONAL PARAMETER]
+              //   searchBarRadius: 10.0,
 
-                ///triggers once country selected in dropdown
-                onCountryChanged: (country) async {
-                  setState(() {
-                    ///store value in country variable
-                    _countryValue = country;
-                  });
-                },
+              //   ///triggers once country selected in dropdown
+              //   onCountryChanged: (country) async {
+              //     setState(() {
+              //       ///store value in country variable
+              //       _countryValue = country;
+              //     });
+              //   },
 
-                ///triggers once state selected in dropdown
-                onStateChanged: (state) async {
-                  setState(() {
-                    _stateValue = state!;
-                  });
-                  // setState(() {
-                  //   ///store value in state variable
-                  // stateValue = state!;
-                  // });
+              //   ///triggers once state selected in dropdown
+              //   onStateChanged: (state) async {
+              //     setState(() {
+              //       _stateValue = state!;
+              //     });
+              //     // setState(() {
+              //     //   ///store value in state variable
+              //     // stateValue = state!;
+              //     // });
 
-                  //                 SharedPreferences preferences = await SharedPreferences.getInstance();
+              //     //                 SharedPreferences preferences = await SharedPreferences.getInstance();
 
-                  // preferences.setString(stateValue, state!);
-                },
+              //     // preferences.setString(stateValue, state!);
+              //   },
 
-                ///triggers once city selected in dropdown
-                onCityChanged: (city) async {
-                  setState(() {
-                    _cityValue = city!;
-                  });
+              //   ///triggers once city selected in dropdown
+              //   onCityChanged: (city) async {
+              //     setState(() {
+              //       _cityValue = city!;
+              //     });
 
-                  // setState(() {
-                  //   ///store value in city variable
-                  // cityValue = city!;
-                  // });
-                },
-              ),
-              D10HCustomClSizedBoxWidget(),
+              //     // setState(() {
+              //     //   ///store value in city variable
+              //     // cityValue = city!;
+              //     // });
+              //   },
+              // ),
+              // D10HCustomClSizedBoxWidget(),
 
-              WidgetTitleAndTextfieldWhiteBgAdjHeight(
-                textFieldController: _officeAddressController,
-                maxLines: 6,
-                onChanged: (value) {},
-                textFieldHint: 'Enter',
-                textFieldTitle: 'Address',
-              ),
+              // WidgetTitleAndTextfieldWhiteBgAdjHeight(
+              //   textFieldController: _officeAddressController,
+              //   maxLines: 6,
+              //   onChanged: (value) {},
+              //   textFieldHint: 'Enter',
+              //   textFieldTitle: 'Address',
+              // ),
 
               Text(
                 "Contact Person Details",
@@ -425,16 +426,16 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
                 textFieldController: _firstNameController,
                 // textFieldFillColor: Colors.yellow,
               ),
-              WidgetTitleAndTextfieldColorChangeble(
-                textFieldController: _lastNameController,
-                onChanged: (vaue) {},
-                textFieldHint: 'Enter',
-                textFieldTitle: 'Last Name',
-                // textFieldFillColor: Colors.yellow,
-              ),
+              // WidgetTitleAndTextfieldColorChangeble(
+              //   textFieldController: _lastNameController,
+              //   onChanged: (vaue) {},
+              //   textFieldHint: 'Enter',
+              //   textFieldTitle: 'Last Name',
+              //   // textFieldFillColor: Colors.yellow,
+              // ),
 
               D10HCustomClSizedBoxWidget(),
-               CSCPicker(
+              CSCPicker(
                 layout: Layout.vertical,
 
                 ///Enable disable state dropdown [OPTIONAL PARAMETER]
@@ -537,7 +538,7 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
                   // });
                 },
               ),
-                D10HCustomClSizedBoxWidget(),
+              D10HCustomClSizedBoxWidget(),
 
               Text(
                 'Profile Picture',
@@ -645,7 +646,7 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
               //   // textFieldFillColor: Colors.yellow,
               // ),
 
-                WidgetTitleAndTextfieldColorChangeble(
+              WidgetTitleAndTextfieldColorChangeble(
                 textFieldController: _notaryController,
                 onChanged: (vaue) {},
                 textFieldHint: 'Enter',
@@ -658,8 +659,64 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
                   DdbHint: 'Select',
                   DbdItems: _hiringManagerUid,
                   onChanged: (value) {}),
-              CustomClRectangleCheckboxWithQuestionWidget2(
-                question: 'I agree to the Terms of Service and Privacy Policy.',
+              // CustomClRectangleCheckboxWithQuestionWidget2(
+              //   question: 'I agree to the Terms of Service and Privacy Policy.',
+              // ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //  SizedBox(height: DeviceSize.itemHeight/10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: Checkbox(
+                          // tristate: true,
+                          // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+
+                          value: agree_terms,
+                          onChanged: (newBool) {
+                            setState(() {
+                              agree_terms = newBool!;
+                            });
+                          },
+                          side: BorderSide(
+                              color: ColorConstant.clCheckboxDarkBlueColor),
+                          shape: const RoundedRectangleBorder(),
+                          activeColor: ColorConstant.clCheckboxDarkBlueColor,
+
+                          fillColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.disabled)) {
+                              return ColorConstant.clCheckboxDarkBlueColor
+                                  .withOpacity(.32);
+                            }
+                            return ColorConstant.clCheckboxDarkBlueColor;
+                          }),
+                        ),
+                      ),
+                      SizedBox(
+                        width: DeviceSize.itemWidth / 20,
+                      ),
+                      Expanded(
+                          child: Text(
+                        'I agree to the Terms of Service and Privacy Policy.',
+                        style: TextStyle(
+                            // letterSpacing: ,
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.w500,
+                            // color: ColorConstant.clGreyFontColor3,
+                            fontSize: DeviceSize.itemWidth / 14.413),
+                      )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: DeviceSize.itemHeight / 30,
+                  ),
+                ],
               ),
               D10HCustomClSizedBoxWidget(),
               D10HCustomClSizedBoxWidget(),
@@ -701,18 +758,26 @@ class _EditAccountProfileManagerState extends State<EditAccountProfileManager> {
               flex: 10,
               child: MyElevatedButton(
                   onPressed: () {
-                    pm_edit_account(
-                      officeName: _officeNameController.text,
-                      officeCountry: _countryValue,
-                      officeCity: _cityValue,
-                      officeAddress: _officeAddressController.text,
-                      fName: _firstNameController.text,
-                      lName: _lastNameController.text,
-                      personalAddress: _contactAddressController.text,
-                      personalCountry: _persCountryValue,
-                      personalCity: _persCityValue,
-                      profile_picture: profPicPath.toString(), notary: _notaryController.text
-                    );
+                    agree_terms
+                        ? sm_edit_account(
+                            // officeName: _officeNameController.text,
+                            // officeCountry: _countryValue,
+                            // officeCity: _cityValue,
+                            // officeAddress: _officeAddressController.text,
+                            fName: _firstNameController.text,
+                            lName: _lastNameController.text,
+                            personalAddress: _contactAddressController.text,
+                            personalCountry: _persCountryValue,
+                            personalCity: _persCityValue,
+                            profile_picture: profPicPath.toString(),
+                            notary: _notaryController.text)
+                        : Fluttertoast.showToast(
+                            msg:
+                                "Not agreed to the Terms of Service and Privacy Policy ...!",
+                            backgroundColor: ColorConstant.deepPurpleA200,
+                            textColor: Colors.white,
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
                   },
                   borderRadius: BorderRadius.circular(10),
                   width: double.maxFinite,

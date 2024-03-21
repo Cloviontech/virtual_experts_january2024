@@ -16,7 +16,7 @@ import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen
 import 'package:virtual_experts/presentation/4ProfileManager/account/1_account_local_admin_screen_account.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Account/ad_pro_account_screen.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/ad_pro_all_ads_screen.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/not_used_ad_pro_all_ads_screen.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -28,7 +28,7 @@ import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:http/http.dart' as http;
 import '../../../model/data_model.dart';
-import '../../8AdDistributorAdvertisement/DashBoard/dashboard_ad_distributor.dart';
+import '../not_used_dashBoard/dashboard_ad_distributor.dart';
 
 class EditAccountAdDis extends StatefulWidget {
   final UserAllData? option;

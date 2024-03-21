@@ -123,6 +123,49 @@ void updatePassword() async {
       }
     }
 
+
+       // 
+     else if (widget.service == 'pass_sales_update') {
+
+       var requestBodyPi = {
+        'password': updatePasswordResetController.text,
+        'confirm_password': updatePasswordResetController.text,
+        
+       
+        };
+
+      
+
+      var response = await http.post(
+        Uri.parse(
+            'http://${ApiService.ipAddress}/pass_sales_update/$userId'),
+
+        headers: headers,
+        // body: jsonEncode(requestBody),
+        body: requestBodyPi,
+      );
+      if (response.statusCode == 200) {
+        print('Password Updated');
+        print(response.body);
+
+        //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ThreeSigninScreen(
+              // emailid: mail,
+              service: 'sm_signin',
+            );
+          }),
+        );
+      }
+      
+       else {
+        print("errorCode: ${response.statusCode}");
+        print(response.body);
+      }
+    }
+
     // 
      else if (widget.service == 'ad_dis_password_update') {
       var response = await http.post(

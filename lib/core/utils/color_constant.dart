@@ -152,6 +152,10 @@ class ColorConstant {
    static Color lightGreyFontCl = fromHex('#666666');
 
    static Color lightYellowBgCl = fromHex('#EDF5DF');
+  
+  static Color lightYellowBgCl1 = fromHex('#fdefef');
+
+   
 
   static Color darkIndigogradientCl = fromHex('#10073b');
 static Color lightIndigoGradientCl = fromHex('#775ef8');

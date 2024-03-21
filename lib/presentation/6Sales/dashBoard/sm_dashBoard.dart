@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:virtual_experts/model_final/ad_provider_models/adprovider_ads.dart';
 import 'package:virtual_experts/model_final/ad_provider_models/all_ads_model.dart';
-import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/DashBoard%20copy/Ad_dis_dashBoard.dart';
+import 'package:virtual_experts/model_final/sales_manager_models/sales_all_data_model.dart';
+import 'package:virtual_experts/model_final/sales_manager_models/sm_all_ad_pro_ads_data_model.dart';
+import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -15,14 +18,14 @@ import '../../../core/services/api_services.dart';
 import '../../../model/data_model.dart';
 import '../../1ProfileFinder/Registeration/11-1screen_primary_details.dart';
 
-class SalesDashboardScreen extends StatefulWidget {
-  const SalesDashboardScreen({super.key});
+class SmDashboardScreen extends StatefulWidget {
+  const SmDashboardScreen({super.key});
 
   @override
-  State<SalesDashboardScreen> createState() => _SalesDashboardScreenState();
+  State<SmDashboardScreen> createState() => _SmDashboardScreenState();
 }
 
-class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
+class _SmDashboardScreenState extends State<SmDashboardScreen> {
   List<String> Dbditems = [
     "USA",
     "UK",
@@ -39,14 +42,16 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
   ];
 
   bool viewAllRecentAdPosted = false;
-
-  bool Loading = true;
-  
+  bool viewAllCoinsEarn = false;
 
   late List data = [];
 
+  bool Loading1 = true;
+  bool Loading2 = true;
+  
+
   _getData() async {
-    String endpoint = "http://${ApiServices.ipAddress}/all_pro_ads_data/";
+    String endpoint = "http://${ApiServices.ipAddress}/all_sm_data/";
     // String endpoint = "http://${ApiServices.ipAddress}/all_dis_ads_data/";
 
     var response = await http.get(Uri.parse(endpoint));
@@ -55,24 +60,44 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
       final List result = await jsonDecode(response.body);
       setState(() {
         data.addAll(
-            result.map((e) => AllProAddData.fromJson(e)).toList().reversed);
+            result.map((e) => SalesAllDataModel.fromJson(e)).toList().reversed);
 
-            Loading = false;
+            Loading1= false;
       });
-
-      print(data[1].adId);
+      // print(data[1].adId);
       print("vibin : ${data.runtimeType}");
       print(" my data : ${data}");
       // data?.reversed;
-    } 
-    
-    else {
+    } else {
       throw Exception(response.reasonPhrase);
     }
   }
 
+  late List sm_all_ad_pro_ads_data = [];
 
+  smAllAdProAdsData() async {
+    String endpoint = "http://${ApiServices.ipAddress}/adprovider_ads/";
+    // String endpoint = "http://${ApiServices.ipAddress}/all_dis_ads_data/";
 
+    var response = await http.get(Uri.parse(endpoint));
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      final List result = await jsonDecode(response.body);
+      // setState(() {
+        sm_all_ad_pro_ads_data.addAll(
+            result.map((e) => SmAllAdProAdsModel.fromJson(e)).toList().reversed);
+
+            Loading2=false;
+      // });
+      // print(sm_all_ad_pro_ads_data[1].adId);
+      print("vibin : ${data.runtimeType}");
+      print(" my data : ${sm_all_ad_pro_ads_data}");
+      // data?.reversed;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+  
 
   @override
   void initState() {
@@ -80,19 +105,18 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
 
     super.initState();
     _getData();
+    smAllAdProAdsData();
+
+    
   }
 
   @override
   Widget build(BuildContext context) {
     var valuee = 'India';
-    return Loading ? Center(child: CircularProgressIndicator())
-    :
-    
-    
-    SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+    return SingleChildScrollView(
+      // physics: BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -103,10 +127,15 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
-            SizedBox(
-              height: DeviceSize.itemHeight / 10,
-            ),
-            Card(
+
+            Loading1 && Loading2 ? Center(child: CircularProgressIndicator())
+            :
+            Column(
+              children: [
+                SizedBox(
+                  height: DeviceSize.itemHeight / 10,
+                ),
+                  Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -270,7 +299,7 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Recent Ad Posted',
+                    'Recent Clients',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -292,23 +321,7 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                 ],
               ),
             ),
-
-             SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-               child: customHorizontalTableWidget(
-                  title1: '#No.',
-                  title2: 'User ID',
-                  title3: 'Name',
-                  title4: '',
-                  data: data,
-                  viewAll: false,
-                ),
-                // HorizontalTable(),
-              
-            ),
-           const D10HCustomClSizedBoxWidget(),
-
-              SingleChildScrollView(
+            SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
                   // border: TableBorder(bottom: BorderSide()),
@@ -349,8 +362,8 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                     ),
                     DataColumn(
                       label: Text(
-                          // 'Email ID', // There is no variable 'email' in api response
-                          'Ad Type',
+                          'Email ID', // There is no variable 'email' in api response
+                          // 'Ad Type',
 
                           // widget.title4.toString(),
                           style: TextStyle(
@@ -362,22 +375,16 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                   rows: [
                     // Dynamic Row
                     ...List<DataRow>.generate(
-                      // data.length, 
+                        // data.length,
 
-                      viewAllRecentAdPosted ?
-                      data.length
-                      :
-                      5
-                      
-                      ,
-                      (index) {
+                        viewAllRecentAdPosted ? data.length : 5, (index) {
                       return DataRow(
                         cells: [
                           DataCell(Text('${index + 1}')),
                           DataCell(
                             Text(
                                 // 'AOB1C036',
-                                data[index].adId,
+                                data[index].uid,
                                 style: TextStyle(
                                     // fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -386,7 +393,7 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                           DataCell(
                             Text(
                                 // 'Environmental Specialist',
-                                data[index].adName,
+                                data[index].fullName.toString(),
                                 style: TextStyle(
                                     // fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -394,8 +401,8 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                           ),
                           DataCell(
                             Text(
-                                // 'Frankd@Funtap.Vn',
-                                data[index].adType,
+                              // 'Frankd@Funtap.Vn',
+                                data[index].email,
                                 style: TextStyle(
                                     // fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -414,12 +421,7 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                             });
                           },
                           child: Text(
-                            viewAllRecentAdPosted ?
-                            
-                            'View Less'
-                            :
-                            'View All'
-                            ,
+                              viewAllRecentAdPosted ? 'View Less' : 'View All',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 // color: Colors.black,
@@ -433,14 +435,7 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                     ),
                   ]),
             ),
-
-         
-
-
             D10HCustomClSizedBoxWidget(),
-
-   
-          
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -466,24 +461,136 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                 ),
               ],
             ),
-          
-           
             const D10HCustomClSizedBoxWidget(),
+
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-               child: customHorizontalTableWidget(
-                  title1: '#No.',
-                  title2: 'Ad Type',
-                  title3: 'Created Date',
-                  title4: 'Coins',
-                  data: data,
-                  viewAll: false,
-                ),
-                // HorizontalTable(),
-              
-            ),
-           const D10HCustomClSizedBoxWidget(),
+              child: DataTable(
+                  // border: TableBorder(bottom: BorderSide()),
 
+                  // border: TableBorder(bottom: BorderSide()),
+                  showBottomBorder: true,
+                  dividerThickness: 1,
+                  decoration: BoxDecoration(
+                    color: ColorConstant.whiteA700,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  columns: [
+                    DataColumn(
+                      label: Text(
+                        'Ad',
+                        // widget.title1.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: DeviceSize.itemHeight / 13),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text('Ad Type',
+                          // widget.title2.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: DeviceSize.itemHeight / 13)),
+                    ),
+                    DataColumn(
+                      label: Text('Credited Date',
+                          // widget.title3.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: DeviceSize.itemHeight / 13)),
+                    ),
+                    DataColumn(
+                      label: Text(
+                          'Coins', // There is no variable 'email' in api response
+                          // 'Ad Type',
+
+                          // widget.title4.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: DeviceSize.itemHeight / 13)),
+                    ),
+                  ],
+                  rows: [
+                    // Dynamic Row
+                    ...List<DataRow>.generate(
+                        // data.length,
+
+                        viewAllRecentAdPosted ? data.length : 5, (index) {
+                      return DataRow(
+                        cells: [
+                          DataCell(Text('${index + 1}')),
+                          DataCell(
+                            Text(
+                                // 'AOB1C036',
+                                sm_all_ad_pro_ads_data[index].adType,
+                                style: TextStyle(
+                                    // fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: DeviceSize.itemHeight / 13)),
+                          ),
+                          DataCell(
+                            Text(
+                                // 'Environmental Specialist',
+                                sm_all_ad_pro_ads_data[index].adCreatedDate.toString(),
+                                style: TextStyle(
+                                    // fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: DeviceSize.itemHeight / 13)),
+                          ),
+                          DataCell(
+                            Text(
+                              // 'Frankd@Funtap.Vn',
+                                sm_all_ad_pro_ads_data[index].coin.toString(),
+                                style: TextStyle(
+                                    // fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: DeviceSize.itemHeight / 13)),
+                          ),
+                        ],
+                      );
+                    }),
+
+                    DataRow(
+                      cells: [
+                        DataCell(GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              viewAllCoinsEarn = !viewAllCoinsEarn;
+                            });
+                          },
+                          child: Text(
+                              viewAllCoinsEarn ? 'View Less' : 'View All',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                // color: Colors.black,
+                                // fontSize: DeviceSize.itemHeight / 13
+                              )),
+                        )),
+                        DataCell(Text('')),
+                        DataCell(Text('')),
+                        DataCell(Text('')),
+                      ],
+                    ),
+                  ]),
+            ),
+            // SingleChildScrollView(
+            //   scrollDirection: Axis.horizontal,
+            //   child: customHorizontalTableWidget(
+            //     title1: '#No.',
+            //     title2: 'Ad Type',
+            //     title3: 'Created Date',
+            //     title4: 'Coins',
+            //     data: sm_all_ad_pro_ads_data,
+            //     viewAll: false,
+            //     value1: 'adType'
+            //   ),
+            //   // HorizontalTable(),
+            // ),
+            const D10HCustomClSizedBoxWidget(),
             Container(
               padding: const EdgeInsets.only(top: 30, bottom: 30),
               width: double.infinity,
@@ -494,7 +601,7 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
                   SvgPicture.asset("assets/images/totalcoins.svg"),
                   const SizedBox(height: 15),
                   Text(
-                    data.length.toString(),
+                    sm_all_ad_pro_ads_data.length.toString(),
                     style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w500,
@@ -583,9 +690,158 @@ class _SalesDashboardScreenState extends State<SalesDashboardScreen> {
             SizedBox(
               height: DeviceSize.itemHeight / 2,
             ),
+              ],
+            ),
+          
           ],
         ),
       ),
     );
+  }
+}
+
+class customHorizontalTableWidget extends StatefulWidget {
+  customHorizontalTableWidget({
+    super.key,
+    this.title1,
+    this.title2,
+    this.title3,
+    this.title4,
+    this.title5,
+    this.data,
+    this.viewAll = false,
+    this.value1,
+    this.value2,
+    this.value3,
+    this.value4,
+  });
+
+  final String? title1;
+  final String? title2;
+  final String? title3;
+  final String? title4;
+  final String? title5;
+  final String? value1;
+  final String? value2;
+  final String? value3;
+  final String? value4;
+
+  final List? data;
+  bool viewAll;
+
+  @override
+  State<customHorizontalTableWidget> createState() =>
+      _customHorizontalTableWidgetState();
+}
+
+class _customHorizontalTableWidgetState
+    extends State<customHorizontalTableWidget> {
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DataTable(
+        decoration: BoxDecoration(
+          color: ColorConstant.whiteA700,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        columns: [
+          DataColumn(
+            label: Text(
+              // '#No',
+              widget.title1.toString(),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: DeviceSize.itemHeight / 13),
+            ),
+          ),
+          DataColumn(
+            label: Text(
+                // 'User ID',
+                widget.title2.toString(),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: DeviceSize.itemHeight / 13)),
+          ),
+          DataColumn(
+            label: Text(
+                // 'Name',
+                widget.title3.toString(),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: DeviceSize.itemHeight / 13)),
+          ),
+          DataColumn(
+            label: Text(
+                // 'Email ID',
+                widget.title4.toString(),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: DeviceSize.itemHeight / 13)),
+          ),
+        ],
+        rows: [
+          ...List<DataRow>.generate(widget.viewAll ? widget.data!.length : 5,
+              (index) {
+            return DataRow(
+              cells: [
+                DataCell(Text('${index + 1}')),
+                DataCell(
+                  Text(
+                    // '${widget.data![index].adType}',
+                    '${widget.data![index]}.${widget.value1}',
+                    
+                      style: TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: DeviceSize.itemHeight / 13)),
+                ),
+                DataCell(
+                  Text('${widget.data![index]}.${widget.value1}',
+                      style: TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: DeviceSize.itemHeight / 13)),
+                ),
+                DataCell(
+                  Text('${widget.data![index]}.${widget.value1}',
+                      style: TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: DeviceSize.itemHeight / 13)),
+                ),
+              ],
+            );
+          }),
+          DataRow(
+            cells: [
+              DataCell(GestureDetector(
+                onTap: () {
+                  setState(() {
+                    widget.viewAll = !widget.viewAll;
+                  });
+                },
+                child: Text(widget.viewAll ? 'View Less' : 'View All',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      // color: Colors.black,
+                      // fontSize: DeviceSize.itemHeight / 13
+                    )),
+              )),
+              DataCell(Text('')),
+              DataCell(Text('')),
+              DataCell(Text('')),
+            ],
+          ),
+        ]);
   }
 }

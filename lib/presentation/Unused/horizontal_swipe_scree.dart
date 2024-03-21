@@ -26,7 +26,7 @@ class HorizontalSwipeScreen extends StatelessWidget {
           // SigninScreenThree(),
           // Iphone1313ProFiveScreen(),
           // Iphone1313ProSixScreen(),
-          Iphone1313ProSevenScreen(),
+          // Iphone1313ProSevenScreen(),
           // Iphone1313ProEightScreen(),
           Iphone1313ProNineScreen(),
           // Iphone1313ProTenScreen(),

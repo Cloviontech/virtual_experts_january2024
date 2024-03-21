@@ -21,8 +21,7 @@ ThemeData _baseTheme = ThemeData(
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
-  Widget build(BuildContext context)
-  {   
+  Widget build(BuildContext context) {
     return MaterialApp(
       theme: _baseTheme,
       title: 'marriyoo_virtual_experts',
@@ -84,6 +83,145 @@ class MyApp extends StatelessWidget {
           textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,
         );
+
+         ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Copied "$text" to clipboard'),
+      ),
+    );
+
+
+         style: TextStyle(
+                              // fontFamily: "Inter",
+                              fontWeight: FontWeight.w400,
+                              // fontSize: 14,
+                            ),
+
+
+        // fetch single json response 
+        late Future<ViewAddisId> futureUserAdDis;
+
+        Future<ViewAddisId> fetchUserAdDis() async {
+    
+        final response = await http.get(Uri.parse(
+        'http://${ApiServices.ipAddress}/view_addis_id/${widget.uid}'));
+
+        if (response.statusCode == 200) {
+        return ViewAddisId.fromJson(jsonDecode(response.body));
+        } else {
+        throw Exception('Failed to load user');
+        }
+        }
+
+        @override
+        void initState() {
+        // TODO: implement initState
+        super.initState();
+        futureUserAdDis = fetchUserAdDis();
+        }
+        // 
+
+
+
+
+
+
+                            
+
+  List<String> _company = [
+    "Samsung",
+    "Tata",
+    "Bajaj",
+    "Reliance",
+    "Kotak",
+  ];
+
+
+  final List<String> _adType = [
+    "Image Ads",
+    "Corosoul Ads",
+    "Banner Ads",
+  ];
+
+  final List<String> _languages = [
+    "Tamil",
+    "English",
+    "Malayalam",
+    'Kannada',
+    'Hindi'
+
+  ];
+
+
+  final List<String> _countries = [
+    "India",
+    "USA",
+    "UK",
+    "China",
+    "New Zealand",
+  ];
+
+
+  final List<String> _states = [
+    "Tamil Nadu",
+    "Kerala",
+    "Karnataka",
+    "Telungana",
+    "Maharastra",
+  ];
+
+  final List<String> _districts = [
+    "Kanniyakumari",
+    "Madurai",
+    "Chennai",
+    "Coimbatore",
+    "Trichy",
+  ];
+
+
+  final List<String> _gender = [
+    "Male",
+    "Female",
+    'Others'
+  ];
+
+    final List<String> _ageFrom = [
+    '1',
+    '10',
+    '15',
+    '20',
+    '50',
+    '100',
+
+  ];
+
+    final List<String> _ageTo = [
+     '1',
+    '10',
+    '15',
+    '20',
+    '50',
+    '100',
+  ];
+
+    final List<String> _daysRequired = [
+      '1',
+    '10',
+    '15',
+    '20',
+    '50',
+    '100',
+  ];
+
+    final List<String> _timesRepeat = [
+     '1',
+    '10',
+    '15',
+    '20',
+    '50',
+    '100',
+  ];
+
 
 
 

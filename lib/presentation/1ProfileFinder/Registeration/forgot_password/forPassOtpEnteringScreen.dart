@@ -133,6 +133,46 @@ class _ForgotPasswordOtpEnteringScreenState extends State<ForgotPasswordOtpEnter
       }
     } 
 
+    // 
+     else if (widget.service == 'sm_signin') {
+      var response = await http.post(
+        // Uri.parse("$url$mail"),
+
+        Uri.parse(
+            'http://${ApiService.ipAddress}/sales_forget_password_otp/$userId'),
+
+        headers: headers,
+        // body: jsonEncode(requestBody),
+        body: requestBody,
+      );
+      if (response.statusCode == 200) {
+        print('Otp Is Correct');
+        print(response.body);
+
+        //  Navigator.pushNamed(context, AppRoutes.iphone1313ProEightScreen);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return UpdatePasswordScreen(
+              service: 'pass_sales_update',
+            );
+          }),
+        );
+      } else {
+        print("errorCode: ${response.statusCode}");
+        print(response.body);
+        // print(url);
+        print(requestBody);
+
+        Fluttertoast.showToast(
+          backgroundColor: Colors.orange,
+          textColor: Colors.white,
+          msg: 'Invalid OTP',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    } 
+
 
 
     else if (widget.service == 'am_signin') {

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
+import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 
 class WidgetTitleAndTextfield extends StatelessWidget {
   final String? textFieldTitle;
@@ -177,11 +178,11 @@ class _WidgetTitleAndTextfieldColorChangebleState
  
 
  
-//  @override
-//   void initState() {
-//     super.initState();
-//  widget.textFieldController = TextEditingController(text: widget.defaultText);
-//   }
+ @override
+  void initState() {
+    super.initState();
+ widget.textFieldController = TextEditingController(text: widget.defaultText);
+  }
   
  
  
@@ -547,3 +548,6 @@ class _WidgetTitleAndTextfieldSuffixCalendarState
     );
   }
 }
+
+
+

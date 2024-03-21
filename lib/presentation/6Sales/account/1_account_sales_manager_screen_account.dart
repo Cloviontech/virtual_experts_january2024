@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
+import 'package:virtual_experts/model_final/sales_manager_models/sm_my_data_model.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/not_used_2_Edit_profile_local_admin_screen_Account.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/not_used_pm_edit_profile/edit_pro_prof_manag_scr.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/pm_acc_bal/pm_account_bal.dart';
+import 'package:virtual_experts/presentation/6Sales/account/sm_acc_bal/sm_coin_balance_screen.dart';
+import 'package:virtual_experts/presentation/6Sales/account/sm_acc_bal/sm_rupees_balance_screen.dart';
+import 'package:virtual_experts/presentation/6Sales/account/sm_edit_profile/edit_pro_sales_manag_scr.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/2_Edit_profile_local_admin_screen_Account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -25,9 +29,9 @@ class AccountSalesManagerScreen extends StatefulWidget {
 }
 
 class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
-  late String profile_manager_id;
+ 
 
-  static List<PmMyData> _pmMyData = [];
+ 
 
   bool isLoading = true;
 
@@ -50,59 +54,63 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
   List<String> officeDetailsAns = [];
   List<String> personalDetailsAns = [];
 
+   late String sales_manager_id;
+
+    static List<SmMyDataModel> _smMyData = [];
+
   Future<void> _fetchDataPmMyData() async {
     // late String private_investicator_id;
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    profile_manager_id = preferences.getString("uid2").toString();
+    sales_manager_id = preferences.getString("uid2").toString();
 
     final response = await http.get(
-        Uri.parse("http://${ApiService.ipAddress}/pm_my_data/88N7ZZR0Y5C"));
+        Uri.parse("http://${ApiService.ipAddress}/sm_my_data/$sales_manager_id"));
 
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
       setState(() {
-        _pmMyData =
-            jsonResponse.map((data) => PmMyData.fromJson(data)).toList();
+        _smMyData =
+            jsonResponse.map((data) => SmMyDataModel.fromJson(data)).toList();
         isLoading = false;
-        officeDetailsAns.add(
-          _pmMyData[0].officeName.toString(),
-        );
-        officeDetailsAns.add(
-          _pmMyData[0].mobile.toString(),
-        );
-        officeDetailsAns.add(
-          _pmMyData[0].email.toString(),
-        );
-        officeDetailsAns.add(
-          _pmMyData[0].officeCity.toString(),
-        );
-        officeDetailsAns.add(
-          _pmMyData[0].officeAddress.toString(),
-        );
+        // officeDetailsAns.add(
+        //   _smMyData[0].officeName.toString(),
+        // );
+        // officeDetailsAns.add(
+        //   _smMyData[0].mobile.toString(),
+        // );
+        // officeDetailsAns.add(
+        //   _smMyData[0].email.toString(),
+        // );
+        // officeDetailsAns.add(
+        //   _smMyData[0].officeCity.toString(),
+        // );
+        // officeDetailsAns.add(
+        //   _smMyData[0].officeAddress.toString(),
+        // );
 
         personalDetailsAns.add(
-          _pmMyData[0].officeName.toString(),
+          _smMyData[0].fullName.toString(),
         );
         personalDetailsAns.add(
-          _pmMyData[0].mobile.toString(),
+          _smMyData[0].mobile.toString(),
         );
         personalDetailsAns.add(
-          _pmMyData[0].email.toString(),
+          _smMyData[0].email.toString(),
         );
         personalDetailsAns.add(
-          _pmMyData[0].officeCity.toString(),
+          _smMyData[0].personalCity   .toString(),
         );
         personalDetailsAns.add(
-          _pmMyData[0].officeAddress.toString(),
+          _smMyData[0].personalAddress.toString(),
         );
       });
 
-      debugPrint(_pmMyData[0].profilePicture);
+      debugPrint(_smMyData[0].profilePicture);
     } else {
       throw Exception('Failed to load data');
     }
 
-    _pmMyData[0].createdDate.toString();
+    _smMyData[0].createdDate.toString();
   }
 
   @override
@@ -165,7 +173,7 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
                                       shape: BoxShape.circle),
                                   child: CircleAvatar(
                                     backgroundImage: NetworkImage(
-                                      _pmMyData[0].profilePicture.toString(),
+                                      _smMyData[0].profilePicture.toString(),
                                     ),
                                   ),
                                 ),
@@ -176,7 +184,7 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
                             ),
                             Text(
                               // 'Jacob Jones',
-                              _pmMyData[0].firstName.toString(),
+                              _smMyData[0].fullName .toString(),
                               style: TextStyle(
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w700,
@@ -209,8 +217,8 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
                                       fontSize: DeviceSize.itemWidth / 11.411),
                                 ),
                                 Text(
-                                  'test',
-                                  // _pmMyData[0].createdDate.toString(),
+                                  // 'test',
+                                  _smMyData[0].createdDate.toString(),
                                   style: TextStyle(
                                       fontFamily: 'Inter',
                                       fontWeight: FontWeight.w400,
@@ -224,6 +232,75 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
                       ),
                     ),
                     Card(
+                      color: ColorConstant.lightYellowBgCl1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      shadowColor: Colors.white,
+                      elevation: 0,
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return SmCoinBalScr();
+                            }),
+                          );
+                        },
+                        contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                        leading: Container(
+                          padding: EdgeInsets.all(13),
+                          // height: DeviceSize.itemHeight,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorConstant.whiteA700,
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/images/Wallet.svg',
+                            height: DeviceSize.itemHeight / 3,
+                          ),
+                        ),
+                        title: Text(
+                          '₹ 100',
+                          style: TextStyle(
+                              fontFamily: 'DM Sans',
+                              fontWeight: FontWeight.w700,
+                              color: ColorConstant.clGreen,
+                              fontSize: 24),
+                        ),
+                        minLeadingWidth: 1,
+                        minVerticalPadding: 1,
+                        subtitle: Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        
+                          children: [
+                            Text(
+                              'Total Coin',
+                              style: TextStyle(
+                                  fontFamily: 'DM Sans',
+                                  fontWeight: FontWeight.w400,
+                                  color: ColorConstant.gray800,
+                                  fontSize: 16),
+                            ),
+                            SizedBox(width: 50,),
+                            Text(
+                              'Details',
+                              style: TextStyle(
+                                  fontFamily: 'DM Sans',
+                                  fontWeight: FontWeight.w400,
+                                  decoration: TextDecoration.underline,
+                                  color: ColorConstant.deepPurpleA200,
+                                  fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: DeviceSize.itemHeight / 50,
+                    ),
+
+                     Card(
                       color: ColorConstant.lightYellowBgCl,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -235,11 +312,11 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) {
-                              return PmAccBalScr();
+                              return SmAccBalScr();
                             }),
                           );
                         },
-                        contentPadding: EdgeInsets.symmetric(vertical: 20),
+                        contentPadding: EdgeInsets.symmetric(vertical: 20,horizontal: 10),
                         leading: Container(
                           padding: EdgeInsets.all(13),
                           // height: DeviceSize.itemHeight,
@@ -262,36 +339,35 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
                         ),
                         minLeadingWidth: 1,
                         minVerticalPadding: 1,
-                        subtitle: Text(
-                          'Account Balance',
-                          style: TextStyle(
-                              fontFamily: 'DM Sans',
-                              fontWeight: FontWeight.w400,
-                              color: ColorConstant.gray800,
-                              fontSize: 16),
+                        subtitle: 
+                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Account Balance',
+                              style: TextStyle(
+                                  fontFamily: 'DM Sans',
+                                  fontWeight: FontWeight.w400,
+                                  color: ColorConstant.gray800,
+                                  fontSize: 16),
+                            ),
+                            SizedBox(width: 50,),
+                            Text(
+                              'Details',
+                              style: TextStyle(
+                                  fontFamily: 'DM Sans',
+                                  fontWeight: FontWeight.w400,
+                                  decoration: TextDecoration.underline,
+                                  color: ColorConstant.deepPurpleA200,
+                                  fontSize: 16),
+                            ),
+                          ],
                         ),
+                        
+                       
                       ),
                     ),
-                    SizedBox(
-                      height: DeviceSize.itemHeight / 10,
-                    ),
-                    Text(
-                      'Office Details',
-                      style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w700,
-                          color: ColorConstant.indigo900,
-                          fontSize: DeviceSize.itemWidth / 11.411),
-                    ),
-                    SizedBox(
-                      height: DeviceSize.itemHeight / 20,
-                    ),
-                    ClListviewBuilderTableWidget(
-                        officeDetailsQus: officeDetailsQus,
-                        officeDetailsAns: officeDetailsAns),
-                    SizedBox(
-                      height: DeviceSize.itemHeight / 10,
-                    ),
+                   
                     Text(
                       'Contact Personal Details',
                       style: TextStyle(
@@ -325,7 +401,7 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return EditAccountProfileManager();
+                        return SmEditAccountScreen();
                       }),
                     );
                   },

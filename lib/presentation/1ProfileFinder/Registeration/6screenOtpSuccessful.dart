@@ -10,7 +10,8 @@ import 'package:virtual_experts/presentation/4ProfileManager/bottom_navigation_l
 import 'package:virtual_experts/presentation/4ProfileManager/registeration/complete_profile_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/registeration/am_complete_profile_screen.dart';
-import 'package:virtual_experts/presentation/6Sales/registeration/contact_details_sales_manag.dart';
+import 'package:virtual_experts/presentation/6Sales/registeration/not_used_contact_details_sales_manag.dart';
+import 'package:virtual_experts/presentation/6Sales/registeration/sm_complete_profile_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/registeration/CompleteProfileRegisterationAdProviderScreen.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/registeration/CompleteProfileRegisterationAdProviderScreen.dart';
@@ -65,7 +66,7 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (BuildContext context) => const ContactDetailsSalesManagerScreen(service: '',)),
+              builder: (BuildContext context) => const SmCompleteProfileScreen()),
         ),
       );
     }
