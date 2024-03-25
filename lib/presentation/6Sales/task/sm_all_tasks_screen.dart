@@ -36,6 +36,7 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
+import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
 
 class SmAllTasksScreen extends StatefulWidget {
   SmAllTasksScreen({super.key});
@@ -86,15 +87,46 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
     return model;
   }
 
-  static List<SmAllClientsDataModel> _smAllClientsDataModel = [];
+  //  fetch ad provider Ads
 
-  // AdProAllUsersDataModel _smAllClientsDataModel = AdProAllUsersDataModel();
+  late Future<List<SmAllClientsDataModel>> futureSmTasks;
 
-  Future<void> _fetchAllProfFindsData() async {
-    late String ad_pro_user_id;
+  Future<List<SmAllClientsDataModel>> fetchSmTasks() async {
+    late String userId;
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    ad_pro_user_id = preferences.getString("uid2").toString();
+    userId = preferences.getString("uid2").toString();
+
+    print('_fetchAll Ad Pro Ads Data method start');
+
+    final response = await http
+        .get(Uri.parse("http://${ApiService.ipAddress}/all_client_data"));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+
+      List<SmAllClientsDataModel> ads = jsonResponse
+          .map((dynamic adJson) => SmAllClientsDataModel.fromJson(adJson))
+          .where((ad) => jsonDecode(ad.salesId.toString())['uid'] == userId)
+          .toList();
+
+      return ads;
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  static List<SmAllClientsDataModel> _smAllTasksDataModel = [];
+  static List<SmAllClientsDataModel> smMyTasks = [];
+  // AdProAllUsersDataModel _smAllTasksDataModel = AdProAllUsersDataModel();
+
+  Future<void> fetchSmMyTasksData() async {
+    late String smUserId;
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    smUserId = preferences.getString("uid2").toString();
+
+    debugPrint('smUserId : $smUserId');
 
     final response = await http
         .get(Uri.parse("http://${ApiService.ipAddress}/all_client_data"));
@@ -102,20 +134,22 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
       setState(() {
-        _smAllClientsDataModel = jsonResponse
+        _smAllTasksDataModel = jsonResponse
             .map((data) => SmAllClientsDataModel.fromJson(data))
             .toList();
 
         _isLoading = false;
+
+        smMyTasks = _smAllTasksDataModel
+            .where((element) => element.salesId == smUserId)
+            .toList();
       });
 
-      debugPrint(_smAllClientsDataModel[0].email);
-      debugPrint(_smAllClientsDataModel[0].phoneNumber);
-      debugPrint(_smAllClientsDataModel[1].clientLocation);
-      debugPrint(_smAllClientsDataModel[1].googleMap);
+      debugPrint('smMyTasks');
+      debugPrint(smMyTasks[0].email);
 
       debugPrint(response.statusCode.toString());
-      debugPrint(response.body);
+      // debugPrint(response.body);
     } else {
       throw Exception('Failed to load data');
     }
@@ -143,10 +177,10 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
         _isLoading1 = false;
       });
 
-      debugPrint(_smAllClientsDataModel[0].email);
-      debugPrint(_smAllClientsDataModel[0].phoneNumber);
-      debugPrint(_smAllClientsDataModel[1].clientLocation);
-      debugPrint(_smAllClientsDataModel[1].googleMap);
+      debugPrint(_smAllTasksDataModel[0].email);
+      debugPrint(_smAllTasksDataModel[0].phoneNumber);
+      debugPrint(_smAllTasksDataModel[1].clientLocation);
+      debugPrint(_smAllTasksDataModel[1].googleMap);
 
       debugPrint(response.statusCode.toString());
       debugPrint(response.body);
@@ -251,13 +285,15 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
   void initState() {
     super.initState();
     // _getData();
-    _fetchAllProfFindsData();
+    fetchSmMyTasksData();
 
     _fetchSmAllActivitiesData();
 
     _fetchAllAdDistData();
 
     _fetchAllAdProData();
+
+    futureSmTasks = fetchSmTasks();
   }
 
   @override
@@ -453,195 +489,414 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                     const D10HCustomClSizedBoxWidget(),
 
                     (currentTile == 0)
-                        ? ListView.builder(
-                            itemCount: _smAllClientsDataModel.length,
-                            controller: ScrollController(),
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return Id123456AboutMeLocalAdminScreen(
-                                        profile_finder_user_id:
-                                            _smAllClientsDataModel[index]
-                                                .uid
-                                                .toString(),
-                                      );
-                                    }),
-                                  );
-                                },
-                                child: Card(
-                                  color: Colors.white,
-                                  elevation: 0,
-                                  child: Container(
-                                    // height: DeviceSize.itemHeight / 0.9,
-                                    // height: double.infinity,
-                                    width: double.maxFinite,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.topCenter,
-                                                child: CircleAvatar(
-                                                  backgroundImage: NetworkImage(
-                                                      _smAllClientsDataModel[
-                                                              index]
-                                                          .picture
-                                                          .toString()),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              SizedBox(
-                                                // width: DeviceSize.itemWidth / 1.3,
-                                                child: Column(
+                        ?
+
+                        // ListView.builder(
+                        //     itemCount: smMyTasks.length,
+                        //     controller: ScrollController(),
+                        //     physics: const BouncingScrollPhysics(),
+                        //     shrinkWrap: true,
+                        //     scrollDirection: Axis.vertical,
+                        //     itemBuilder: (context, index) {
+                        //       return GestureDetector(
+                        //         onTap: () {
+                        //           Navigator.push(
+                        //             context,
+                        //             MaterialPageRoute(builder: (context) {
+                        //               return Id123456AboutMeLocalAdminScreen(
+                        //                 profile_finder_user_id:
+                        //                     smMyTasks[index]
+                        //                         .uid
+                        //                         .toString(),
+                        //               );
+                        //             }),
+                        //           );
+                        //         },
+                        //         child: Card(
+                        //           color: Colors.white,
+                        //           elevation: 0,
+                        //           child: Container(
+                        //             // height: DeviceSize.itemHeight / 0.9,
+                        //             // height: double.infinity,
+                        //             width: double.maxFinite,
+                        //             child: Padding(
+                        //               padding: const EdgeInsets.all(10.0),
+                        //               child: Row(
+                        //                 mainAxisAlignment:
+                        //                     MainAxisAlignment.spaceBetween,
+                        //                 crossAxisAlignment:
+                        //                     CrossAxisAlignment.start,
+                        //                 children: [
+                        //                   Row(
+                        //                     crossAxisAlignment:
+                        //                         CrossAxisAlignment.start,
+                        //                     children: [
+                        //                       Align(
+                        //                         alignment: Alignment.topCenter,
+                        //                         child: CircleAvatar(
+                        //                           backgroundImage: NetworkImage(
+                        //                               smMyTasks[
+                        //                                       index]
+                        //                                   .picture
+                        //                                   .toString()),
+                        //                         ),
+                        //                       ),
+                        //                       const SizedBox(
+                        //                         width: 10,
+                        //                       ),
+                        //                       SizedBox(
+                        //                         // width: DeviceSize.itemWidth / 1.3,
+                        //                         child: Column(
+                        //                           crossAxisAlignment:
+                        //                               CrossAxisAlignment.start,
+                        //                           children: [
+                        //                             Text(
+                        //                               // 'test',
+                        //                               smMyTasks[index].uid.toString(),
+                        //                               style: TextStyle(
+                        //                                   fontFamily: 'Inter',
+                        //                                   // fontWeight: FontWeight.w900,
+                        //                                   color: ColorConstant
+                        //                                       .clGreyFontColor3,
+                        //                                   fontSize: DeviceSize
+                        //                                           .itemWidth /
+                        //                                       15.413),
+                        //                             ),
+                        //                             Text(
+                        //                               smMyTasks[
+                        //                                       index]
+                        //                                   .clientName
+                        //                                   .toString(),
+                        //                               style: TextStyle(
+                        //                                   fontFamily: 'Inter',
+                        //                                   fontWeight:
+                        //                                       FontWeight.bold,
+                        //                                   color: ColorConstant
+                        //                                       .black900,
+                        //                                   fontSize: DeviceSize
+                        //                                           .itemWidth /
+                        //                                       11.413),
+                        //                             ),
+                        //                             Text(
+                        //                               smMyTasks[
+                        //                                       index]
+                        //                                   .email
+                        //                                   .toString(),
+                        //                               style: TextStyle(
+                        //                                   fontFamily: 'Inter',
+                        //                                   // fontWeight: FontWeight.w900,
+                        //                                   color: ColorConstant
+                        //                                       .clGreyFontColor3,
+                        //                                   fontSize: DeviceSize
+                        //                                           .itemWidth /
+                        //                                       11.413),
+                        //                             ),
+                        //                             Text(
+                        //                               smMyTasks[
+                        //                                       index]
+                        //                                   .phoneNumber
+                        //                                   .toString(),
+                        //                               style: TextStyle(
+                        //                                   fontFamily: 'Inter',
+                        //                                   // fontWeight: FontWeight.w900,
+                        //                                   color: ColorConstant
+                        //                                       .clGreyFontColor3,
+                        //                                   fontSize: DeviceSize
+                        //                                           .itemWidth /
+                        //                                       11.413),
+                        //                             ),
+                        //                           ],
+                        //                         ),
+                        //                       ),
+                        //                     ],
+                        //                   ),
+                        //                   Column(
+                        //                     mainAxisAlignment:
+                        //                         MainAxisAlignment.start,
+                        //                     // crossAxisAlignment: CrossAxisAlignment.end,
+                        //                     children: [
+                        //                       GestureDetector(
+                        //                         onTap: () {
+                        //                           showDialog(
+                        //                             context: context,
+                        //                             builder:
+                        //                                 (BuildContext context) {
+                        //                               return UserDialogBox(
+                        //                                 email:
+                        //                                     smMyTasks[
+                        //                                             index]
+                        //                                         .email
+                        //                                         .toString(),
+                        //                                 index1: 0,
+                        //                               ); // Your custom widget goes here
+                        //                             },
+                        //                           );
+                        //                         },
+                        //                         child: Container(
+                        //                           width: DeviceSize.itemWidth /
+                        //                               4.5,
+                        //                           height:
+                        //                               DeviceSize.itemHeight /
+                        //                                   4.5,
+                        //                           decoration: BoxDecoration(
+                        //                               color: ColorConstant
+                        //                                   .clYellowBgColor4,
+                        //                               borderRadius:
+                        //                                   BorderRadius.circular(
+                        //                                       8)),
+                        //                           child: Padding(
+                        //                             padding:
+                        //                                 const EdgeInsets.all(
+                        //                                     10.0),
+                        //                             child: Center(
+                        //                                 child: SvgPicture.asset(
+                        //                               "assets/images/more_2_fill.svg",
+                        //                               color: ColorConstant
+                        //                                   .deepPurpleA200,
+                        //                             )),
+                        //                           ),
+                        //                         ),
+                        //                       ),
+                        //                       // Switch(
+                        //                       //   // value: isSwitched,
+                        //                       //   value: _smAllTasksDataModel[index]
+                        //                       //           .email ==
+                        //                       //       'sundershroff@gmail.com',
+
+                        //                       //   onChanged: (value) {
+
+                        //                       //   },
+                        //                       //   activeTrackColor:
+                        //                       //       ColorConstant.deepPurpleA2006c,
+                        //                       //   activeColor:
+                        //                       //       ColorConstant.deepPurpleA200,
+                        //                       // ),
+                        //                     ],
+                        //                   )
+                        //                 ],
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       );
+                        //     },
+                        //   )
+
+                        SizedBox(
+                            height: 600,
+                            child: FutureBuilder<List<SmAllClientsDataModel>>(
+                              future: futureSmTasks,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return 
+                                   ListView.builder(
+                                    // itemCount: _smAllTasksDataModel.length,
+                                    itemCount: snapshot.data!.length,
+
+                                    controller: ScrollController(),
+                                    physics: const BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      return Card(
+                                        color: Colors.white,
+                                        elevation: 0,
+                                        child: Container(
+                                          // height: DeviceSize.itemHeight / 0.9,
+                                          // height: double.infinity,
+                                          width: double.maxFinite,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
-                                                      'test',
-                                                      // _smAllClientsDataModel[index].uid.toString(),
-                                                      style: TextStyle(
-                                                          fontFamily: 'Inter',
-                                                          // fontWeight: FontWeight.w900,
-                                                          color: ColorConstant
-                                                              .clGreyFontColor3,
-                                                          fontSize: DeviceSize
-                                                                  .itemWidth /
-                                                              15.413),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topCenter,
+                                                      child: CircleAvatar(
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                snapshot.data!
+                                                                    [index].picture
+                                                                    .toString()),
+                                                      ),
                                                     ),
-                                                    Text(
-                                                      _smAllClientsDataModel[
-                                                              index]
-                                                          .clientName
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontFamily: 'Inter',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: ColorConstant
-                                                              .black900,
-                                                          fontSize: DeviceSize
-                                                                  .itemWidth /
-                                                              11.413),
+                                                    const SizedBox(
+                                                      width: 10,
                                                     ),
-                                                    Text(
-                                                      _smAllClientsDataModel[
-                                                              index]
-                                                          .email
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontFamily: 'Inter',
-                                                          // fontWeight: FontWeight.w900,
-                                                          color: ColorConstant
-                                                              .clGreyFontColor3,
-                                                          fontSize: DeviceSize
-                                                                  .itemWidth /
-                                                              11.413),
-                                                    ),
-                                                    Text(
-                                                      _smAllClientsDataModel[
-                                                              index]
-                                                          .phoneNumber
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                          fontFamily: 'Inter',
-                                                          // fontWeight: FontWeight.w900,
-                                                          color: ColorConstant
-                                                              .clGreyFontColor3,
-                                                          fontSize: DeviceSize
-                                                                  .itemWidth /
-                                                              11.413),
+                                                    SizedBox(
+                                                      // width: DeviceSize.itemWidth / 1.3,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            // 'test',
+                                                            snapshot.data!
+                                                                    [index].uid
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                // fontWeight: FontWeight.w900,
+                                                                color: ColorConstant
+                                                                    .clGreyFontColor3,
+                                                                fontSize: DeviceSize
+                                                                        .itemWidth /
+                                                                    15.413),
+                                                          ),
+                                                          Text(
+                                                           snapshot.data!
+                                                                    [index].clientName
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color:
+                                                                    ColorConstant
+                                                                        .black900,
+                                                                fontSize: DeviceSize
+                                                                        .itemWidth /
+                                                                    11.413),
+                                                          ),
+                                                          Text(
+                                                            snapshot.data!
+                                                                    [index]
+                                                                .email
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                // fontWeight: FontWeight.w900,
+                                                                color: ColorConstant
+                                                                    .clGreyFontColor3,
+                                                                fontSize: DeviceSize
+                                                                        .itemWidth /
+                                                                    11.413),
+                                                          ),
+                                                          Text(
+                                                            snapshot.data!
+                                                                    [index]
+                                                                .activeStatus.toString() 
+                                                                == 'true'
+                                                                  ? 'Active' : 'Deactive' 
+                                                                  ,
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                // fontWeight: FontWeight.w900,
+                                                                color: ColorConstant
+                                                                    .clGreyFontColor3,
+                                                                fontSize: DeviceSize
+                                                                        .itemWidth /
+                                                                    11.413),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                            ],
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  // crossAxisAlignment: CrossAxisAlignment.end,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return UserDialogBox(
+                                                              email:
+                                                                  snapshot.data!
+                                                                    [index]
+                                                                      .email
+                                                                      .toString(),
+
+                                                              index1: index,
+                                                              uid1:
+                                                                  snapshot.data!
+                                                                    [index]
+                                                                      .uid,
+                                                              // uid1: _smAllActivitiesModel[index].,
+                                                            );
+                                                            
+                                                             // Your custom widget goes here
+                                                          },
+                                                        );
+
+                                                         futureSmTasks = fetchSmTasks();
+                                                      },
+                                                      child: Container(
+                                                        width: DeviceSize
+                                                                .itemWidth /
+                                                            4.5,
+                                                        height: DeviceSize
+                                                                .itemHeight /
+                                                            4.5,
+                                                        decoration: BoxDecoration(
+                                                            color: ColorConstant
+                                                                .clYellowBgColor4,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8)),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10.0),
+                                                          child: Center(
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                            "assets/images/more_2_fill.svg",
+                                                            color: ColorConstant
+                                                                .deepPurpleA200,
+                                                          )),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    // Switch(
+                                                    //   // value: isSwitched,
+                                                    //   value: _smAllTasksDataModel[index]
+                                                    //           .email ==
+                                                    //       'sundershroff@gmail.com',
+
+                                                    //   onChanged: (value) {
+
+                                                    //   },
+                                                    //   activeTrackColor:
+                                                    //       ColorConstant.deepPurpleA2006c,
+                                                    //   activeColor:
+                                                    //       ColorConstant.deepPurpleA200,
+                                                    // ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            // crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return UserDialogBox(
-                                                        email:
-                                                            _smAllClientsDataModel[
-                                                                    index]
-                                                                .email
-                                                                .toString(),
-                                                        index1: 0,
-                                                      ); // Your custom widget goes here
-                                                    },
-                                                  );
-                                                },
-                                                child: Container(
-                                                  width: DeviceSize.itemWidth /
-                                                      4.5,
-                                                  height:
-                                                      DeviceSize.itemHeight /
-                                                          4.5,
-                                                  decoration: BoxDecoration(
-                                                      color: ColorConstant
-                                                          .clYellowBgColor4,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8)),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10.0),
-                                                    child: Center(
-                                                        child: SvgPicture.asset(
-                                                      "assets/images/more_2_fill.svg",
-                                                      color: ColorConstant
-                                                          .deepPurpleA200,
-                                                    )),
-                                                  ),
-                                                ),
-                                              ),
-                                              // Switch(
-                                              //   // value: isSwitched,
-                                              //   value: _smAllClientsDataModel[index]
-                                              //           .email ==
-                                              //       'sundershroff@gmail.com',
-
-                                              //   onChanged: (value) {
-
-                                              //   },
-                                              //   activeTrackColor:
-                                              //       ColorConstant.deepPurpleA2006c,
-                                              //   activeColor:
-                                              //       ColorConstant.deepPurpleA200,
-                                              // ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+                                        ),
+                                      );
+                                    },
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text('${snapshot.error}');
+                                }
+                                return const CircularProgressIndicator();
+                              },
+                            ),
                           )
                         :
 
@@ -673,7 +928,7 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                     builder: (context) {
                                                   return Id123456AboutMeLocalAdminScreen(
                                                     profile_finder_user_id:
-                                                        _smAllClientsDataModel[
+                                                        _smAllTasksDataModel[
                                                                 index]
                                                             .uid
                                                             .toString(),
@@ -786,7 +1041,7 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                           );
                                         },
                                         itemCount: (currentTile == 0)
-                                            ? _smAllClientsDataModel.length
+                                            ? _smAllTasksDataModel.length
                                             : _smAllActivitiesModel.length,
                                       ),
                                       const SizedBox(
@@ -813,7 +1068,7 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                     builder: (context) {
                                                   return Id123456AboutMeLocalAdminScreen(
                                                     profile_finder_user_id:
-                                                        _smAllClientsDataModel[
+                                                        _smAllTasksDataModel[
                                                                 index]
                                                             .uid
                                                             .toString(),
@@ -926,7 +1181,7 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                           );
                                         },
                                         itemCount: (currentTile == 0)
-                                            ? _smAllClientsDataModel.length
+                                            ? _smAllTasksDataModel.length
                                             : _smAllActivitiesModel.length,
                                       ),
                                     ],
@@ -940,18 +1195,16 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-
                                   //  Text(
                                   //   'Ad Distributor',
                                   //   style: TextStyle(
                                   //     fontWeight: FontWeight.bold,
-                                      
+
                                   //   ),
                                   // ),
 
-                                  
                                   ListView.builder(
-                                    // itemCount: _smAllClientsDataModel.length,
+                                    // itemCount: _smAllTasksDataModel.length,
                                     itemCount: myClientsOfAdDis.length,
 
                                     controller: ScrollController(),
@@ -1128,7 +1381,7 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                     ),
                                                     // Switch(
                                                     //   // value: isSwitched,
-                                                    //   value: _smAllClientsDataModel[index]
+                                                    //   value: _smAllTasksDataModel[index]
                                                     //           .email ==
                                                     //       'sundershroff@gmail.com',
 
@@ -1150,22 +1403,19 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                     },
                                   ),
 
-
-                                  // 
-                                  // 
+                                  //
+                                  //
                                   const D10HCustomClSizedBoxWidget(),
                                   // Text(
                                   //   'Ad Provider',
                                   //   style: TextStyle(
                                   //     fontWeight: FontWeight.bold,
-                                      
+
                                   //   ),
                                   // ),
 
-
-
                                   ListView.builder(
-                                    // itemCount: _smAllClientsDataModel.length,
+                                    // itemCount: _smAllTasksDataModel.length,
                                     itemCount: myClientsOfAdPro.length,
 
                                     controller: ScrollController(),
@@ -1308,7 +1558,8 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                                           index]
                                                                       .uid,
 
-                                                                      category: 'ad_pro',
+                                                              category:
+                                                                  'ad_pro',
                                                               // uid1: _smAllActivitiesModel[index].,
                                                             ); // Your custom widget goes here
                                                           },
@@ -1344,7 +1595,7 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                     ),
                                                     // Switch(
                                                     //   // value: isSwitched,
-                                                    //   value: _smAllClientsDataModel[index]
+                                                    //   value: _smAllTasksDataModel[index]
                                                     //           .email ==
                                                     //       'sundershroff@gmail.com',
 
@@ -1388,12 +1639,11 @@ class UserDialogBox extends StatefulWidget {
   String? category;
 
   UserDialogBox(
-      {super.key, required this.email, 
-      required this.index1, 
+      {super.key,
+      required this.email,
+      required this.index1,
       this.uid1,
-      this.category
-      
-      });
+      this.category});
 
   @override
   State<UserDialogBox> createState() => _UserDialogBoxState();
@@ -1443,6 +1693,49 @@ class _UserDialogBoxState extends State<UserDialogBox> {
     }
   }
 
+
+
+  
+  smActivateClient() async { 
+   
+    final url = Uri.parse(
+        "http://${ApiService.ipAddress}/active_satus/${widget.email}");
+    var request = http.MultipartRequest('POST', url);
+
+    // request.fields['active'] = widget.email;
+    // request.fields['pm_id'] = sales_manager_id;
+
+    try {
+      final response = await request.send();
+     
+      print("Status Code : ${response.statusCode}");
+      print("widget.uid1 : ${widget.email}");
+      
+      if (response.statusCode == 200) {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) {
+        //     return const SmOtpEnteringScreen(
+        //       timerr: 3,
+        //       // profile_finder_user_id: profile_finder_id,
+        //     );
+        //   }),
+        // );
+
+        Fluttertoast.showToast(
+          msg: "Client Activated Successfully...!",
+          backgroundColor: ColorConstant.deepPurpleA200,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_SHORT,
+        );
+
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      print("Do Something When Error Occurs");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -1452,7 +1745,12 @@ class _UserDialogBoxState extends State<UserDialogBox> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              onTap: () => sm_generate_otp(),
+              // onTap: () => sm_generate_otp(),
+              onTap: () => smActivateClient(),
+              
+
+
+              
               //  Navigator.push(
               //     context,
               //     MaterialPageRoute(builder: (context) {
