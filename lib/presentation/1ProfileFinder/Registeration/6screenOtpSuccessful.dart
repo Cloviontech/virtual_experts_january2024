@@ -13,8 +13,10 @@ import 'package:virtual_experts/presentation/5Affiliate%20Marketing/registeratio
 import 'package:virtual_experts/presentation/6Sales/registeration/not_used_contact_details_sales_manag.dart';
 import 'package:virtual_experts/presentation/6Sales/registeration/sm_complete_profile_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/registeration/CompleteProfileRegisterationAdProviderScreen.dart';
-import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/registeration/CompleteProfileRegisterationAdProviderScreen.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/registeration/complete_profile_registeration_ad_distributor_screen.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/registeration/not_used_completeProfileRegisterationAdProviderScreen.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/registeration/CompleteProfileRegisterationAdDistributorScreen.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/registeration/not_used_CompleteProfileRegisterationAdProviderScreen.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/registeration/pi_complete_account.dart';
 
 class SixOtpSuccessfulScreen extends StatefulWidget {
@@ -88,7 +90,7 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
           MaterialPageRoute(
               builder: (BuildContext context) => 
               
-              AdProCompleteAccountScreen()
+              const AdProCompleteAccountScreen()
               // BottomNavigationAdProviderMainScreen()
               
               ),
@@ -103,7 +105,7 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
           MaterialPageRoute(
               builder: (BuildContext context) => 
               
-              AdDisCompleteAccountScreen()
+              const AdDisCompleteAccountScreen()
               // BottomNavigationAdProviderMainScreen()
               
               ),

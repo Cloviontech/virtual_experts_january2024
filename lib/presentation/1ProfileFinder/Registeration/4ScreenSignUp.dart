@@ -60,9 +60,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
 
   bool _passwordVisible2 = true;
 
-  var phone = '';
+  // var phone = '';
 
-  var countryCode;
+  String countryCode = '';
 
   var errorr;
 
@@ -90,113 +90,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
     });
   }
 
-  // Future register() async {
-  /*
-    // Api Sign Up
-    var url = Uri.parse("http://192.168.1.29/API/Marriyo/Auth/signup.php");
-    var response = await http.post(url, body: {
-      "username": emailController.text.toString(),
-      "password": passwordController.text.toString(),
-      "mobileNumber": mobileNoController.text,
-      "refferalCode": refferalCodeController.text,
-    });
-
-
-    var data = json.decode(response.body);
-    if (data == "Error") {
-      Fluttertoast.showToast(
-        backgroundColor: Colors.orange,
-        textColor: Colors.white,
-        msg: 'User already exit!',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-    } else {
-      Fluttertoast.showToast(
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        msg: 'Registration Successful',
-        toastLength: Toast.LENGTH_SHORT,
-      );
-      await FirebaseAuth.instance
-        .verifyPhoneNumber(
-      // phoneNumber: '+91 9894 018 373',
-      phoneNumber: countryCode+mobileNoController.text,
-      
-      verificationCompleted:
-          (PhoneAuthCredential
-              credential) {},
-      verificationFailed:
-          (FirebaseAuthException e) {
-        setState(() {
-          errorr = e.toString();
-        });
-        print({
-          'The provided phone number is not valid.' +
-              errorr.toString()
-        });
-      },
-      codeSent: (String verificationId,
-          int? resendToken) {},
-      codeAutoRetrievalTimeout:
-          (String verificationId) {},
-    );
-      Navigator.pushNamed(context, AppRoutes.iphone1313ProSixScreen);
-    }
-    */
-
-  // Firebase Sign Up
-  //   _databaseManager.signUp(
-  //       context,
-  //       emailController.text,
-  //       passwordController.text,
-  //       mobileNoController.text,
-  //       refferalCodeController.text);
-  // }
-
-  // String MainURL = "http://127.0.0.1:8000/";
-  // var MainURL = "http://127.0.0.1:8000/signup/";
-
-  // static const signUpurl = 'http://192.168.1.29:8000/signup/';
-
-  // void callApi(Uri url) async {
-  //   final request = http.MultipartRequest('POST', url);
-  //   request.fields['email'] = emailController.text;
-  //   request.fields['password'] = passwordController.text;
-  //   request.fields['referral_code'] = refferalCodeController.text;
-  //   request.fields['mobile'] = mobileNoController.text;
-  //   final send = await request.send();
-  //   final response = await http.Response.fromStream(send);
-  //   print(response.statusCode);
-  //   print(response.body);
-  // }
-
-  // String URL =  Uri.parse('http://10.0.2.2:3000/signup/');
-  // void myFunction() async {
-  //   // var data = {};
-  //   var headers = {
-  //     // 'Content-Type': 'application/json',
-  //     'Context-Type': 'application/json',
-  //   };
-  //   var requestBody = {
-  //     // 'email': emailController.text,
-  //     // 'mobile': mobileNoController.text,
-  //     // 'password': passwordController.text,
-  //     // 'referral_code': refferalCodeController.text
-
-  //     'email': 'arun2@gmail.com',
-  //     'mobile': '9876543211',
-  //     'password': '123456',
-  //     'referral_code': '123123',
-  //   };
-
-  //   var response = await http.post(Uri.parse('http://10.0.2.2:8000/signup/'),
-  //       headers: headers, body: requestBody);
-  //   if (response.statusCode == 200) {
-  //     print(response.body);
-  //   } else {
-  //     print('A network error occurred');
-  //   }
-  // }
+  
 
    void putServiceOfUser() async {
      SharedPreferences SharedPrefservice = await SharedPreferences.getInstance();
@@ -215,27 +109,13 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
     };
 
     var requestBody = {
-      // 'email': 'umsrn333@gmail.com',
-      // 'mobile': 9876543210,
-      // 'password': "12345",
-      // 'password2': "12345",
-      // 'code': "",
-
-      // 'email': emailController.text,
-      // 'mobile': mobileNoController.text,
-      // 'password': passwordController.text,
-      // 'password2': confirmPasswordController.text,
-      // 'code': refferalCodeController.text
-
+   
       'email': emailController.text,
-      'mobile': mobileNoController.text,
+      'mobile':  '+$countryCode ${mobileNoController.text}',
       'password': passwordController.text,
       // 'referral_code': refferalCodeController.text
 
-      // 'email': 'abc@gmail.com',
-      // 'mobile': '9876543211',
-      // 'password': '123456',
-      // 'referral_code': '123123',
+     
     };
 
 
@@ -295,7 +175,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
 
   @override
   void initState() {
-    countryCode = '+91';
+    countryCode = '91';
     putServiceOfUser();
   
     super.initState();
@@ -351,7 +231,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
 
                               ),
                             ),
-                            Text(widget.service),
+                            // Text(widget.service),
 
                             const Text("Emaill ID*"),
                             Padding(
@@ -410,21 +290,28 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                           decoration: const InputDecoration(
                                               border: InputBorder.none),
                                           initialCountryCode: 'IN',
-                                          onCountryChanged: (phone) {
-                                            countryCode = phone.code.toString();
+                                          onCountryChanged: (value) {
+                                            setState(() {
+
+                                               countryCode = value.fullCountryCode;
+                                              
+                                            });
+
+                                           
                                           },
-                                          onChanged: (phone) {
+                                          // onChanged: (value) {
                                             
 
-                                            setState(() {
-                                              countryCode = phone.countryCode;
-                                            });
+                                          //   setState(() {
+                                          //     countryCode = value.countryCode;
+                                          //   });
                                             
-                                          },
+                                          // },
                                         ),
                                       ),
                                     ),
                                     const SizedBox(width: 10.0),
+                                    
                                     Expanded(
                                       flex: 4,
                                       child: Container(
@@ -467,7 +354,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                   ],
                                 )),
 
-                            // Text(countryCode),
+                            // Text('+$countryCode'),
                             const Padding(
                               padding: EdgeInsets.only(top: 20),
                               child: Text("Password*"),

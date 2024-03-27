@@ -1,249 +1,8 @@
-// import 'package:dotted_border/dotted_border.dart';
-// import 'package:file_picker/file_picker.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
-// import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
-// import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
-// import 'package:virtual_experts/widgets/CustomWidgetsCl/bottomBarArrowAndGoNext.dart';
-// import 'package:virtual_experts/core/utils/color_constant.dart';
-// import 'package:virtual_experts/core/utils/size_utils.dart';
-// import 'package:virtual_experts/core/utils/image_constant.dart';
-
-// class CompleteProfileRegisterationAdProviderScreen extends StatefulWidget {
-//   const CompleteProfileRegisterationAdProviderScreen({super.key});
-
-//   @override
-//   State<CompleteProfileRegisterationAdProviderScreen> createState() =>
-//       _CompleteProfileRegisterationAdProviderScreenState();
-// }
-
-// class _CompleteProfileRegisterationAdProviderScreenState
-//     extends State<CompleteProfileRegisterationAdProviderScreen> {
-//   PlatformFile? pickedFile;
-
-//   late FToast fToast;
-
-//   // Future UploadDoc() async {
-//   //   final path = 'files/${pickedFile!.name}';
-//   //   final file = File(pickedFile!.path!);
-
-//   //   final ref = FirebaseStorage.instance.ref().child(path);
-//   //   ref.putFile(file).whenComplete(() => fToast.showToast(
-//   //         gravity: ToastGravity.BOTTOM,
-//   //         toastDuration: Duration(milliseconds: 2000),
-//   //         child: Row(
-//   //           mainAxisSize: MainAxisSize.min,
-//   //           children: [
-//   //             Icon(Icons.face),
-//   //             Text(
-//   //               "Data Uploaded Succesfully!",
-//   //               style: TextStyle(
-//   //                   color: Colors.white,
-//   //                   fontSize: 20.0,
-//   //                   fontWeight: FontWeight.bold),
-//   //             )
-//   //           ],
-//   //         ),
-//   //       ));
-//   // }
-
-//   Future PickFile() async {
-//     final result = await FilePicker.platform.pickFiles();
-//     if (result == null) return;
-
-//     setState(() {
-//       pickedFile = result.files.first;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: const Text("Complete Profile",
-//               style:
-//                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-//           backgroundColor: Colors.white,
-//           centerTitle: true,
-//           elevation: 0,
-//         ),
-//         body: SingleChildScrollView(
-//           physics: BouncingScrollPhysics(),
-//           child: Padding(
-//             padding: EdgeInsets.symmetric(horizontal: 20),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               mainAxisAlignment: MainAxisAlignment.start,
-//               children: [
-//                 Center(
-//                   child: Text(
-//                     'Enter your basic details for the better service!',
-//                     // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: DeviceSize.itemHeight / 10,
-//                 ),
-//                 WidgetTitleAndTextfield(
-//                   onChanged: (value) {},
-//                   textFieldHint: 'Enter',
-//                   textFieldTitle: 'Full Name',
-//                 ),
-//                 WidgetTitleAndDropdown(
-//                   DbdItems: ["India", "USA", "UK"],
-//                   DdbHint: 'Select',
-//                   DdbTitle: 'Country',
-//                   onChanged: (value) {},
-//                 ),
-//                 WidgetTitleAndDropdown(
-//                   DbdItems: ["India", "USA", "UK"],
-//                   DdbHint: 'Select',
-//                   DdbTitle: 'City',
-//                   onChanged: (value) {},
-//                 ),
-//                 WidgetTitleAndTextfielGreyBgAdjHeight(
-//                     textFieldTitle: "Address",
-//                     textFieldHint: "Select",
-//                     onChanged: (value) {},
-//                     maxLines: 5),
-//                 Text(
-//                   'Contact Person Details',
-//                   style: TextStyle(
-//                       fontFamily: 'Roboto',
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 18),
-//                 ),
-//                 D10HCustomClSizedBoxWidget(),
-//                 WidgetTitleAndTextfield(
-//                   onChanged: (value) {},
-//                   textFieldHint: 'Enter',
-//                   textFieldTitle: 'Full Name',
-//                 ),
-//                 WidgetTitleAndDropdown(
-//                   DbdItems: ["India", "USA", "UK"],
-//                   DdbHint: 'Select',
-//                   DdbTitle: 'Country',
-//                   onChanged: (value) {},
-//                 ),
-//                 WidgetTitleAndDropdown(
-//                   DbdItems: ["India", "USA", "UK"],
-//                   DdbHint: 'Select',
-//                   DdbTitle: 'City',
-//                   onChanged: (value) {},
-//                 ),
-//                 WidgetTitleAndTextfielGreyBgAdjHeight(
-//                     textFieldTitle: "Address",
-//                     textFieldHint: "Select",
-//                     onChanged: (value) {},
-//                     maxLines: 6),
-//                     Text(
-//                   'ID Card',
-//                   style: TextStyle(
-//                       fontFamily: 'Roboto',
-//                       fontWeight: FontWeight.w400,
-//                       fontSize: 14,
-//                       color: ColorConstant.gray800),
-//                 ),
-//                 DottedBorder(
-//                   borderType: BorderType.RRect,
-//                   color: Colors.grey,
-//                   strokeWidth: 1,
-//                   dashPattern: [2, 4],
-//                   radius: Radius.circular(10),
-//                   child: Container(
-//                     width: double.maxFinite,
-
-//                     // height: 300,
-
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         SizedBox(
-//                           height: 80,
-//                         ),
-//                         GestureDetector(
-//                           onTap: () async {
-//                             await PickFile();
-//                             // await UploadDoc();
-//                           },
-//                           child: Container(
-//                               height: 80,
-//                               width: 80,
-//                               decoration: BoxDecoration(
-//                                   color: Colors.blue.shade100,
-//                                   borderRadius: BorderRadius.circular(10)),
-//                               child: Padding(
-//                                 padding: const EdgeInsets.all(20),
-//                                 child: SvgPicture.asset(
-//                                   ImageConstant.imgfile,
-//                                   // height: 50,
-//                                 ),
-//                               )),
-//                         ),
-//                         SizedBox(
-//                           height: 30,
-//                         ),
-//                         Text("Drag or Click Here To Upload Your ID",
-//                         style: TextStyle(
-//                       fontFamily: 'Roboto',
-//                       fontWeight: FontWeight.w400,
-//                       fontSize: 14,
-//                       color: ColorConstant.gray600),
-//                         ),
-//                         SizedBox(
-//                           height: 80,
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 D10HCustomClSizedBoxWidget(),
-//                 WidgetTitleAndDropdown(
-//                   DbdItems: ["India", "USA", "UK"],
-//                   DdbHint: 'Select',
-//                   DdbTitle: 'Hiring Manager',
-//                   onChanged: (value) {},
-//                 ),
-//                 CustomClRectangleCheckboxWithQuestionWidget2(
-//                   question:
-//                       'I agree to the Terms of Service and Privacy Policy.',
-//                 ),
-//                 D10HCustomClSizedBoxWidget(height: 5,),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Text(
-//                       "If you don't want to continue now? ",
-//                       style: TextStyle(
-//                           fontFamily: 'Roboto',
-//                           fontWeight: FontWeight.w500,
-//                           fontSize: 14,
-//                           color: ColorConstant.clFontGreyColor),
-//                     ),
-//                     Text(
-//                       "Logout Now",
-//                       style: TextStyle(
-//                           fontFamily: 'Roboto',
-//                           fontWeight: FontWeight.w500,
-//                           fontSize: 14,
-//                           color: ColorConstant.deepPurpleA200),
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//         bottomNavigationBar: const bottomBarArrowAndGoNext());
-//   }
-// }
-
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:country_picker/country_picker.dart';
+import 'package:csc_picker/csc_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -253,26 +12,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:virtual_experts/core/utils/color_constant.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/dashboard/hm_dashboard_screen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/dashboard_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
-import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/not_used_dashBoard/dashboard_ad_distributor.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
-import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/dashboard_private_admin_screen.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/not_used_dashBoard/dashboard_ad_distributor.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
 
-class AdDisCompleteAccountScreen extends StatefulWidget {
-  const AdDisCompleteAccountScreen({super.key});
+class AdProCompleteAccountScreen extends StatefulWidget {
+  const AdProCompleteAccountScreen({super.key});
 
   @override
-  State<AdDisCompleteAccountScreen> createState() =>
-      _AdDisCompleteAccountScreenState();
+  State<AdProCompleteAccountScreen> createState() =>
+      _AdProCompleteAccountScreenState();
 }
 
-class _AdDisCompleteAccountScreenState
-    extends State<AdDisCompleteAccountScreen> {
+class _AdProCompleteAccountScreenState
+    extends State<AdProCompleteAccountScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _officeNameController = TextEditingController();
   final TextEditingController _officeAddressController =
@@ -302,9 +58,13 @@ class _AdDisCompleteAccountScreenState
 
   final TextEditingController _taglineController = TextEditingController();
 
-  String? countryName;
-  String? selectedCityValue;
+  String? officialCountryName;
+  String? officialStateName;
+
+  String? officialCityValue;
   String? personalCountryName;
+  String? personalStateName;
+
   String? personalSelectedCityValue;
   String? selectedHiringManager;
   String? selectedSalesManager;
@@ -331,6 +91,8 @@ class _AdDisCompleteAccountScreenState
   String? errorExperienceCertificate;
   String? errorGstCertificate;
   String? errorPanCard;
+
+  bool termsAndCondCheckBox = false;
 
   var userId;
   void getAccessToken() async {
@@ -365,17 +127,17 @@ class _AdDisCompleteAccountScreenState
   }
 
   Future<void> profileUpload(
-      BottomNavigationAdDistributorScreen
-          bottomNavigationAdDistributorScreen) async {
+      BottomNavigationAdProviderMainScreen
+          bottomNavigationAdProviderMainScreen) async {
     // var uri = "http://${ApiServices.ipAddress}/ad_pro_upload_account/$userId";
-    var uri = "http://${ApiServices.ipAddress}/ad_dis_upload_account/$userId";
+    var uri = "http://${ApiServices.ipAddress}/ad_pro_upload_account/$userId";
     print(userId);
     var request = http.MultipartRequest('POST', Uri.parse(uri));
     // Data Send MultipartRequest
     request.fields.addAll({
       "office_name": _officeNameController.text.trim(),
-      "office_country": countryName.toString(),
-      "office_city": selectedCityValue.toString(),
+      "office_country": officialCountryName.toString(),
+      "office_city": officialCityValue.toString(),
       "office_address": _officeAddressController.text.trim(),
       'first_name': _firstNameController.text.trim(),
       'last_name': _lastNameController.text.trim(),
@@ -396,8 +158,8 @@ class _AdDisCompleteAccountScreenState
       "year_experience": _yearOfExperienceController.text.trim(),
       "ex_location": _locationController.text.trim(),
       // "type" : _typeController.text.trim(),
-      "type" : '_typeController',
-      
+      "type": '_typeController',
+
       "gst_number": _gstNumberController.text.trim(),
       "company_pan_no": _companyPanNumberController.text.trim(),
       "arn_no": _arnNumberController.text.trim(),
@@ -408,9 +170,14 @@ class _AdDisCompleteAccountScreenState
         await http.MultipartFile.fromPath('degree_cer', degreeCertificate!));
     request.files.add(
         await http.MultipartFile.fromPath('ex_cer', experienceCertificate!));
-    request.files.add(
-        await http.MultipartFile.fromPath('gst_certificate', gstCertificate!));
-    request.files.add(await http.MultipartFile.fromPath('pan_card', panCard!));
+
+    if (workType == 'Official') {
+      request.files.add(await http.MultipartFile.fromPath(
+          'gst_certificate', gstCertificate!));
+      request.files
+          .add(await http.MultipartFile.fromPath('pan_card', panCard!));
+    }
+
     http.StreamedResponse response = await request.send();
     print(response.statusCode);
     if (response.statusCode == 200) {
@@ -418,7 +185,7 @@ class _AdDisCompleteAccountScreenState
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => bottomNavigationAdDistributorScreen));
+              builder: (context) => bottomNavigationAdProviderMainScreen));
       // push;
     }
   }
@@ -446,12 +213,12 @@ class _AdDisCompleteAccountScreenState
               errorExperienceCertificate = null;
             });
           } else if (image == "gstCertificate") {
-            gstCertificate = result!.paths[0];
+            gstCertificate = result!.paths[0].toString();
             setState(() {
               errorGstCertificate = null;
             });
           } else if (image == "panCard") {
-            panCard = result!.paths[0];
+            panCard = result!.paths[0].toString();
             errorPanCard = null;
           }
 
@@ -506,7 +273,7 @@ class _AdDisCompleteAccountScreenState
               children: [
                 const Center(
                     child: Text(
-                  "Ad Distributor Complete Profile",
+                  "Ad Dis Complete Profile",
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -526,38 +293,103 @@ class _AdDisCompleteAccountScreenState
                       return null;
                     }),
                 const SizedBox(height: 15),
-                GestureDetector(
-                  onTap: () {
-                    showCountryPicker(
-                        context: context,
-                        onSelect: (Country country) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(country.name)));
-                          setState(() {
-                            countryName = country.name;
-                          });
-                          print(country.name);
-                        });
-                  },
-                  child: WidgetTitleAndDropdown(
-                    DdbTitle: "Country*",
-                    DdbHint: "Select",
-                    DbdItems: Dbditems,
-                    country: countryName,
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     showCountryPicker(
+                //         context: context,
+                //         onSelect: (Country country) {
+                //           ScaffoldMessenger.of(context).showSnackBar(
+                //               SnackBar(content: Text(country.name)));
+                //           setState(() {
+                //             officialCountryName = country.name;
+                //           });
+                //           print(country.name);
+                //         });
+                //   },
+                //   child: WidgetTitleAndDropdown(
+                //     DdbTitle: "Country*",
+                //     DdbHint: "Select",
+                //     DbdItems: Dbditems,
+                //     country: officialCountryName,
+                //   ),
+                // ),
 
-                WidgetTitleAndDropdown(
-                  DdbTitle: "City*",
-                  DdbHint: "Select",
-                  DbdItems: Dbditems,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "City*",
+                //   DdbHint: "Select",
+                //   DbdItems: Dbditems,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       officialCityValue = newValue!;
+                //     });
+                //     // uploadAboutMe("Physical Status", dropdownValue.toString());
+                //   },
+                // ),
+
+                CSCPicker(
+                  layout: Layout.vertical,
+
+                  flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+                  dropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.white,
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 1)),
+                  disabledDropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey.shade100,
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 1)),
+
+                  countrySearchPlaceholder: "Country",
+                  stateSearchPlaceholder: "State",
+                  citySearchPlaceholder: "City",
+
+                  countryDropdownLabel: "Country*",
+                  stateDropdownLabel: "State*",
+                  cityDropdownLabel: "City*",
+
+                  defaultCountry: CscCountry.India,
+
+                  selectedItemStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+
+                  ///DropdownDialog Heading style [OPTIONAL PARAMETER]
+                  dropdownHeadingStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+
+                  dropdownItemStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+
+                  dropdownDialogRadius: 10.0,
+
+                  searchBarRadius: 10.0,
+
+                  onCountryChanged: (country) async {
                     setState(() {
-                      selectedCityValue = newValue!;
+                      officialCountryName = country;
                     });
-                    // uploadAboutMe("Physical Status", dropdownValue.toString());
+                  },
+
+                  onStateChanged: (state) async {
+                    setState(() {
+                      officialStateName = state!;
+                    });
+                  },
+
+                  onCityChanged: (city) async {
+                    setState(() {
+                      officialCityValue = city!;
+                    });
                   },
                 ),
+                const D10HCustomClSizedBoxWidget(),
                 WidgetTitleAndTextfielGreyBgAdjHeight(
                   textFieldHint: 'Enter Your Office Address',
                   textFieldTitle: "Office Address",
@@ -606,37 +438,102 @@ class _AdDisCompleteAccountScreenState
                       return null;
                     }),
                 const SizedBox(height: 15),
-                GestureDetector(
-                  onTap: () {
-                    showCountryPicker(
-                        context: context,
-                        onSelect: (Country country) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(country.name)));
-                          setState(() {
-                            personalCountryName = country.name;
-                          });
-                          print(country.name);
-                        });
-                  },
-                  child: WidgetTitleAndDropdown(
-                    DdbTitle: "Country*",
-                    DdbHint: "Select",
-                    DbdItems: Dbditems,
-                    country: personalCountryName,
+                // GestureDetector(
+                //   onTap: () {
+                //     showCountryPicker(
+                //         context: context,
+                //         onSelect: (Country country) {
+                //           ScaffoldMessenger.of(context).showSnackBar(
+                //               SnackBar(content: Text(country.name)));
+                //           setState(() {
+                //             personalCountryName = country.name;
+                //           });
+                //           print(country.name);
+                //         });
+                //   },
+                //   child: WidgetTitleAndDropdown(
+                //     DdbTitle: "Country*",
+                //     DdbHint: "Select",
+                //     DbdItems: Dbditems,
+                //     country: personalCountryName,
+                //   ),
+                // ),
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "City*",
+                //   DdbHint: "Select",
+                //   DbdItems: Dbditems,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       personalSelectedCityValue = newValue!;
+                //     });
+                //     // uploadAboutMe("Physical Status", dropdownValue.toString());
+                //   },
+                // ),
+
+                CSCPicker(
+                  layout: Layout.vertical,
+
+                  flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+                  dropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.white,
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 1)),
+                  disabledDropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey.shade100,
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 1)),
+
+                  countrySearchPlaceholder: "Country",
+                  stateSearchPlaceholder: "State",
+                  citySearchPlaceholder: "City",
+
+                  countryDropdownLabel: "Country*",
+                  stateDropdownLabel: "State*",
+                  cityDropdownLabel: "City*",
+
+                  defaultCountry: CscCountry.India,
+
+                  selectedItemStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
                   ),
-                ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "City*",
-                  DdbHint: "Select",
-                  DbdItems: Dbditems,
-                  onChanged: (String? newValue) {
+
+                  ///DropdownDialog Heading style [OPTIONAL PARAMETER]
+                  dropdownHeadingStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+
+                  dropdownItemStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+
+                  dropdownDialogRadius: 10.0,
+
+                  searchBarRadius: 10.0,
+
+                  onCountryChanged: (country) async {
                     setState(() {
-                      personalSelectedCityValue = newValue!;
+                      personalCountryName = country;
                     });
-                    // uploadAboutMe("Physical Status", dropdownValue.toString());
+                  },
+
+                  onStateChanged: (state) async {
+                    setState(() {
+                      personalStateName = state!;
+                    });
+                  },
+
+                  onCityChanged: (city) async {
+                    setState(() {
+                      personalSelectedCityValue = city!;
+                    });
                   },
                 ),
+                const D10HCustomClSizedBoxWidget(),
                 WidgetTitleAndTextfielGreyBgAdjHeight(
                   textFieldHint: 'Enter Your Address',
                   textFieldTitle: "Address",
@@ -1217,12 +1114,20 @@ class _AdDisCompleteAccountScreenState
                                 )
                               : const Text(""),
                           const SizedBox(height: 20),
-                          CustomClRectangleCheckboxWithQuestionWidget2(
-                            question:
-                                'I agree to the Terms of Service and Privacy Policy.',
-                          ),
+                        
+                          // Text(termsAndCondCheckBox.toString())
                         ],
                       ),
+                        CustomClRectangleCheckboxWithQuestionWidget2(
+                            question:
+                                'I agree to the Terms of Service and Privacy Policy.',
+                            tick: termsAndCondCheckBox,
+                            tickFunction: () {
+                              setState(() {
+                                termsAndCondCheckBox = !termsAndCondCheckBox;
+                              });
+                            },
+                          ),
               ],
             ),
           ),
@@ -1268,12 +1173,24 @@ class _AdDisCompleteAccountScreenState
                       onPressed: () {
                         // profileUpload(DashboardPrivateInvestigatorScreen());
                         if ((_formKey.currentState?.validate() ?? false) &&
-                            degreeCertificate != null &&
-                            experienceCertificate != null &&
-                            gstCertificate != null &&
-                            panCard != null) {
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>const BottomNavigationAdProviderMainScreen()));
-                          profileUpload(const BottomNavigationAdDistributorScreen());
+                                degreeCertificate != null &&
+                                experienceCertificate != null
+                            // &&
+                            // gstCertificate != null &&
+                            // panCard != null
+
+                            ) {
+                          if (termsAndCondCheckBox) {
+                            profileUpload(
+                                const BottomNavigationAdProviderMainScreen());
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Please Agree Terms Of Service And Privacy Policy'),
+                              ),
+                            );
+                          }
                         } else {
                           setState(() {
                             errorDegreeCertificate =

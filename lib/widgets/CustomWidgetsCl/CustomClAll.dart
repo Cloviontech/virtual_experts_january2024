@@ -892,11 +892,14 @@ class CustomClRectangleCheckboxWithQuestionWidget2 extends StatefulWidget {
     super.key,
     required this.question,
     this.tick = false,
+    this.tickFunction,
 
   });
 
   final String question;
   bool tick;
+
+  VoidCallback? tickFunction;
 
   @override
   State<CustomClRectangleCheckboxWithQuestionWidget2> createState() =>
@@ -925,6 +928,7 @@ class _CustomClRectangleCheckboxWithQuestionWidget2State
 
                 value: widget.tick,
                 onChanged: (newBool) {
+                 widget.tickFunction!();
                   setState(() {
                     widget.tick = newBool!;
                   });

@@ -7,19 +7,11 @@ import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenScreen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/complaints/AllComplaints.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Account/ad_pro_account_screen.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads%20copy/AdProAdsScreen.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/not_used_ad_pro_all_ads_screen.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/ad_pro_ads_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/DashBoard/dashBoardAdProvider.dart';
-import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixteenHiringMgrScreen.dart';
-import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
-import 'package:virtual_experts/presentation/2HiringManager/Approvals/AllApplicationsThirteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Settings/settings_ad_pro.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/users/ad_pro_users_add_new_user.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/users/ad_pro_users_screen.dart';
-import 'package:virtual_experts/presentation/unUsedTestingScreen.dart';
-import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +19,8 @@ import 'package:http/http.dart' as http;
 
 
 class BottomNavigationAdProviderMainScreen extends StatefulWidget {
+  const BottomNavigationAdProviderMainScreen({super.key});
+
 
   
   @override

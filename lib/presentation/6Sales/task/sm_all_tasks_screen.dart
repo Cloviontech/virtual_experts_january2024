@@ -6,37 +6,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virtual_experts/model/data_model.dart';
-import 'package:virtual_experts/model_final/ad_provider_models/ad_pro_all_users_by_id_model.dart';
 import 'package:virtual_experts/model_final/modelAllUser.dart';
-import 'package:virtual_experts/model_final/profile_manager_models/all_profile_finders_data.dart';
-import 'package:virtual_experts/model_final/profile_manager_models/pm_all_secondary_users_data_model.dart';
-import 'package:virtual_experts/model_final/profile_manager_models/pm_my_users_list.dart';
 import 'package:virtual_experts/model_final/sales_manager_models/ad_dis_list_model.dart';
 import 'package:virtual_experts/model_final/sales_manager_models/sm_all_activities_model.dart';
 import 'package:virtual_experts/model_final/sales_manager_models/sm_all_clients_data-model.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/1_pm_profile_finder_search_screen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/3_pm_id123456_about_me_pm_screen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/4_pm_reason_for_reject_screen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/users/pm_users_add_new_user.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/users/pm_users_filter_screen.dart';
-import 'package:virtual_experts/presentation/6Sales/task/my_clients/not_used_sm_all_clients_created_by_me_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/task/my_clients/sm_view_client_details.dart';
 import 'package:virtual_experts/presentation/6Sales/task/sm_add_new_activity_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/task/sm_otp_entering_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/task/my_clients/sm_tasks_add_new_client_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/task/sm_tasks_filter_screen.dart';
-import 'package:virtual_experts/presentation/6Sales/bottom_navigation/users/sm_users_add_new_user.dart';
-import 'package:virtual_experts/presentation/6Sales/bottom_navigation/users/sm_users_filter_screen.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/users/ad_pro_users_add_new_user.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/users/ad_pro_users_filter_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
-import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
-import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
 
 class SmAllTasksScreen extends StatefulWidget {
   SmAllTasksScreen({super.key});
@@ -688,8 +671,7 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                               future: futureSmTasks,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  return 
-                                   ListView.builder(
+                                  return ListView.builder(
                                     // itemCount: _smAllTasksDataModel.length,
                                     itemCount: snapshot.data!.length,
 
@@ -723,10 +705,10 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                           Alignment.topCenter,
                                                       child: CircleAvatar(
                                                         backgroundImage:
-                                                            NetworkImage(
-                                                                snapshot.data!
-                                                                    [index].picture
-                                                                    .toString()),
+                                                            NetworkImage(snapshot
+                                                                .data![index]
+                                                                .picture
+                                                                .toString()),
                                                       ),
                                                     ),
                                                     const SizedBox(
@@ -741,8 +723,9 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                         children: [
                                                           Text(
                                                             // 'test',
-                                                            snapshot.data!
-                                                                    [index].uid
+                                                            snapshot
+                                                                .data![index]
+                                                                .uid
                                                                 .toString(),
                                                             style: TextStyle(
                                                                 fontFamily:
@@ -755,8 +738,9 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                                     15.413),
                                                           ),
                                                           Text(
-                                                           snapshot.data!
-                                                                    [index].clientName
+                                                            snapshot
+                                                                .data![index]
+                                                                .clientName
                                                                 .toString(),
                                                             style: TextStyle(
                                                                 fontFamily:
@@ -772,8 +756,8 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                                     11.413),
                                                           ),
                                                           Text(
-                                                            snapshot.data!
-                                                                    [index]
+                                                            snapshot
+                                                                .data![index]
                                                                 .email
                                                                 .toString(),
                                                             style: TextStyle(
@@ -787,12 +771,12 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                                     11.413),
                                                           ),
                                                           Text(
-                                                            snapshot.data!
-                                                                    [index]
-                                                                .activeStatus.toString() 
-                                                                == 'true'
-                                                                  ? 'Active' : 'Deactive' 
-                                                                  ,
+                                                            snapshot.data![index]
+                                                                        .activeStatus
+                                                                        .toString() ==
+                                                                    'true'
+                                                                ? 'Active'
+                                                                : 'Deactive',
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     'Inter',
@@ -820,25 +804,24 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                           builder: (BuildContext
                                                               context) {
                                                             return UserDialogBox(
-                                                              email:
-                                                                  snapshot.data!
-                                                                    [index]
-                                                                      .email
-                                                                      .toString(),
+                                                              email: snapshot
+                                                                  .data![index]
+                                                                  .email
+                                                                  .toString(),
 
                                                               index1: index,
-                                                              uid1:
-                                                                  snapshot.data!
-                                                                    [index]
-                                                                      .uid,
+                                                              uid1: snapshot
+                                                                  .data![index]
+                                                                  .uid.toString(), category: 'tasks',
                                                               // uid1: _smAllActivitiesModel[index].,
                                                             );
-                                                            
-                                                             // Your custom widget goes here
+
+                                                            // Your custom widget goes here
                                                           },
                                                         );
 
-                                                         futureSmTasks = fetchSmTasks();
+                                                        futureSmTasks =
+                                                            fetchSmTasks();
                                                       },
                                                       child: Container(
                                                         width: DeviceSize
@@ -1195,13 +1178,12 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  //  Text(
-                                  //   'Ad Distributor',
-                                  //   style: TextStyle(
-                                  //     fontWeight: FontWeight.bold,
-
-                                  //   ),
-                                  // ),
+                                  Text(
+                                    'Ad Distributor',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
 
                                   ListView.builder(
                                     // itemCount: _smAllTasksDataModel.length,
@@ -1318,6 +1300,36 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                                         .itemWidth /
                                                                     11.413),
                                                           ),
+                                                          Text(
+                                                            myClientsOfAdDis[
+                                                                    index]
+                                                                .createdDate
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                // fontWeight: FontWeight.w900,
+                                                                color: ColorConstant
+                                                                    .clGreyFontColor3,
+                                                                fontSize: DeviceSize
+                                                                        .itemWidth /
+                                                                    11.413),
+                                                          ),
+                                                          // Text(
+                                                          //   myClientsOfAdDis[
+                                                          //           index]
+                                                          //       .type
+                                                          //       .toString(),
+                                                          //   style: TextStyle(
+                                                          //       fontFamily:
+                                                          //           'Inter',
+                                                          //       // fontWeight: FontWeight.w900,
+                                                          //       color: ColorConstant
+                                                          //           .clGreyFontColor3,
+                                                          //       fontSize: DeviceSize
+                                                          //               .itemWidth /
+                                                          //           11.413),
+                                                          // ),
                                                         ],
                                                       ),
                                                     ),
@@ -1345,7 +1357,8 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                               uid1:
                                                                   myClientsOfAdDis[
                                                                           index]
-                                                                      .uid,
+                                                                      .uid.toString(),
+                                                                      category: 'ad_dis',
                                                               // uid1: _smAllActivitiesModel[index].,
                                                             ); // Your custom widget goes here
                                                           },
@@ -1406,13 +1419,12 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                   //
                                   //
                                   const D10HCustomClSizedBoxWidget(),
-                                  // Text(
-                                  //   'Ad Provider',
-                                  //   style: TextStyle(
-                                  //     fontWeight: FontWeight.bold,
-
-                                  //   ),
-                                  // ),
+                                  Text(
+                                    'Ad Provider',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
 
                                   ListView.builder(
                                     // itemCount: _smAllTasksDataModel.length,
@@ -1529,6 +1541,36 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                                         .itemWidth /
                                                                     11.413),
                                                           ),
+                                                          Text(
+                                                            myClientsOfAdPro[
+                                                                    index]
+                                                                .createdDate
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                // fontWeight: FontWeight.w900,
+                                                                color: ColorConstant
+                                                                    .clGreyFontColor3,
+                                                                fontSize: DeviceSize
+                                                                        .itemWidth /
+                                                                    11.413),
+                                                          ),
+                                                          // Text(
+                                                          //   myClientsOfAdPro[
+                                                          //           index]
+                                                          //       .type
+                                                          //       .toString(),
+                                                          //   style: TextStyle(
+                                                          //       fontFamily:
+                                                          //           'Inter',
+                                                          //       // fontWeight: FontWeight.w900,
+                                                          //       color: ColorConstant
+                                                          //           .clGreyFontColor3,
+                                                          //       fontSize: DeviceSize
+                                                          //               .itemWidth /
+                                                          //           11.413),
+                                                          // ),
                                                         ],
                                                       ),
                                                     ),
@@ -1556,7 +1598,7 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
                                                               uid1:
                                                                   myClientsOfAdPro[
                                                                           index]
-                                                                      .uid,
+                                                                      .uid.toString(),
 
                                                               category:
                                                                   'ad_pro',
@@ -1635,15 +1677,15 @@ class _SmAllTasksScreenState extends State<SmAllTasksScreen> {
 class UserDialogBox extends StatefulWidget {
   final String email;
   int index1;
-  String? uid1;
-  String? category;
+  String uid1;
+  String category;
 
   UserDialogBox(
       {super.key,
       required this.email,
       required this.index1,
-      this.uid1,
-      this.category});
+      required this.uid1,
+      required this.category});
 
   @override
   State<UserDialogBox> createState() => _UserDialogBoxState();
@@ -1693,11 +1735,7 @@ class _UserDialogBoxState extends State<UserDialogBox> {
     }
   }
 
-
-
-  
-  smActivateClient() async { 
-   
+  smActivateClient() async {
     final url = Uri.parse(
         "http://${ApiService.ipAddress}/active_satus/${widget.email}");
     var request = http.MultipartRequest('POST', url);
@@ -1707,10 +1745,10 @@ class _UserDialogBoxState extends State<UserDialogBox> {
 
     try {
       final response = await request.send();
-     
+
       print("Status Code : ${response.statusCode}");
       print("widget.uid1 : ${widget.email}");
-      
+
       if (response.statusCode == 200) {
         // Navigator.push(
         //   context,
@@ -1747,10 +1785,7 @@ class _UserDialogBoxState extends State<UserDialogBox> {
             ListTile(
               // onTap: () => sm_generate_otp(),
               onTap: () => smActivateClient(),
-              
 
-
-              
               //  Navigator.push(
               //     context,
               //     MaterialPageRoute(builder: (context) {
@@ -1763,18 +1798,20 @@ class _UserDialogBoxState extends State<UserDialogBox> {
               title: const Text('Activate'),
             ),
             ListTile(
-              onTap: () =>
-                  // pm_approve_my_client_post(profile_finder_id),
-                  Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return SmViewClientScreen(
-                    index2: widget.index1,
-                    uid: widget.uid1,
-                    category1: widget.category,
-                  );
-                }),
-              ),
+              onTap: () {
+                // pm_approve_my_client_post(profile_finder_id),
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return SmViewClientScreen(
+                      index2: widget.index1,
+                      uid: widget.uid1,
+                      category1: widget.category,
+                    );
+                  }),
+                );
+              },
 
               // leading: Icon(
               //   Icons.visibility,

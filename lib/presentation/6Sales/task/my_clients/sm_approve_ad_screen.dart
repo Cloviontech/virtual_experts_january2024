@@ -1,37 +1,37 @@
 import 'dart:convert';
 
-import 'package:dotted_border/dotted_border.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:virtual_experts/model_final/ad_provider_models/adprovider_ads.dart';
 import 'package:virtual_experts/model_final/sales_manager_models/addistributor_ads.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/6Sales/task/my_clients/sm_reason_for_reject_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
-import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
-import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
-import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:http/http.dart' as http;
 
-class SmAddNewAdScreen extends StatefulWidget {
+class SmApproveAdScreen extends StatefulWidget {
   final String? uid1;
+  final String? category;
+  final int index1;
 
-  SmAddNewAdScreen({super.key, this.uid1});
+  const SmApproveAdScreen(
+      {super.key, this.uid1, this.category, required this.index1});
 
   @override
-  State<SmAddNewAdScreen> createState() => _SmAddNewAdScreenState();
+  State<SmApproveAdScreen> createState() => _SmApproveAdScreenState();
 }
 
-class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
-  late Future<List<AddistributorAds>> futureAds;
+class _SmApproveAdScreenState extends State<SmApproveAdScreen> {
+  bool termsAndCondCheckBox = false;
 
-  Future<List<AddistributorAds>> fetchAds() async {
+  late Future<List<AddistributorAds>> futureAdsAdDis;
+
+  Future<List<AddistributorAds>> fetchAdsAdDis() async {
     print('_fetchAllAdDistAdsData method start');
 
     final response = await http
@@ -50,37 +50,79 @@ class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
     }
   }
 
-  List<String> savedAdUid = []; // List to store values
+// for ad Provider
 
-  Future<void> appoveAd() async {
-    print('Approve method start');
-    print(savedAdUid[0]);
+  late Future<List<AdproviderAds>> futureAdsAdPro;
 
-    final response = await http.post(Uri.parse(
-        "http://${ApiService.ipAddress}/adsdis_status_active/${savedAdUid[0]}"));
-    print(response.statusCode);
+  Future<List<AdproviderAds>> fetchAdsAdPro() async {
+    print('_fetchAllAdDistAdsData method start');
+
+    final response = await http
+        .get(Uri.parse("http://${ApiService.ipAddress}/adprovider_ads"));
+
     if (response.statusCode == 200) {
-      print('approve : ${response.statusCode}');
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+
+      List<AdproviderAds> ads = jsonResponse
+          .map((dynamic adJson) => AdproviderAds.fromJson(adJson))
+          .where((ad) => jsonDecode(ad.adPro.toString())['uid'] == widget.uid1)
+          .toList();
+      return ads;
     } else {
       throw Exception('Failed to load data');
     }
   }
 
+  List<String> savedAdUid = []; // List to store values
 
-  
+  late String adId;
 
+  Future<void> appoveAd() async {
+    print('Approve method start');
+    // print(savedAdUid[0]);
 
-  
+    String urlAdDis =
+        "http://${ApiService.ipAddress}/adsdis_status_active/$adId";
+    String urlAdPro =
+        "http://${ApiService.ipAddress}/adspro_status_active/$adId";
+
+    final response = await http
+        .post(Uri.parse(widget.category == 'ad_pro' ? urlAdPro : urlAdDis));
+
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print('approve : ${response.statusCode}');
+
+      Fluttertoast.showToast(
+          msg: "$adId  Successfully...!",
+          backgroundColor: ColorConstant.deepPurpleA200,
+          textColor: Colors.white,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   Future rejectAd() async {
     print('reject ad method start');
-   
 
-    final url =
-        Uri.parse("http://${ApiService.ipAddress}/adsdis_status_reject/${savedAdUid[0]}");
+    String urlAdDis =
+        "http://${ApiService.ipAddress}/adsdis_status_reject/$adId";
+    String urlAdPro =
+        "http://${ApiService.ipAddress}/adspro_status_reject/$adId";
+
+    // final response = await http.post(Uri.parse(
+    //     widget.category == 'ad_pro' ? urlAdPro :    urlAdDis));
+
+    // final url = Uri.parse(
+    //     "http://${ApiService.ipAddress}/adsdis_status_reject/$adId}");
+
+    final url = Uri.parse(widget.category == 'ad_pro' ? urlAdPro : urlAdDis);
+
     final request = http.MultipartRequest('POST', url);
-   
+
     request.fields['reason'] = 'reason test';
-   
 
     try {
       final send = await request.send();
@@ -88,6 +130,12 @@ class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {
+        Fluttertoast.showToast(
+            msg: "$adId Rejected Successfully...!",
+            backgroundColor: ColorConstant.deepPurpleA200,
+            textColor: Colors.white,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER);
         // Navigator.pushNamed(context, AppRoutes.ThirteenScreenscr);
       }
     } catch (e) {
@@ -99,7 +147,9 @@ class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
   void initState() {
     // TODO: implement initState
 
-    futureAds = fetchAds();
+    futureAdsAdDis = fetchAdsAdDis();
+
+    futureAdsAdPro = fetchAdsAdPro();
     super.initState();
   }
 
@@ -108,7 +158,9 @@ class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
     return Scaffold(
       backgroundColor: ColorConstant.clPurple05,
       appBar: ClAppbarLeadArrowBackSuffHeart(
-        testingNextPage: SmAddNewAdScreen(),
+        testingNextPage: SmApproveAdScreen(
+          index1: 0,
+        ),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -121,114 +173,336 @@ class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
             children: [
               const Center(
                 child: Text(
-                  'Add New',
+                  'Approve Ad',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
               SizedBox(
                 height: DeviceSize.itemHeight / 10,
               ),
+              Text(widget.category.toString()),
 
-              //
-              FutureBuilder<List<AddistributorAds>>(
-                future: futureAds,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      controller: ScrollController(),
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        savedAdUid.add(snapshot.data![index].adId.toString());
+              // for Ad distributor
+              widget.category == 'ad_pro'
+                  ? FutureBuilder<List<AdproviderAds>>(
+                      future: futureAdsAdPro,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            controller: ScrollController(),
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            // itemCount: snapshot.data!.length,
+                            itemCount: 1,
+                            itemBuilder: (context, index) {
+                              savedAdUid
+                                  .add(snapshot.data![index].adId.toString());
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(savedAdUid[0]),
-                            customDisplayDataWidget(
-                              name: 'Ad Name',
-                              value: snapshot.data![index].adName,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Category',
-                              value: snapshot.data![index].category,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Type Of Ad',
-                              value: snapshot.data![index].adType,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Languages',
-                              value: snapshot.data![index].languages,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Country',
-                              value: snapshot.data![index].officeCountry,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'State',
-                              value: snapshot.data![index].officeState,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'District',
-                              value: snapshot.data![index].officeDistrict,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Gender',
-                              value: snapshot.data![index].gender,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Age Group',
-                              value: snapshot.data![index].ageRange,
-                            ),
-                            // customDisplayDataWidget(name: 'Advertisement', value: snapshot.data![index].adName,),
-                            customDisplayDataWidget(
-                              name: 'Total No. Of Views',
-                              value: snapshot.data![index].noViews,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'How Many days Required',
-                              value: snapshot.data![index].daysRequired,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'How many times repeat per day',
-                              value: snapshot.data![index].timesRepeat,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Ad Details',
-                              value: snapshot.data![index].adDetails,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Other Ads',
-                              value: snapshot.data![index].otherAds,
-                            ),
+                              adId =
+                                  snapshot.data![widget.index1].adId.toString();
 
-                            Container(
-                              height: 200,
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.green,
-                                  image: DecorationImage(
-                                      image: NetworkImage(snapshot
-                                          .data![index].otherAds
-                                          .toString()),
-                                      fit: BoxFit.cover // profile pic
-                                      )),
-                            ),
-                            D10HCustomClSizedBoxWidget(),
-                            customDisplayDataWidget(
-                              name: 'Button Name',
-                              value: snapshot.data![index].actionName,
-                            ),
-                            customDisplayDataWidget(
-                              name: 'Button Url',
-                              value: snapshot.data![index].actionUrl,
-                            ),
+                              return Column(
+                                children: [
+                                  D10HCustomClSizedBoxWidget(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // Text(savedAdUid[0]),
 
-                            // for feature use, dont delete
-                            /*
+                                          customDisplayDataWidget(
+                                            name: 'Ad No.',
+                                            value: '${index + 1}',
+                                          ),
+
+                                          customDisplayDataWidget(
+                                            name: 'Ad ID',
+                                            value: snapshot
+                                                .data![widget.index1].adId,
+                                          ),
+
+                                          customDisplayDataWidget(
+                                            name: 'Ad Name',
+                                            value: snapshot
+                                                .data![widget.index1].adName,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Category',
+                                            value: snapshot
+                                                .data![widget.index1].category,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Type Of Ad',
+                                            value: snapshot
+                                                .data![widget.index1].adType,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Languages',
+                                            value: snapshot
+                                                .data![widget.index1].languages,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Country',
+                                            value: snapshot.data![widget.index1]
+                                                .officeCountry,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'State',
+                                            value: snapshot.data![widget.index1]
+                                                .officeState,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'District',
+                                            value: snapshot.data![widget.index1]
+                                                .officeDistrict,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Gender',
+                                            value: snapshot
+                                                .data![widget.index1].gender,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Age Group',
+                                            value: snapshot
+                                                .data![widget.index1].ageRange,
+                                          ),
+                                          // customDisplayDataWidget(name: 'Advertisement', value: snapshot.data![widget.index1].adName,),
+                                          customDisplayDataWidget(
+                                            name: 'Total No. Of Views',
+                                            value: snapshot
+                                                .data![widget.index1].noViews,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'How Many days Required',
+                                            value: snapshot.data![widget.index1]
+                                                .daysRequired,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name:
+                                                'How many times repeat per day',
+                                            value: snapshot.data![widget.index1]
+                                                .timesRepeat,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Ad Details',
+                                            value: snapshot
+                                                .data![widget.index1].adDetails,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Other Ads',
+                                            value: snapshot
+                                                .data![widget.index1].otherAds,
+                                          ),
+
+                                          Container(
+                                            height: 200,
+                                            width: double.maxFinite,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.green,
+                                                image: DecorationImage(
+                                                    image: NetworkImage(snapshot
+                                                        .data![widget.index1]
+                                                        .otherAds
+                                                        .toString()),
+                                                    fit: BoxFit
+                                                        .cover // profile pic
+                                                    )),
+                                          ),
+                                          D10HCustomClSizedBoxWidget(),
+                                          customDisplayDataWidget(
+                                            name: 'Button Name',
+                                            value: snapshot.data![widget.index1]
+                                                .actionName,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Button Url',
+                                            value: snapshot
+                                                .data![widget.index1].actionUrl,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  //  Divider()
+                                ],
+                              );
+                            },
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    )
+                  : FutureBuilder<List<AddistributorAds>>(
+                      future: futureAdsAdDis,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            controller: ScrollController(),
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            // itemCount: snapshot.data!.length,
+                            itemCount: 1,
+                            itemBuilder: (context, index) {
+                              savedAdUid.add(snapshot.data![widget.index1].adId
+                                  .toString());
+
+                              //  setState(() {
+                              adId =
+                                  snapshot.data![widget.index1].adId.toString();
+                              // });
+
+                              return Column(
+                                children: [
+                                  D10HCustomClSizedBoxWidget(),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          customDisplayDataWidget(
+                                            name: 'Ad No.',
+                                            value: '${index + 1}',
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Ad ID',
+                                            value: snapshot
+                                                .data![widget.index1].adId,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Ad Name',
+                                            value: snapshot
+                                                .data![widget.index1].adName,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Category',
+                                            value: snapshot
+                                                .data![widget.index1].category,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Type Of Ad',
+                                            value: snapshot
+                                                .data![widget.index1].adType,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Languages',
+                                            value: snapshot
+                                                .data![widget.index1].languages,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Country',
+                                            value: snapshot.data![widget.index1]
+                                                .officeCountry,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'State',
+                                            value: snapshot.data![widget.index1]
+                                                .officeState,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'District',
+                                            value: snapshot.data![widget.index1]
+                                                .officeDistrict,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Gender',
+                                            value: snapshot
+                                                .data![widget.index1].gender,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Age Group',
+                                            value: snapshot
+                                                .data![widget.index1].ageRange,
+                                          ),
+                                          // customDisplayDataWidget(name: 'Advertisement', value: snapshot.data![widget.index1].adName,),
+                                          customDisplayDataWidget(
+                                            name: 'Total No. Of Views',
+                                            value: snapshot
+                                                .data![widget.index1].noViews,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'How Many days Required',
+                                            value: snapshot.data![widget.index1]
+                                                .daysRequired,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name:
+                                                'How many times repeat per day',
+                                            value: snapshot.data![widget.index1]
+                                                .timesRepeat,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Ad Details',
+                                            value: snapshot
+                                                .data![widget.index1].adDetails,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Other Ads',
+                                            value: snapshot
+                                                .data![widget.index1].otherAds,
+                                          ),
+
+                                          Container(
+                                            height: 200,
+                                            width: double.maxFinite,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.green,
+                                                image: DecorationImage(
+                                                    image: NetworkImage(snapshot
+                                                        .data![widget.index1]
+                                                        .otherAds
+                                                        .toString()),
+                                                    fit: BoxFit
+                                                        .cover // profile pic
+                                                    )),
+                                          ),
+                                          D10HCustomClSizedBoxWidget(),
+                                          customDisplayDataWidget(
+                                            name: 'Button Name',
+                                            value: snapshot.data![widget.index1]
+                                                .actionName,
+                                          ),
+                                          customDisplayDataWidget(
+                                            name: 'Button Url',
+                                            value: snapshot
+                                                .data![widget.index1].actionUrl,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    ),
+
+              // for feature use, dont delete
+              /*
                             // D10HCustomClSizedBoxWidget(),
 
                             WidgetTitleAndTextfieldColorChangeble(
@@ -599,22 +873,19 @@ class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
                             ),
 
                             */
-                          ],
-                        );
-                      },
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-                  return CircularProgressIndicator();
-                },
-              ),
 
               //
 
+              D10HCustomClSizedBoxWidget(),
+
               CustomClRectangleCheckboxWithQuestionWidget2(
-                // completed: true,
                 question: 'I agree to the Terms of Service and Privacy Policy.',
+                tick: termsAndCondCheckBox,
+                tickFunction: () {
+                  setState(() {
+                    termsAndCondCheckBox = !termsAndCondCheckBox;
+                  });
+                },
               ),
             ],
           ),
@@ -629,7 +900,14 @@ class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
               flex: 10,
               child: MyElevatedButtonWithBorderColor(
                   onPressed: () {
-                    appoveAd();
+                    termsAndCondCheckBox
+                        ? appoveAd()
+                        : Fluttertoast.showToast(
+                            msg: "Please Approve Terms and Conditions...!",
+                            backgroundColor: ColorConstant.deepPurpleA200,
+                            textColor: Colors.white,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER);
                   },
                   borderRadius: BorderRadius.circular(10),
                   width: double.maxFinite,
@@ -658,13 +936,21 @@ class _SmAddNewAdScreenState extends State<SmAddNewAdScreen> {
                   onPressed: () {
                     // rejectAd();
 
-                    Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return SmReasonForrejectScreen(ad_Id: savedAdUid[0],);
-                  }),
-                );
-
+                    termsAndCondCheckBox
+                        ? Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return SmReasonForrejectScreen(
+                          ad_Id:    adId, category: widget.category.   toString(),
+                        );
+                      }),
+                        )    
+                        : Fluttertoast.showToast(
+                            msg: "Please Approve Terms and Conditions...!",
+                            backgroundColor: ColorConstant.deepPurpleA200,
+                            textColor: Colors.white,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER);
 
                     
                   },

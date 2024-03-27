@@ -33,7 +33,7 @@ class _SevenChooseServiceScreenState extends State<SevenChooseServiceScreen> {
   List<String> ServiceItems = [
     "Profile Manager",
     "Hiring Manager",
-    "Sales Person",
+    "Sales Manager",
     "Ad-Provider",
     "Ad-Distributor",
     "Affiliate Marketing",

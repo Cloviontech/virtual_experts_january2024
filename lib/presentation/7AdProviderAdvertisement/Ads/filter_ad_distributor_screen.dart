@@ -1,17 +1,10 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/AdDisAdsScreen.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
-import 'package:virtual_experts/core/utils/color_constant.dart';
-import 'package:virtual_experts/core/utils/size_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
@@ -38,7 +31,7 @@ class _AdDistributorFilterScreenState extends State<AdDistributorFilterScreen> {
     "Ad5",
   ];
 
-  List<String> _status = [
+  final List<String> _status = [
     "Active",
     "Pending",
     "Deactive",
@@ -53,15 +46,15 @@ class _AdDistributorFilterScreenState extends State<AdDistributorFilterScreen> {
       //   title: Text('Filter'),
       // ),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
             
-               Center(
+               const Center(
                 child: Text(
                   'Filter',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),

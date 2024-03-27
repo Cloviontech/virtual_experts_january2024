@@ -89,11 +89,9 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
     if (response.statusCode == 200) {
       preferences.setString("id", response.body.replaceAll("\"", ""));
       preferences.setString("uid2", response.body.replaceAll("\"", ""));
-      
 
       preferences.setString("emailid", emailController.text);
-       preferences.setString("userEmail", emailController.text);
-
+      preferences.setString("userEmail", emailController.text);
 
       print(response.statusCode);
       print('Login Successfully');
@@ -111,11 +109,18 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
 
       preferences.setString("uid2", _userUidSignInClean.toString());
 
+      SharedPreferences SharedPrefservice =
+          await SharedPreferences.getInstance();
+
+      SharedPrefservice.setString("serviceOfUser", widget.service);
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => _Navigation[index]));
+
       setState(() {
         ThreeSigninScreen.userUidAccess = _userUidSignInClean;
       });
 
-        // Navigator.pop(context);
+      // Navigator.pop(context);
 
       print(preferences.getString("uid2").toString());
 
@@ -180,7 +185,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
           }),
         );
       }
-    
+
       //
 
       //
@@ -448,13 +453,16 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                           // Text(widget.service),
                           GestureDetector(
                             onTap: () {
-                               print('Service in signin Page: ${widget.service}');
-                               Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return ForgotPasswordScreen(service: widget.service);
-                              }),
-                            );},
+                              print(
+                                  'Service in signin Page: ${widget.service}');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return ForgotPasswordScreen(
+                                      service: widget.service);
+                                }),
+                              );
+                            },
                             child: const Center(
                               child: Text("Forgot Password",
                                   style: TextStyle(
@@ -705,9 +713,7 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
                                                   service: 'am_signup');
                                             }),
                                           );
-                                        }
-
-                                        else if (widget.service ==
+                                        } else if (widget.service ==
                                             'sm_signin') {
                                           Navigator.push(
                                             context,

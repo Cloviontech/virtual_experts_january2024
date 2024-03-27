@@ -38,6 +38,9 @@ class MyApp extends StatelessWidget {
 /*
 
 
+ad_pro_upload_account
+
+
 // parsing list of json
 
    static late List<PiMyData> userList;
@@ -90,6 +93,13 @@ class MyApp extends StatelessWidget {
       ),
     );
 
+    // 
+     const Center(
+              child: SpinKitWave(color: Colors.blue)
+            ),
+
+    // 
+
 
          style: TextStyle(
                               // fontFamily: "Inter",
@@ -122,105 +132,18 @@ class MyApp extends StatelessWidget {
         // 
 
 
+        // checkbox for terms and conditions
 
-
-
-
-                            
-
-  List<String> _company = [
-    "Samsung",
-    "Tata",
-    "Bajaj",
-    "Reliance",
-    "Kotak",
-  ];
-
-
-  final List<String> _adType = [
-    "Image Ads",
-    "Corosoul Ads",
-    "Banner Ads",
-  ];
-
-  final List<String> _languages = [
-    "Tamil",
-    "English",
-    "Malayalam",
-    'Kannada',
-    'Hindi'
-
-  ];
-
-
-  final List<String> _countries = [
-    "India",
-    "USA",
-    "UK",
-    "China",
-    "New Zealand",
-  ];
-
-
-  final List<String> _states = [
-    "Tamil Nadu",
-    "Kerala",
-    "Karnataka",
-    "Telungana",
-    "Maharastra",
-  ];
-
-  final List<String> _districts = [
-    "Kanniyakumari",
-    "Madurai",
-    "Chennai",
-    "Coimbatore",
-    "Trichy",
-  ];
-
-
-  final List<String> _gender = [
-    "Male",
-    "Female",
-    'Others'
-  ];
-
-    final List<String> _ageFrom = [
-    '1',
-    '10',
-    '15',
-    '20',
-    '50',
-    '100',
-
-  ];
-
-    final List<String> _ageTo = [
-     '1',
-    '10',
-    '15',
-    '20',
-    '50',
-    '100',
-  ];
-
-    final List<String> _daysRequired = [
-      '1',
-    '10',
-    '15',
-    '20',
-    '50',
-    '100',
-  ];
-
-    final List<String> _timesRepeat = [
-     '1',
-    '10',
-    '15',
-    '20',
-    '50',
-    '100',
-  ];
+        CustomClRectangleCheckboxWithQuestionWidget2(
+                            question:
+                                'I agree to the Terms of Service and Privacy Policy.',
+                            tick: termsAndCondCheckBox,
+                            tickFunction: () {
+                              setState(() {
+                                termsAndCondCheckBox = !termsAndCondCheckBox;
+                              });
+                            },
+                          ),
 
 
 

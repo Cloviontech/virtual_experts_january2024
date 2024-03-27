@@ -2,18 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:virtual_experts/core/app_export.dart';
 import 'package:http/http.dart' as http;
 import 'package:virtual_experts/core/services/api_services.dart';
-import 'package:virtual_experts/model/data_model.dart';
 
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/model_final/ad_provider_models/all_ads_model.dart';
 
 import '../../../widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
-import '../../7AdProviderAdvertisement/registeration/CompleteProfileRegisterationAdProviderScreen.dart';
-import '../../8AdDistributorAdvertisement/Ads/add_new_Ad_distributor.dart';
+import '../../8AdDistributorAdvertisement/Ads/not_used_add_new_ad_distributor.dart';
 
 class AdProviderAdsScreen extends StatefulWidget {
   const AdProviderAdsScreen({super.key});
@@ -52,9 +49,7 @@ class _AdProviderAdsScreenState
   @override
   void initState() {
     super.initState();
-    print("hiiii");
     _getData();
-    print("howw");
   }
 
 

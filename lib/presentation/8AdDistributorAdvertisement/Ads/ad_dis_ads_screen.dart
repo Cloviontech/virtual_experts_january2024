@@ -8,7 +8,8 @@ import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model_final/ad_dis_models/ad_dis_all_ads_model.dart';
 import 'package:virtual_experts/model_final/sales_manager_models/addistributor_ads.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/add_new_Ad_distributor.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/ad_dis_add_new_ad_screen.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/not_used_add_new_ad_distributor.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/filter_ad_distributorscreen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
@@ -183,12 +184,12 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    // size = MediaQuery.of(context).size;
+    // height = size.height;
+    // width = size.width;
 
     return Scaffold(
-      // backgroundColor: ColorConstant.clPurple05,
+      backgroundColor: ColorConstant.clPurple05,
       // appBar: ClAppbarLeadArrowBackSuffHeart(
       //   testingNextPage: AdProAddNewAdScreen(),
       // ),
@@ -215,7 +216,7 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
                 ),
               ),
               const D10HCustomClSizedBoxWidget(),
-              D10HCustomClSizedBoxWidget(),
+              const D10HCustomClSizedBoxWidget(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -272,7 +273,7 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
                             context,
                             MaterialPageRoute(
                               builder: (context) => 
-                              AddNewAdDistributorScreen(),
+                              const AdDisAddNewAdScreen(),
                             ),
                           );
                         },
@@ -628,7 +629,7 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
                   //     ),
                   //   ),
 
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
 

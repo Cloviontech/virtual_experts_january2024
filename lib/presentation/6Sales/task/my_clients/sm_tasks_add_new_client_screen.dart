@@ -15,7 +15,7 @@ import 'package:virtual_experts/model_final/sales_manager_models/view_addis_id_m
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/3_pm_id123456_about_me_pm_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/bottom_navigation/BottomNavigationBarSales.dart';
-import 'package:virtual_experts/presentation/6Sales/task/my_clients/sm_add_new_ad_screen.dart';
+import 'package:virtual_experts/presentation/6Sales/task/my_clients/sm_approve_ad_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/task/sm_all_tasks_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
@@ -441,7 +441,7 @@ class _SmAddNewClientScreenState extends State<SmAddNewClientScreen> {
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(builder: (context) {
-                    //     return SmAddNewAdScreen();
+                    //     return SmApproveAdScreen();
                     //   }),
                     // );
                   },

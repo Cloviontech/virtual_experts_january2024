@@ -15,7 +15,7 @@ import 'package:virtual_experts/presentation/6Sales/task/my_clients/not_used_sm_
 import 'package:virtual_experts/presentation/6Sales/task/sm_all_tasks_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/bottom_navigation/users/sm_users_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Account/ad_pro_account_screen.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/not_used_ad_pro_all_ads_screen.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/ads_not_used/not_used_ad_pro_all_ads_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/DashBoard/dashBoardAdProvider.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';

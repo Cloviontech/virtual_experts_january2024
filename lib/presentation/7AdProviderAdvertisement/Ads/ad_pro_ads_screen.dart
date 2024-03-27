@@ -1,19 +1,14 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
-import 'package:virtual_experts/model/data_model.dart';
-import 'package:virtual_experts/model_final/ad_dis_models/ad_dis_all_ads_model.dart';
 import 'package:virtual_experts/model_final/ad_provider_models/adprovider_ads.dart';
 import 'package:virtual_experts/model_final/ad_provider_models/all_ads_model.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads%20copy/AdProAddNewAdScreen.dart';
-import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/add_new_Ad_distributor.dart';
+import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Ads/ad_pro_add_new_ad_screen.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/filter_ad_distributorscreen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
@@ -186,15 +181,15 @@ class _AdProAllAdsScreenState extends State<AdProAllAdsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    // size = MediaQuery.of(context).size;
+    // height = size.height;
+    // width = size.width;
 
     return Scaffold(
-      // backgroundColor: ColorConstant.clPurple05,
-      // appBar: ClAppbarLeadArrowBackSuffHeart(
-      //   testingNextPage: AdProAddNewAdScreen(),
-      // ),
+      backgroundColor: ColorConstant.clPurple05,
+      appBar: ClAppbarLeadArrowBackSuffHeart(
+        testingNextPage: const AdProAddNewAdScreen(),
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -218,7 +213,7 @@ class _AdProAllAdsScreenState extends State<AdProAllAdsScreen> {
                 ),
               ),
               const D10HCustomClSizedBoxWidget(),
-              D10HCustomClSizedBoxWidget(),
+              const D10HCustomClSizedBoxWidget(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -274,7 +269,7 @@ class _AdProAllAdsScreenState extends State<AdProAllAdsScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AdProAddNewAdScreen(),
+                              builder: (context) => const AdProAddNewAdScreen(),
                             ),
                           );
                         },
@@ -389,7 +384,7 @@ class _AdProAllAdsScreenState extends State<AdProAllAdsScreen> {
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
                                 return AdDistributorBannerControl(
-                                  adName: snapshot.data![index].adType,
+                                  adName: snapshot.data![index].adName,
                                   isSwitched:
                                       snapshot.data![index].status == ('Closed')
                                           ? true
@@ -630,7 +625,7 @@ class _AdProAllAdsScreenState extends State<AdProAllAdsScreen> {
                       ),
                     ),
 
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
 

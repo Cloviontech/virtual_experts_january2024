@@ -155,32 +155,38 @@ class _WidgetTitleAndDropdownTextfieldFillBgColorChangebleState
           height: 10,
         ),
         Container(
+          height: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             // color: Colors.grey.shade100,
             color: widget.textfieldfillColorDropdown,
           ),
           child: DropdownButtonFormField<String>(
+            
+            // itemHeight: 20,
             value: widget.initialValue,
             decoration: InputDecoration(
-                border: InputBorder.none, contentPadding: EdgeInsets.all(10)
+                border: InputBorder.none, contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 10 )
                 // labelText: "Select"
                 ),
             // underline: SizedBox(),
             isExpanded: true,
             // autofocus: true,
-
+          
             dropdownColor: Colors.white,
             // focusColor: Colors.white,
             hint: Text(
               widget.DdbHint,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w400,
                   color: widget.titleFontColor ?? ColorConstant.gray800,
-                  fontSize: DeviceSize.itemWidth / 14),
+                  // fontSize: DeviceSize.itemWidth / 14
+                  
+                  ),
             ),
-
+          
             // value: dropdownValue,
             icon: Icon(
               Icons.arrow_drop_down,
@@ -188,15 +194,15 @@ class _WidgetTitleAndDropdownTextfieldFillBgColorChangebleState
             ),
             iconSize: 24,
             // elevation: 16,
-
+          
             // onChanged: (String? newValue) {
             //   setState(() {
             //     dropdownValue = newValue!;
             //   });
             // },
-
+          
             onChanged: widget.onChanged,
-
+          
             items:
                 widget.DbdItems.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(

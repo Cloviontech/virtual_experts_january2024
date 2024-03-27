@@ -19,9 +19,10 @@ import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:http/http.dart' as http;
 
 class SmReasonForrejectScreen extends StatefulWidget {
-  SmReasonForrejectScreen({super.key, required this.ad_Id});
+  SmReasonForrejectScreen({super.key, required this.ad_Id, required this.category});
 
   final String ad_Id;
+  final String category;
 
   @override
   State<SmReasonForrejectScreen> createState() =>
@@ -39,8 +40,19 @@ ad_reject_by_sm( String _profile_finder_uid) async {
   final statusCode;
   final body;
 
-  final url =
-      Uri.parse("http://${ApiService.ipAddress}/adsdis_status_reject/${widget.ad_Id}");
+  
+  // final url =
+  //     Uri.parse("http://${ApiService.ipAddress}/adsdis_status_reject/${widget.ad_Id}");
+  
+
+   String urlAdDis =
+        "http://${ApiService.ipAddress}/adsdis_status_reject/${widget.ad_Id}";
+    String urlAdPro =
+        "http://${ApiService.ipAddress}/adspro_status_reject/${widget.ad_Id}";
+
+   final url = Uri.parse(widget.category == 'ad_pro' ? urlAdPro : urlAdDis);
+
+  
   var request = http.MultipartRequest('POST', url);
 
   // request.fields['status'] = "reject";
@@ -58,7 +70,7 @@ ad_reject_by_sm( String _profile_finder_uid) async {
     if (response.statusCode == 200) {
 
        Fluttertoast.showToast(
-          msg: "Rejected Successfully...!",
+          msg: "${widget.ad_Id} Rejected Successfully...!",
           backgroundColor: ColorConstant.deepPurpleA200,
           textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,

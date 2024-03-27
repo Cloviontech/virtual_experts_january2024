@@ -16,7 +16,7 @@ import 'package:virtual_experts/model_final/sales_manager_models/view_adpro_id_m
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/matching_details_fifty_one_screen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/3_pm_id123456_about_me_pm_screen.dart';
-import 'package:virtual_experts/presentation/6Sales/task/my_clients/sm_add_new_ad_screen.dart';
+import 'package:virtual_experts/presentation/6Sales/task/my_clients/sm_approve_ad_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/task/my_clients/sm_tasks_add_new_client_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:http/http.dart' as http;
@@ -282,7 +282,7 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                                     ),
                                     //
                                     Text(
-                                      'ID: ${snapshot.data!.uid}',
+                                      'IDaa: ${snapshot.data!.uid}',
                                       style: const TextStyle(
                                         // fontFamily: "Inter",
                                         fontWeight: FontWeight.w500,
@@ -292,7 +292,7 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
 
                                     //
                                     Text(
-                                      'Type: ${snapshot.data!.workType}',
+                                      'Typeee: ${snapshot.data!.workType}',
                                       style: const TextStyle(
                                           // fontFamily: "Inter",
                                           // fontWeight: FontWeight.w400,
@@ -329,11 +329,14 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                         ),
                       ],
                     );
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
+                  } 
+                  
+                  // else if (snapshot.hasError) {
+                  //   return Text('${snapshot.error}');
+                  // }
 
-                  return CircularProgressIndicator();
+                  // return CircularProgressIndicator();
+                  return const SizedBox();
                 },
               )
 
@@ -441,15 +444,19 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                         ),
                       ],
                     );
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
+                  } 
+                  
+                  // else if (snapshot.hasError) {
+                  //   return Text('${snapshot.error}');
+                  // }
 
-                  return CircularProgressIndicator();
+                  // return CircularProgressIndicator();
+
+                  return const SizedBox();
                 },
               ),
 
-              D10HCustomClSizedBoxWidget(),
+              const D10HCustomClSizedBoxWidget(),
 
               //
 
@@ -480,8 +487,9 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {
-                                  return SmAddNewAdScreen(
-                                      uid1: widget.uid.toString());
+                                  return SmApproveAdScreen(
+                                    category: widget.category1,
+                                      uid1: widget.uid.toString(), index1: index,);
                                 }),
                               );
                             },
@@ -526,7 +534,7 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                                                           FontWeight.bold),
                                                 ),
                                                 Text(snapshot
-                                                        .data![index].adType
+                                                        .data![index].adId
                                                         .toString()
                                                     //  == 'null' ? '' : _smAllClientsDataModel[index].typesOfActivities .toString()
                                                     ),
@@ -571,7 +579,7 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Center(
                                               child: Text(
-                                                "View Details",
+                                                (snapshot.data![index].status == 'Pending') ? "Pending" : (snapshot.data![index].status == 'Active') ? "Active" : (snapshot.data![index].status == 'Closed') ? "Closed" : (snapshot.data![index].status == 'Rejected') ? "Rejected" : "View Details",
                                                 style: TextStyle(
                                                   color:
                                                       ColorConstant.whiteA700,
@@ -590,7 +598,7 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                     } else if (snapshot.hasError) {
                       return Text('${snapshot.error}');
                     }
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   },
                 )
                 :
@@ -619,8 +627,8 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {
-                                  return SmAddNewAdScreen(
-                                      uid1: widget.uid.toString());
+                                  return SmApproveAdScreen(
+                                      uid1: widget.uid.toString(), index1: index,);
                                 }),
                               );
                             },
@@ -665,7 +673,7 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                                                           FontWeight.bold),
                                                 ),
                                                 Text(snapshot
-                                                        .data![index].adType
+                                                        .data![index].adId
                                                         .toString()
                                                     //  == 'null' ? '' : _smAllClientsDataModel[index].typesOfActivities .toString()
                                                     ),
@@ -710,7 +718,7 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Center(
                                               child: Text(
-                                                "View Details",
+                                              (snapshot.data![index].status == 'Pending') ? "Pending" : (snapshot.data![index].status == 'Active') ? "Active" : "View Details",
                                                 style: TextStyle(
                                                   color:
                                                       ColorConstant.whiteA700,
@@ -729,7 +737,7 @@ class _SmViewClientScreenState extends State<SmViewClientScreen> {
                     } else if (snapshot.hasError) {
                       return Text('${snapshot.error}');
                     }
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   },
                 ),
               ),

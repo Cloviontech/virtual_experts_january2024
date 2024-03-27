@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/AdDisAdsScreen.dart';
+import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/Ads/ad_dis_ads_screen.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';

@@ -2884,48 +2884,51 @@ class _AdProDashboardScreenState extends State<AdProDashboardScreen> {
             SizedBox(
               height: DeviceSize.itemHeight / 10,
             ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              shadowColor: Colors.white,
-              elevation: 0,
-              child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(vertical: 20),
-                leading: Container(
-                  padding: const EdgeInsets.all(13),
-                  // height: DeviceSize.itemHeight,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: ColorConstant.clElevatedButtonColor2),
-                  child: SvgPicture.asset(
-                    'assets/images/3_user.svg',
-                    height: DeviceSize.itemHeight / 3,
+            Column(
+              children: [
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadowColor: Colors.white,
+                  elevation: 0,
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 20),
+                    leading: Container(
+                      padding: const EdgeInsets.all(13),
+                      // height: DeviceSize.itemHeight,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ColorConstant.clElevatedButtonColor2),
+                      child: SvgPicture.asset(
+                        'assets/images/3_user.svg',
+                        height: DeviceSize.itemHeight / 3,
+                      ),
+                    ),
+                    title: data == null
+                        ? const Text("0")
+                        : Text(
+                            data.length.toString(),
+                            style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                                color: ColorConstant.deepPurpleA200,
+                                fontSize: DeviceSize.itemHeight / 7),
+                          ),
+                    minLeadingWidth: 1,
+                    minVerticalPadding: 1,
+                    subtitle: Text(
+                      'Deioces',
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          color: ColorConstant.clFontGreyColor,
+                          fontSize: DeviceSize.itemHeight / 10),
+                    ),
                   ),
                 ),
-                title: data == null
-                    ? const Text("0")
-                    : Text(
-                        data.length.toString(),
-                        style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            color: ColorConstant.deepPurpleA200,
-                            fontSize: DeviceSize.itemHeight / 7),
-                      ),
-                minLeadingWidth: 1,
-                minVerticalPadding: 1,
-                subtitle: Text(
-                  'Deioces',
-                  style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      color: ColorConstant.clFontGreyColor,
-                      fontSize: DeviceSize.itemHeight / 10),
-                ),
-              ),
-            ),
-            Card(
+                // 
+                 Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -3361,6 +3364,9 @@ class _AdProDashboardScreenState extends State<AdProDashboardScreen> {
             SizedBox(
               height: DeviceSize.itemHeight / 2,
             ),
+              ],
+            ),
+           
           ],
         ),
       ),

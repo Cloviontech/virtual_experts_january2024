@@ -2,7 +2,6 @@
 //
 //     final blockedUsersByMe = blockedUsersByMeFromJson(jsonString);
 
-import 'dart:convert';
 
 // BlockedUsersByMe blockedUsersByMeFromJson(String str) => BlockedUsersByMe.fromJson(json.decode(str));
 

@@ -203,27 +203,30 @@ class _WidgetTitleAndTextfieldColorChangebleState
         SizedBox(
           height: 10,
         ),
-        TextField(
-            onChanged: widget.onChanged,
-            controller: widget.textFieldController,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(10),
-              hintText: widget.textFieldHint,
-              hintStyle: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w400,
-                  color: ColorConstant.blueGray900,
-                  fontSize: 14),
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(width: 0, color: Colors.transparent),
-                  borderRadius: BorderRadius.circular(10)),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(10)),
-              filled: true, //<-- SEE HERE
-              // fillColor: Colors.grey.shade100,
-              fillColor: widget.textFieldFillColor,
-            )),
+        SizedBox(
+          height: 40,
+          child: TextField(
+              onChanged: widget.onChanged,
+              controller: widget.textFieldController,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10),
+                hintText: widget.textFieldHint,
+                hintStyle: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w400,
+                    color: ColorConstant.blueGray900,
+                    fontSize: 14),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(width: 0, color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(10)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(10)),
+                filled: true, //<-- SEE HERE
+                // fillColor: Colors.grey.shade100,
+                fillColor: widget.textFieldFillColor,
+              )),
+        ),
         SizedBox(
           height: 20,
         ),
