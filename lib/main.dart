@@ -148,4 +148,34 @@ ad_pro_upload_account
 
 
 
+       // for nested json response
+
+  List<Map<String, dynamic>> dataList = [];
+
+  fetchData() async {
+    final response = await http.get(Uri.parse(
+        "http://${ApiServices.ipAddress}/pm_my_clients/${widget.profile_manager_id_close_deal}"));
+    print(
+        "http://${ApiServices.ipAddress}/pm_my_clients/${widget.profile_manager_id_close_deal}");
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      final jsonoutput = jsonDecode(response.body);
+      String key = jsonoutput.keys.first;
+      dataList = List<Map<String, dynamic>>.from(jsonoutput[key]);
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      //   print(dataList.first['uid']);
+    } else {
+      throw Exception('Unexpected Error Occured!');
+    }
+  }
+
+
+
+
  */

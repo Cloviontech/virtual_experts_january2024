@@ -182,6 +182,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model/data_model.dart';
 import 'package:virtual_experts/model_final/modelAllUser.dart';
 import 'package:virtual_experts/model_final/pi_models/PiMyClientsListModel.dart';
@@ -221,13 +222,7 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
 
   bool _isLoading = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchPmMyClients();
-    // _getData();
-    // _fetchAllProfFindsData();
-  }
+ 
 
 
   static List<UserModel> model = [];
@@ -319,6 +314,49 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
     debugPrint('_fetchPmMyClients end');
   }
 
+ //
+
+  List<Map<String, dynamic>> dataList = [];
+
+  fetchData() async {
+
+     SharedPreferences preferences = await SharedPreferences.getInstance();
+    profile_manager_id = preferences.getString("uid2").toString();
+    debugPrint('profile_manager_id : $profile_manager_id');
+    final response = await http.get(Uri.parse(
+        "http://${ApiServices.ipAddress}/pm_my_clients/$profile_manager_id"));
+    print(
+        "http://${ApiServices.ipAddress}/pm_my_clients/$profile_manager_id");
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      final jsonoutput = jsonDecode(response.body);
+      String key = jsonoutput.keys.first;
+      dataList = List<Map<String, dynamic>>.from(jsonoutput[key]);
+
+      setState(() {
+        _isLoading = false;
+      });
+
+        print(dataList.first['uid']);
+    } else {
+      throw Exception('Unexpected Error Occured!');
+    }
+  }
+
+
+   @override
+  void initState() {
+    super.initState();
+    // _fetchPmMyClients();
+    fetchData();
+    // _getData();
+    // _fetchAllProfFindsData();
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -383,7 +421,7 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
               //
               D10HCustomClSizedBoxWidget(),
               //
-              if (Loading)
+              if (_isLoading)
                 const Center(
                   child: CircularProgressIndicator(),
                 )
@@ -391,7 +429,7 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                 Container(
                   height: DeviceSize.itemHeight * 3,
                   child: ListView.builder(
-                    itemCount: _pmMyClientsListModel.length,
+                    itemCount: dataList.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
                       return GestureDetector(
@@ -400,7 +438,9 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                             context,
                             MaterialPageRoute(builder: (context) {
                               return PmViewComplaintsScreen(
-                                indexComplaint: 0, indexClientNo: 0,
+                                indexComplaint: index, indexClientNo: index, pf_uid:  dataList[index]
+                                                  ['uid']
+                                                  .toString() , 
                                 );
                             }),
                           );
@@ -426,10 +466,10 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                                       Align(
                                         alignment: Alignment.topCenter,
                                         child: CircleAvatar(
-                                            // backgroundImage: NetworkImage(
-                                            //     _allProfFinduserList[index]
-                                            //         .profilePicture
-                                            //         .toString()),
+                                            backgroundImage: NetworkImage(
+                                                dataList[index]
+                                                    ['profilePicture']
+                                                    .toString()),
                                             ),
                                       ),
                                       SizedBox(
@@ -442,10 +482,10 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              // _pmMyClientsListModel[index]
-                                              //     .uid
-                                              //     .toString(),
-                                              'ajith',
+                                              dataList[index]
+                                                  ['uid']
+                                                  .toString(),
+                                              // 'ajith',
                                               style: TextStyle(
                                                   fontFamily: 'Inter',
                                                   // fontWeight: FontWeight.w900,
@@ -456,8 +496,8 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                                                           15.413),
                                             ),
                                             Text(
-                                              _pmMyClientsListModel[index]
-                                                  .name
+                                              dataList[index]
+                                                  ['name']
                                                   .toString(),
                                               style: TextStyle(
                                                   fontFamily: 'Inter',
@@ -468,8 +508,8 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                                                           11.413),
                                             ),
                                             Text(
-                                              _pmMyClientsListModel[index]
-                                                  .email
+                                              dataList[index]
+                                                  ['email']
                                                   .toString(),
                                               style: TextStyle(
                                                   fontFamily: 'Inter',
@@ -481,8 +521,8 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                                                           11.413),
                                             ),
                                             Text(
-                                              _pmMyClientsListModel[index]
-                                                  .mobile
+                                              dataList[index]
+                                                  ['mobile']
                                                   .toString(),
                                               style: TextStyle(
                                                   fontFamily: 'Inter',
@@ -496,8 +536,8 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  _pmMyClientsListModel[index]
-                                                      .birthCity
+                                                  dataList[index]
+                                                      ['birthCity']
                                                       .toString(),
                                                   style: TextStyle(
                                                       fontFamily: 'Inter',
@@ -520,8 +560,8 @@ class _AllComplaintsScreenState extends State<AllComplaintsScreen> {
                                                               11.413),
                                                 ),
                                                 Text(
-                                                  _pmMyClientsListModel[index]
-                                                      .rCountry
+                                                  dataList[index]
+                                                      ['rCountry']
                                                       .toString(),
                                                   style: TextStyle(
                                                       fontFamily: 'Inter',
