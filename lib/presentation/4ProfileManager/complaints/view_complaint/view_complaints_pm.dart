@@ -198,74 +198,7 @@ class _PmViewComplaintsScreenState extends State<PmViewComplaintsScreen> {
                       children: [
                         const D10HCustomClSizedBoxWidget(),
 
-                        // _pmMyClientsListModel[widget.indexClientNo]
-                        //             .complaintsReplay![widget.indexComplaint] ==
-                        //         "empty"
-                        //     ? GestureDetector(
-                        //         onVerticalDragUpdate: (details) {
-                        //           setState(() {
-                        //             _height += details.delta.dy;
-                        //             // Constrain the height to a reasonable range
-                        //             _height = _height.clamp(50.0,
-                        //                 MediaQuery.of(context).size.height);
-                        //           });
-                        //         },
-                        //         child: Stack(
-                        //           children: [
-                        //             AnimatedContainer(
-                        //               duration: Duration(milliseconds: 300),
-                        //               height: _height,
-                        //               padding: EdgeInsets.all(1.0),
-                        //               child: TextField(
-                        //                 controller: _replyController,
-                        //                 maxLines: null,
-                        //                 decoration: InputDecoration(
-                        //                   hintText: 'Enter Reply',
-                        //                   border: OutlineInputBorder(
-                        //                       borderSide: BorderSide.none),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             Positioned(
-                        //               bottom:
-                        //                   2.0, // Adjust the position as needed
-                        //               right:
-                        //                   2.0, // Adjust the position as needed
-                        //               child: IconButton(
-                        //                 icon: Icon(Icons.expand_more),
-                        //                 onPressed: () {
-                        //                   // Add your onPressed logic here
-                        //                 },
-                        //               ),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       )
-                        //     : Container(
-                        //         decoration: BoxDecoration(
-                        //             color: ColorConstant.whiteA700,
-                        //             borderRadius: BorderRadius.circular(10),
-                        //             border: Border.all(
-                        //                 color: Colors.grey.shade300)),
-                        //         // height: 200,
-                        //         width: double.maxFinite,
-                        //         child: Padding(
-                        //           padding: const EdgeInsets.all(15.0),
-                        //           child: Center(
-                        //             child: Text(
-                        //               _pmMyClientsListModel[
-                        //                           widget.indexClientNo]
-                        //                       .complaintsReplay![
-                        //                   widget.indexComplaint + 1],
-
-                        //               // 'Where is the San Sebastian home? and she completed here graduation?',
-                        //               style: const TextStyle(
-                        //                   // fontWeight: FontWeight.bold, fontSize: 22
-                        //                   ),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
+                      
 
                         // Text(dataList[widget.indexComplaint]['complaints']),
                         // Text(dataList[widget.indexComplaint]['complaints_replay']),

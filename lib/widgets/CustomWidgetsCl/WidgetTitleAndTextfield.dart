@@ -8,13 +8,13 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 
 class WidgetTitleAndTextfield extends StatelessWidget {
   final String? textFieldTitle;
-
   final String textFieldHint;
   final dynamic onChanged;
   final Icon? suffixIcon;
   final String? initialValueExisitingCust;
-
   final TextEditingController? textFieldController;
+
+  Color fillColor ;
 
   WidgetTitleAndTextfield({
     super.key,
@@ -24,6 +24,7 @@ class WidgetTitleAndTextfield extends StatelessWidget {
     this.textFieldController,
     this.suffixIcon,
     this.initialValueExisitingCust,
+    this.fillColor = Colors.white,
   });
 
   @override
@@ -67,7 +68,7 @@ class WidgetTitleAndTextfield extends StatelessWidget {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(10)),
               filled: true, //<-- SEE HERE
-              fillColor: Colors.grey.shade100,
+              fillColor: fillColor,
               suffixIcon: suffixIcon,
             )),
 

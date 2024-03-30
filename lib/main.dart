@@ -176,6 +176,13 @@ ad_pro_upload_account
   }
 
 
+   customDisplayDataWidget(
+                                            name: 'Category',
+                                            value: snapshot
+                                                .data![widget.index1].category,
+                                          ),
+
+
 
 
  */

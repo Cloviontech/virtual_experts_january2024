@@ -6,7 +6,7 @@ import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/3ScreenSignin.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/8screenUploadTheID.dart';
 import 'package:virtual_experts/presentation/2HiringManager/BottomNavigationThirteenHiringMgrMainScreen.dart';
-import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/am_affiliate_markteting_screen_account.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/am_account_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/bottom_navigation/BottomNavigationBarSales.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/bottomNavigationAdProvider.dart';

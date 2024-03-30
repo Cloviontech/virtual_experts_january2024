@@ -15,6 +15,8 @@ class WidgetTitleAndDropdown extends StatefulWidget {
   final dynamic onChanged;
   
   final String? country;
+  final String? customInitialValue;
+  
 
   const WidgetTitleAndDropdown({
     super.key,
@@ -23,7 +25,7 @@ class WidgetTitleAndDropdown extends StatefulWidget {
     required this.DbdItems,
      this.onChanged,
     
-    this.country,
+    this.country, this.customInitialValue,
   });
 
   @override
@@ -65,7 +67,7 @@ class _WidgetTitleAndDropdownState extends State<WidgetTitleAndDropdown> {
             // hint:  Text(widget.DdbHint),
               hint:  widget.country == null?const Text("Select"):Text(widget.country.toString()),
            
-            // value: dropdownValue,
+            value: widget.customInitialValue,
             icon: Icon(
               Icons.arrow_drop_down,
               color: ColorConstant.red400,

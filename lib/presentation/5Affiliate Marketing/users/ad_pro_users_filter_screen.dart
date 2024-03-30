@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/3_pm_id123456_about_me_pm_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
@@ -9,9 +7,14 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
-class AddNewUserLocalAdminScreen extends StatelessWidget {
-  AddNewUserLocalAdminScreen({super.key});
+class AdProUsersFilterScreen extends StatefulWidget {
+  AdProUsersFilterScreen({super.key});
 
+  @override
+  State<AdProUsersFilterScreen> createState() => _AdProUsersFilterScreenState();
+}
+
+class _AdProUsersFilterScreenState extends State<AdProUsersFilterScreen> {
   List<String> adType = [
     "Ad1",
     "Ad2",
@@ -27,8 +30,6 @@ class AddNewUserLocalAdminScreen extends StatelessWidget {
     "Ad4",
     "Ad5",
   ];
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,24 +48,23 @@ class AddNewUserLocalAdminScreen extends StatelessWidget {
               children: [
                 Center(
                   child: Text(
-                    'Add New User',
+                    'Filter',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
                 SizedBox(
                   height: DeviceSize.itemHeight / 10,
                 ),
-                
                 WidgetTitleAndTextfieldColorChangeble(
                   onChanged: (vaue) {},
                   textFieldHint: 'Enter',
-                  textFieldTitle: 'First Name',
+                  textFieldTitle: 'ID',
                   // textFieldFillColor: Colors.yellow,
                 ),
                 WidgetTitleAndTextfieldColorChangeble(
                   onChanged: (vaue) {},
                   textFieldHint: 'Enter',
-                  textFieldTitle: 'Last Name',
+                  textFieldTitle: 'Name',
                 ),
                 WidgetTitleAndTextfieldColorChangeble(
                   onChanged: (vaue) {},
@@ -76,79 +76,21 @@ class AddNewUserLocalAdminScreen extends StatelessWidget {
                   textFieldHint: 'Enter',
                   textFieldTitle: 'Phone Number',
                 ),
+                WidgetTitleAndDropdownTextfieldFillBgColorChangeble(
+                    DdbTitle: 'Location',
+                    DdbHint: 'Select',
+                    DbdItems: adType,
+                    onChanged: (value) {},
 
-                CheckboxListTile(value: false,
-                 onChanged: (bool? value){
-                  value = value!;
-                 },
-                 activeColor: Colors.blue,
-                  controlAffinity: ListTileControlAffinity.leading,
-                 checkboxShape: CircleBorder(),
-                 title: Text('Approve And Reject Profiles'),
-                 
-                 ),
-                  CheckboxListTile(value: true,
-                 onChanged: (bool? value){
-                  value = value!;
-                 },
-                 activeColor: Colors.blue,
-                  controlAffinity: ListTileControlAffinity.leading,
-                 checkboxShape: CircleBorder(),
-                 title: Text('Edit Delete Profiles'),
-                 
-                 ),
-                  CheckboxListTile(value: false,
-                 onChanged: (bool? value){
-                  value = value!;
-                 },
-                 activeColor: Colors.blue,
-                  controlAffinity: ListTileControlAffinity.leading,
-                 checkboxShape: CircleBorder(),
-                 title: Text('Access Complaints'),
-                 
-                 ),
-                  CheckboxListTile(value: false,
-                 onChanged: (bool? value){
-                  value = value!;
-                 },
-                 activeColor: Colors.blue,
-                  controlAffinity: ListTileControlAffinity.leading,
-                 checkboxShape: CircleBorder(),
-                 title: Text('Reply to Complaints'),
-                 
-                 ),
-                  CheckboxListTile(value: false,
-                 onChanged: (bool? value){
-                  value = value!;
-                 },
-                 activeColor: Colors.blue,
-                  controlAffinity: ListTileControlAffinity.leading,
-                 checkboxShape: CircleBorder(),
-                 title: Text('Add User'),
-                 
-                 ),
-                  CheckboxListTile(value: false,
-                 onChanged: (bool? value){
-                  value = value!;
-                 },
-                 activeColor: Colors.blue,
-                  controlAffinity: ListTileControlAffinity.leading,
-                 checkboxShape: CircleBorder(),
-                 title: Text('Edit User'),
-                 
-                 ),
-                  CheckboxListTile(value: false,
-                 onChanged: (bool? value){
-                  value = value!;
-                 },
-                 activeColor: Colors.blue,
-                  controlAffinity: ListTileControlAffinity.leading,
-                 checkboxShape: CircleBorder(),
-                 title: Text('Delete User'),
-                 
-                 ),
-                 
-               
+                    
+                    ),
+                WidgetTitleAndDropdownTextfieldFillBgColorChangeble(
+                  DbdItems: _status,
+                  DdbHint: 'Select',
+                  DdbTitle: 'Status',
+                  onChanged: (value) {},
+                  // textfieldfillColorDropdown: Colors.yellow,
+                )
               ],
             ),
           ),
@@ -171,7 +113,7 @@ class AddNewUserLocalAdminScreen extends StatelessWidget {
                   //     end: Alignment(1, 0.56),
                   //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
                   child: Text(
-                    'Cansel',
+                    'Reset',
                     style: TextStyle(
                         color: ColorConstant.clPurple5,
                         // fontWeight: FontWeight.bold,
@@ -196,7 +138,7 @@ class AddNewUserLocalAdminScreen extends StatelessWidget {
                   //     end: Alignment(1, 0.56),
                   //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
                   child: Text(
-                    'Create',
+                    'Submit',
                     style: TextStyle(
                         color: ColorConstant.whiteA700,
                         // fontWeight: FontWeight.bold,

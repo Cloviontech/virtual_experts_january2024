@@ -6,23 +6,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
-import 'package:virtual_experts/presentation/1ProfileFinder/HappyCouplesUI/HappyCouplesPackagesThirtySixScreen.dart';
-import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenScreen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/1_account_local_admin_screen_account.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/1_account_local_admin_screen_account.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/dashboard_local_admin_screen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/1_pm_profile_finder_search_screen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/2_pm_filter_id_screen.dart';
-import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/af_m_acc_bal/af_m_account_bal.dart';
-import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/am_affiliate_markteting_screen_account.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/am_account_screen.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/dashboard/am_dashBoard.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/settings/settings.dart';
-import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/users/am_users_screen.dart';
 
 class BottomNavigationAffiliateMarketingScreen extends StatefulWidget {
   @override
@@ -60,8 +54,8 @@ class _BottomNavigationAffiliateMarketingScreenState
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
+    const AmDashboardScreen(),
     const AccountAffiliateMarketingScreenAccount(),
-   
     const AffliateMarketingAccountBalScr(),
      const SettingsAffiliateMarketing(),
   ];
@@ -149,25 +143,23 @@ class _BottomNavigationAffiliateMarketingScreenState
                 color: _selectedIndex == 1
                     ? ColorConstant.deepPurpleA200
                     : Colors.grey.shade300),
-            label: 'Task',
+            label: 'Account',
           ),
            BottomNavigationBarItem(
             icon: 
-
-            // SvgPicture.asset(
-            //     'assets/images/img_user_deep_purple_a200_24x23.svg',
-            Icon(Icons.person_outline,  color: _selectedIndex == 1
+            Icon(Icons.person_outline,  color: _selectedIndex == 2
                     ? ColorConstant.deepPurpleA200
                     : Colors.grey.shade300),
-                     label: 'Account',
+                     label: 'Commisi0n',
                ),
+               
            
           
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/images/icons8-settings.svg',
               height: DeviceSize.itemWidth / 8,
-              color: _selectedIndex == 2
+              color: _selectedIndex == 3
                   ? ColorConstant.deepPurpleA200
                   : Colors.grey.shade300,
             ),
@@ -285,6 +277,26 @@ class _BottomNavigationAffiliateMarketingScreenState
                    Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+
+                      
+
+                      GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return  AmAllUsersScreen();
+                          }),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Users",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                      GestureDetector(
                       onTap: () {
                         Navigator.push(

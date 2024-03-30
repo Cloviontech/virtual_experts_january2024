@@ -1,24 +1,15 @@
 import 'dart:io';
 
 import 'package:country_picker/country_picker.dart';
-import 'package:csc_picker/csc_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model_final/ad_provider_models/ad_pro_user_all_data_model_vibin.dart';
-import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/1_account_local_admin_screen_account.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/3_account_balance_Local_admin_screen_account.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/Account/ad_pro_account_screen.dart';
-import 'package:virtual_experts/presentation/7AdProviderAdvertisement/ads_not_used/not_used_ad_pro_all_ads_screen.dart';
-import 'package:virtual_experts/routes/app_routes.dart';
-// import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/3_account_balance_Local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/not_used_2_Edit_profile_local_admin_screen_Account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
@@ -27,7 +18,6 @@ import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:http/http.dart' as http;
-import '../../../model/data_model.dart';
 import '../../8AdDistributorAdvertisement/not_used_dashBoard/dashboard_ad_distributor.dart';
 
 class EditAccountAdPro extends StatefulWidget {
@@ -190,7 +180,7 @@ class EditAccountAdProState extends State<EditAccountAdPro> {
     return Scaffold(
       backgroundColor: ColorConstant.clPurple05,
       appBar: ClAppbarLeadArrowBackSuffHeart(
-        testingNextPage: AccountBalanceLocalAdminScreenAccount(),
+        testingNextPage: EditProfileLocalAdminScreenAccount(),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

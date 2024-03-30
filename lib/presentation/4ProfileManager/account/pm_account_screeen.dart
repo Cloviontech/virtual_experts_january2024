@@ -5,9 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/not_used_2_Edit_profile_local_admin_screen_Account.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/not_used_pm_edit_profile/edit_pro_prof_manag_scr.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/pm_acc_bal/pm_account_bal.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/sm_acc_bal/sm_account_bal.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/account/pm_edit_account_screen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/registeration/complete_profile_screen.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/2_Edit_profile_local_admin_screen_Account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
@@ -121,11 +120,11 @@ class _PmAccountScreenState
       //   testingNextPage: EditProfileLocalAdminScreenAccount(),
       // ),
       body: isLoading
-          ? CircularProgressIndicator()
+          ? const CircularProgressIndicator()
           : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -162,7 +161,7 @@ class _PmAccountScreenState
                                   DeviceSize.itemHeight / 20,
                                 ),
                                 child: Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Colors.red,
                                       shape: BoxShape.circle),
                                   child: CircleAvatar(
@@ -237,13 +236,13 @@ class _PmAccountScreenState
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) {
-                              return PmAccBalScr();
+                              return const PmAccBalScr();
                             }),
                           );
                         },
-                        contentPadding: EdgeInsets.symmetric(vertical: 20),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 20),
                         leading: Container(
-                          padding: EdgeInsets.all(13),
+                          padding: const EdgeInsets.all(13),
                           // height: DeviceSize.itemHeight,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -315,43 +314,43 @@ class _PmAccountScreenState
                 ),
               ),
             ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 10,
-              child: MyElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        // return EditAccountProfileManager();
-                        return const PmCompleteAccountScreen(
-                          navigateFrom: 'edit_account',
-                        );
-                      }),
-                    );
-                  },
-                  borderRadius: BorderRadius.circular(10),
-                  width: double.maxFinite,
-                  backgroundColor: Colors.transparent,
-                  // gradient: LinearGradient(
-                  //     begin: Alignment(0, 0.56),
-                  //     end: Alignment(1, 0.56),
-                  //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                        color: ColorConstant.whiteA700,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: DeviceSize.itemHeight / 12),
-                  )),
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       Expanded(
+      //         flex: 10,
+      //         child: MyElevatedButton(
+      //             onPressed: () {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(builder: (context) {
+      //                   // return EditAccountProfileManager();
+      //                   return const PmEditAccountScreen(
+      //                     navigateFrom: 'edit_account',
+      //                   );
+      //                 }),
+      //               );
+      //             },
+      //             borderRadius: BorderRadius.circular(10),
+      //             width: double.maxFinite,
+      //             backgroundColor: Colors.transparent,
+      //             // gradient: LinearGradient(
+      //             //     begin: Alignment(0, 0.56),
+      //             //     end: Alignment(1, 0.56),
+      //             //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
+      //             child: Text(
+      //               'Edit Profile',
+      //               style: TextStyle(
+      //                   color: ColorConstant.whiteA700,
+      //                   // fontWeight: FontWeight.bold,
+      //                   fontSize: DeviceSize.itemHeight / 12),
+      //             )),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/3_account_balance_Local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/not_used_2_Edit_profile_local_admin_screen_Account.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -255,7 +255,7 @@ class _EditProPriInvScrState
     return Scaffold(
       backgroundColor: ColorConstant.clPurple05,
       appBar: ClAppbarLeadArrowBackSuffHeart(
-        testingNextPage: AccountBalanceLocalAdminScreenAccount(),
+        testingNextPage: EditProfileLocalAdminScreenAccount(),
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),

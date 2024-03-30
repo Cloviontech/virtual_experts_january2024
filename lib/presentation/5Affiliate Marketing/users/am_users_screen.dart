@@ -10,6 +10,8 @@ import 'package:virtual_experts/model_final/ad_provider_models/ad_pro_all_users_
 import 'package:virtual_experts/model_final/modelAllUser.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/1_pm_profile_finder_search_screen.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/users/am_add_new_user.dart';
+import 'package:virtual_experts/presentation/5Affiliate%20Marketing/users/am_view_single_use_screen.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/users/ad_pro_users_add_new_user.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/users/ad_pro_users_edit_user.dart';
 import 'package:virtual_experts/presentation/7AdProviderAdvertisement/users/ad_pro_users_filter_screen.dart';
@@ -17,14 +19,14 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
-class AdProAllUsersScreen extends StatefulWidget {
-  AdProAllUsersScreen({super.key});
+class AmAllUsersScreen extends StatefulWidget {
+  AmAllUsersScreen({super.key});
 
   @override
-  State<AdProAllUsersScreen> createState() => _AdProAllUsersScreenState();
+  State<AmAllUsersScreen> createState() => _AmAllUsersScreenState();
 }
 
-class _AdProAllUsersScreenState extends State<AdProAllUsersScreen> {
+class _AmAllUsersScreenState extends State<AmAllUsersScreen> {
   List<String> roles = [
     'Regional Manager',
     'Local Admins',
@@ -44,7 +46,7 @@ class _AdProAllUsersScreenState extends State<AdProAllUsersScreen> {
     _fetchAllProfFindsData();
 
      // Start periodic data polling
-    Timer.periodic(Duration(seconds: 3), (Timer t) => _fetchAllProfFindsData());
+    // Timer.periodic(Duration(seconds: 3), (Timer t) => _fetchAllProfFindsData());
  
   }
 
@@ -77,12 +79,12 @@ class _AdProAllUsersScreenState extends State<AdProAllUsersScreen> {
   static List<AdProAllUsersDataModel> _adProAllUsersDataModel = [];
 
   Future<void> _fetchAllProfFindsData() async {
-    late String ad_pro_user_id;
+    late String amId;
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    ad_pro_user_id = preferences.getString("uid2").toString();
+    amId = preferences.getString("uid2").toString();
 
     final response = await http.get(Uri.parse(
-        "http://${ApiService.ipAddress}/ad_pro_my_users_data/$ad_pro_user_id"));
+        "http://${ApiService.ipAddress}/am_my_users_data/$amId"));
 
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -94,7 +96,7 @@ class _AdProAllUsersScreenState extends State<AdProAllUsersScreen> {
         _isLoading = false;
       });
 
-      debugPrint(_adProAllUsersDataModel[0].firstName);
+      // debugPrint(_adProAllUsersDataModel[0].firstName);
       // debugPrint(_adProAllUsersDataModel[0].accessPrivileges);
       // debugPrint(_adProAllUsersDataModel[1].firstName);
       // debugPrint(_adProAllUsersDataModel[1].accessPrivileges);
@@ -242,7 +244,7 @@ class _AdProAllUsersScreenState extends State<AdProAllUsersScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return AdProAddNewUserScreen();
+                          return AmAddNewUserScreen();
                         }),
                       );
                     },
@@ -273,162 +275,175 @@ class _AdProAllUsersScreenState extends State<AdProAllUsersScreen> {
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
-                      return Card(
-                        color: Colors.white,
-                        elevation: 0,
-                        child: Container(
-                          // height: DeviceSize.itemHeight / 0.9,
-                          // height: double.infinity,
-                          width: double.maxFinite,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Align(
-                                    //   alignment: Alignment.topCenter,
-                                    //   child: CircleAvatar(
-                                    //     // backgroundImage: NetworkImage(
-                                    //     //     _adProAllUsersDataModel[index]
-                                    //     //         .profilePicture
-                                    //     //         .toString()),
-                                    //   ),
-                                    // ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    SizedBox(
-                                      // width: DeviceSize.itemWidth / 1.3,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            _adProAllUsersDataModel[index]
-                                                .uid
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontFamily: 'Inter',
-                                                // fontWeight: FontWeight.w900,
-                                                color: ColorConstant
-                                                    .clGreyFontColor3,
-                                                fontSize: DeviceSize.itemWidth /
-                                                    15.413),
-                                          ),
-                                          Text(
-                                            _adProAllUsersDataModel[index]
-                                                .firstName
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.bold,
-                                                color: ColorConstant.black900,
-                                                fontSize: DeviceSize.itemWidth /
-                                                    11.413),
-                                          ),
-                                          Text(
-                                            _adProAllUsersDataModel[index]
-                                                .email
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontFamily: 'Inter',
-                                                // fontWeight: FontWeight.w900,
-                                                color: ColorConstant
-                                                    .clGreyFontColor3,
-                                                fontSize: DeviceSize.itemWidth /
-                                                    11.413),
-                                          ),
-                                          Text(
-                                            _adProAllUsersDataModel[index]
-                                                .mobile
-                                                .toString(),
-                                            style: TextStyle(
-                                                fontFamily: 'Inter',
-                                                // fontWeight: FontWeight.w900,
-                                                color: ColorConstant
-                                                    .clGreyFontColor3,
-                                                fontSize: DeviceSize.itemWidth /
-                                                    11.413),
-                                          ),
-                                        ],
+                      return GestureDetector(
+                        onTap: (){
+                          
+  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return AmViewSingleUsersScreen(createdUserUid:  _adProAllUsersDataModel[index]
+                                                  .uid
+                                                  .toString(),);
+                  }),
+                );
+                        },
+                        child: Card(
+                          color: Colors.white,
+                          elevation: 0,
+                          child: Container(
+                            // height: DeviceSize.itemHeight / 0.9,
+                            // height: double.infinity,
+                            width: double.maxFinite,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // Align(
+                                      //   alignment: Alignment.topCenter,
+                                      //   child: CircleAvatar(
+                                      //     // backgroundImage: NetworkImage(
+                                      //     //     _adProAllUsersDataModel[index]
+                                      //     //         .profilePicture
+                                      //     //         .toString()),
+                                      //   ),
+                                      // ),
+                                      SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  // crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return UserDialogBox(
-                                              deleteUserId:
-                                                  _adProAllUsersDataModel[index]
-                                                      .uid
-                                                      .toString(),
-                                              index1: index,
-                                            ); // Your custom widget goes here
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        width: DeviceSize.itemWidth / 4.5,
-                                        height: DeviceSize.itemHeight / 4.5,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                ColorConstant.clYellowBgColor4,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Center(
-                                              child: Icon(Icons.more_vert)
-                                          //     SvgPicture.asset(
-                                          //   "assets/images/more_2_fill.svg",
-                                          //   color: ColorConstant.deepPurpleA200,
-                                          // )
+                                      SizedBox(
+                                        // width: DeviceSize.itemWidth / 1.3,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _adProAllUsersDataModel[index]
+                                                  .uid
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  // fontWeight: FontWeight.w900,
+                                                  color: ColorConstant
+                                                      .clGreyFontColor3,
+                                                  fontSize: DeviceSize.itemWidth /
+                                                      15.413),
+                                            ),
+                                            Text(
+                                              _adProAllUsersDataModel[index]
+                                                  .firstName
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  fontWeight: FontWeight.bold,
+                                                  color: ColorConstant.black900,
+                                                  fontSize: DeviceSize.itemWidth /
+                                                      11.413),
+                                            ),
+                                            Text(
+                                              _adProAllUsersDataModel[index]
+                                                  .email
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  // fontWeight: FontWeight.w900,
+                                                  color: ColorConstant
+                                                      .clGreyFontColor3,
+                                                  fontSize: DeviceSize.itemWidth /
+                                                      11.413),
+                                            ),
+                                            Text(
+                                              _adProAllUsersDataModel[index]
+                                                  .mobile
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  // fontWeight: FontWeight.w900,
+                                                  color: ColorConstant
+                                                      .clGreyFontColor3,
+                                                  fontSize: DeviceSize.itemWidth /
+                                                      11.413),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    // crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return UserDialogBox(
+                                                deleteUserId:
+                                                    _adProAllUsersDataModel[index]
+                                                        .uid
+                                                        .toString(),
+                                                index1: index,
+                                              ); // Your custom widget goes here
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          width: DeviceSize.itemWidth / 4.5,
+                                          height: DeviceSize.itemHeight / 4.5,
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  ColorConstant.clYellowBgColor4,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Center(
+                                                child: Icon(Icons.more_vert)
+                                            //     SvgPicture.asset(
+                                            //   "assets/images/more_2_fill.svg",
+                                            //   color: ColorConstant.deepPurpleA200,
+                                            // )
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Switch(
-                                      // value: isSwitched,
-                                      value: _adProAllUsersDataModel[index]
-                                              .email ==
-                                          'sundershroff@gmail.com',
-                                      // onChanged: (value) {
-                                      //   setState(() {
-                                      //     // isSwitched = value;
-                                      //     // print(isSwitched);
-                                      //     Navigator.push(
-                                      //       context,
-                                      //       MaterialPageRoute(
-                                      //           builder: (context) {
-                                      //         return ReasonForrejectLocalAdminScreen(
-                                      //           profile_finder_id:
-                                      //               _adProAllUsersDataModel[
-                                      //                       index]
-                                      //                   .uid.toString(),
-                                      //         );
-                                      //       }),
-                                      //     );
-                                      //   });
-                                      // },
-                                      onChanged: (value) {},
-                                      activeTrackColor:
-                                          ColorConstant.deepPurpleA2006c,
-                                      activeColor: ColorConstant.deepPurpleA200,
-                                    ),
-                                  ],
-                                )
-                              ],
+                                      Switch(
+                                        // value: isSwitched,
+                                        value: _adProAllUsersDataModel[index]
+                                                .email ==
+                                            'sundershroff@gmail.com',
+                                        // onChanged: (value) {
+                                        //   setState(() {
+                                        //     // isSwitched = value;
+                                        //     // print(isSwitched);
+                                        //     Navigator.push(
+                                        //       context,
+                                        //       MaterialPageRoute(
+                                        //           builder: (context) {
+                                        //         return ReasonForrejectLocalAdminScreen(
+                                        //           profile_finder_id:
+                                        //               _adProAllUsersDataModel[
+                                        //                       index]
+                                        //                   .uid.toString(),
+                                        //         );
+                                        //       }),
+                                        //     );
+                                        //   });
+                                        // },
+                                        onChanged: (value) {},
+                                        activeTrackColor:
+                                            ColorConstant.deepPurpleA2006c,
+                                        activeColor: ColorConstant.deepPurpleA200,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),

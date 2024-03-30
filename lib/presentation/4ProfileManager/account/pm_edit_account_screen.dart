@@ -1,83 +1,8 @@
-// import 'package:flutter/material.dart';
-// import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
-// import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
-// import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
-// import 'package:virtual_experts/widgets/CustomWidgetsCl/bottomBarArrowAndGoNext.dart';
-// import 'package:virtual_experts/core/utils/size_utils.dart';
-
-// class CompleteProfileScreen extends StatelessWidget {
-//   const CompleteProfileScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Complete Profile",
-//             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-//         backgroundColor: Colors.white,
-//         centerTitle: true,
-//         elevation: 0,
-//       ),
-//       body: SingleChildScrollView(
-//         physics: BouncingScrollPhysics(),
-//         child: Padding(
-//           padding: EdgeInsets.symmetric(horizontal: 20),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             children: [
-//               Center(
-//                 child: Text(
-//                   'Enter your basic details for the better service!',
-//                   // style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: DeviceSize.itemHeight / 10,
-//               ),
-//               WidgetTitleAndTextfield(
-//                 onChanged: (value) {},
-//                 textFieldHint: 'Enter',
-//                 textFieldTitle: 'Full Name',
-//               ),
-//               WidgetTitleAndDropdown(
-//                 DbdItems: ["India", "USA", "UK"],
-//                 DdbHint: 'Select',
-//                 DdbTitle: 'Country',
-//                 onChanged: (value) {},
-//               ),
-//               WidgetTitleAndDropdown(
-//                 DbdItems: ["India", "USA", "UK"],
-//                 DdbHint: 'Select',
-//                 DdbTitle: 'City',
-//                 onChanged: (value) {},
-//               ),
-//               WidgetTitleAndTextfielGreyBgAdjHeight(
-//                   textFieldTitle: "Address",
-//                   textFieldHint: "Select",
-//                   onChanged: (value) {},
-//                   maxLines: 5),
-//               WidgetTitleAndDropdown(
-//                 DbdItems: ["India", "USA", "UK"],
-//                 DdbHint: 'Select',
-//                 DdbTitle: 'Hiring Manager',
-//                 onChanged: (value) {},
-//               ),
-//               CustomClRectangleCheckboxWithQuestionWidget2( question: 'I agree to the Terms of Service and Privacy Policy.',),
-
-//             ],
-//           ),
-//         ),
-//       ),
-//       bottomNavigationBar: const bottomBarArrowAndGoNext()
-//     );
-//   }
-// }
-
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:country_picker/country_picker.dart';
+import 'package:csc_picker/csc_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:http/http.dart' as http;
+import 'package:virtual_experts/model_final/profile_manager_models/pm_my_data.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/pm_account_screeen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/not_used_dashboard_local_admin_screen.dart';
@@ -93,47 +19,106 @@ import '../../../core/utils/color_constant.dart';
 import '../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
-import '../../2HiringManager/a_dublicate_hiring_manager.dart/registeration/ContactDetailsElevenHiringMgrScreen.dart';
-import '../../7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import '../../8AdDistributorAdvertisement/not_used_dashBoard/dashboard_ad_distributor.dart';
 
-class PmCompleteAccountScreen extends StatefulWidget {
-  const PmCompleteAccountScreen({super.key, this.navigateFrom});
+class PmEditAccountScreen extends StatefulWidget {
+  const PmEditAccountScreen({super.key, this.navigateFrom});
 
   final String? navigateFrom;
 
   @override
-  State<PmCompleteAccountScreen> createState() =>
-      _PmCompleteAccountScreenState();
+  State<PmEditAccountScreen> createState() => _PmEditAccountScreenState();
 }
 
-class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
+class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
+  static List<PmMyData> pmMyData = [];
+  
+  late String officialStateName;
+
+  Future<void> fetchPmMyData() async {
+    late String profile_manager_id;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    profile_manager_id = preferences.getString("uid2").toString();
+
+    final response = await http.get(Uri.parse(
+        "http://${ApiServices.ipAddress}/pm_my_data/$profile_manager_id"));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      setState(() {
+        pmMyData = jsonResponse.map((data) => PmMyData.fromJson(data)).toList();
+        loadingPmMyData = false;
+        _officeNameController =
+            TextEditingController(text: pmMyData[0].officeName);
+        _officeAddressController =
+            TextEditingController(text: pmMyData[0].officeAddress);
+        _firstNameController =
+            TextEditingController(text: pmMyData[0].firstName);
+        _lastNameController =
+            TextEditingController(text: pmMyData[0].lastName);
+        _personAddressController =
+            TextEditingController(text: pmMyData[0].personalAddress);
+        _levelOfEducationController =
+            TextEditingController(text: pmMyData[0].levelEducation);
+         _fieldOfStudyController =
+            TextEditingController(text: pmMyData[0].fieldStudy);
+        _jobTitleController =
+            TextEditingController(text: pmMyData[0].workJobTitle);
+        _companyNameController =
+            TextEditingController(text: pmMyData[0].workCompanyName);
+        _companyNameController =
+            TextEditingController(text: pmMyData[0].workCompanyName);
+        _jobLocationController =
+            TextEditingController(text: pmMyData[0].workJobLocation);
+        _jobTitleController1 =
+            TextEditingController(text: pmMyData[0].exJobTitle);
+        _companyNameController1 =
+            TextEditingController(text: pmMyData[0].exCompanyName);
+        _yearOfExperienceController =
+            TextEditingController(text: pmMyData[0].yearExperience);
+        _locationController =
+            TextEditingController(text: pmMyData[0].exLocation);
+        _typeController =
+            TextEditingController(text: pmMyData[0].workType);
+        _gstNumberController =
+            TextEditingController(text: pmMyData[0].gstNumber);
+        _companyPanNumberController =
+            TextEditingController(text: pmMyData[0].companyPanNo);
+         _arnNumberController =
+            TextEditingController(text: pmMyData[0].arnNo);
+        
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _officeNameController = TextEditingController();
-  final TextEditingController _officeAddressController =
+  TextEditingController _officeNameController = TextEditingController();
+   TextEditingController _officeAddressController =
       TextEditingController();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _personAddressController =
+   TextEditingController _firstNameController = TextEditingController();
+   TextEditingController _lastNameController = TextEditingController();
+   TextEditingController _personAddressController =
       TextEditingController();
 
-  final TextEditingController _levelOfEducationController =
+   TextEditingController _levelOfEducationController =
       TextEditingController();
-  final TextEditingController _fieldOfStudyController = TextEditingController();
-  final TextEditingController _jobTitleController = TextEditingController();
-  final TextEditingController _companyNameController = TextEditingController();
-  final TextEditingController _jobLocationController = TextEditingController();
+   TextEditingController _fieldOfStudyController = TextEditingController();
+   TextEditingController _jobTitleController = TextEditingController();
+   TextEditingController _companyNameController = TextEditingController();
+   TextEditingController _jobLocationController = TextEditingController();
   // EXPERIENCE
-  final TextEditingController _jobTitleController1 = TextEditingController();
-  final TextEditingController _companyNameController1 = TextEditingController();
-  final TextEditingController _yearOfExperienceController =
+   TextEditingController _jobTitleController1 = TextEditingController();
+   TextEditingController _companyNameController1 = TextEditingController();
+   TextEditingController _yearOfExperienceController =
       TextEditingController();
-  final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _typeController = TextEditingController();
-  final TextEditingController _gstNumberController = TextEditingController();
-  final TextEditingController _companyPanNumberController =
+   TextEditingController _locationController = TextEditingController();
+   TextEditingController _typeController = TextEditingController();
+   TextEditingController _gstNumberController = TextEditingController();
+   TextEditingController _companyPanNumberController =
       TextEditingController();
-  final TextEditingController _arnNumberController = TextEditingController();
+   TextEditingController _arnNumberController = TextEditingController();
 
   String? countryName;
   String? selectedCityValue;
@@ -154,6 +139,7 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
 
   FilePickerResult? result;
   bool isLoading = false;
+  bool loadingPmMyData = false;
   String? degreeCertificate;
   String? experienceCertificate;
   String? gstCertificate;
@@ -246,23 +232,20 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
       print("ad pro data add successfully : ${response.statusCode}");
 
       if (widget.navigateFrom == 'edit_account') {
-        
-             Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return PmAccountScreen();
-                  }),
-                );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return const PmAccountScreen();
+          }),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return BottomNavigationLocalAdminScreen();
+          }),
+        );
       }
-
-      else {
-
-      Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return BottomNavigationLocalAdminScreen();
-                  }),
-                ); }
     }
   }
 
@@ -326,6 +309,7 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
     getAccessToken();
     hiringManagerUid();
     salesManagerUid();
+    fetchPmMyData();
   }
 
   @override
@@ -347,57 +331,137 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
               children: [
                 const Center(
                     child: Text(
-                  "Profile Manager Complete Profile",
+                  "Edit Profile",
                   style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
                       height: 3),
                 )),
-                _buildTextField(
-                    tittle: 'Office Name*',
-                    hintText: 'Enter Your Office Name',
-                    controller: _officeNameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        print("Please Type Your Office Name");
-                        return "Please Type Your Office Name";
-                      }
-                      return null;
-                    }),
-                const SizedBox(height: 15),
-                GestureDetector(
-                  onTap: () {
-                    showCountryPicker(
-                        context: context,
-                        onSelect: (Country country) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(country.name)));
-                          setState(() {
-                            countryName = country.name;
-                          });
-                          print(country.name);
-                        });
-                  },
-                  child: WidgetTitleAndDropdown(
-                    DdbTitle: "Country*",
-                    DdbHint: "Select",
-                    DbdItems: Dbditems,
-                    country: countryName,
-                  ),
-                ),
 
-                WidgetTitleAndDropdown(
-                  DdbTitle: "City*",
-                  DdbHint: "Select",
-                  DbdItems: Dbditems,
-                  onChanged: (String? newValue) {
+                const Text('length'),
+
+                Text(pmMyData.length.toString()),
+                _buildTextField(
+                  tittle: 'Office Name*',
+                  hintText: 'Enter Your Office Name',
+                  controller: _officeNameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      print("Please Type Your Office Name");
+                      return "Please Type Your Office Name";
+                    }
+                    return null;
+                  },
+
+                  // initialValue: pmMyData[0].officeName,
+                ),
+                const SizedBox(height: 15),
+                // GestureDetector(
+                //   onTap: () {
+                //     showCountryPicker(
+                //         context: context,
+                //         onSelect: (Country country) {
+                //           ScaffoldMessenger.of(context).showSnackBar(
+                //               SnackBar(content: Text(country.name)));
+                //           setState(() {
+                //             countryName = country.name;
+                //           });
+                //           print(country.name);
+                //         });
+                //   },
+                //   child: WidgetTitleAndDropdown(
+                //     DdbTitle: "Country*",
+                //     DdbHint: "Select",
+                //     DbdItems: Dbditems,
+                //     country: countryName,
+                //     // customInitialValue: '${pmMyData[0].officeCountry.toString()}',
+                //   ),
+
+                // ),
+
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "City*",
+                //   DdbHint: "Select",
+                //   DbdItems: Dbditems,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       selectedCityValue = newValue!;
+                //     });
+                //     // uploadAboutMe("Physical Status", dropdownValue.toString());
+                //   },
+                // ),
+
+
+
+                CSCPicker(
+                  layout: Layout.vertical,
+
+                  flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+                  dropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.white,
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 1)),
+                  disabledDropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey.shade100,
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 1)),
+
+                  countrySearchPlaceholder: "Country",
+                  stateSearchPlaceholder: "State",
+                  citySearchPlaceholder: "City",
+
+                  countryDropdownLabel: "Country*",
+                  stateDropdownLabel: "State*",
+                  cityDropdownLabel: "City*",
+
+                  // defaultCountry: CscCountry.India,
+                  showStates: false,
+
+                  currentCountry: pmMyData[0].officeCountry,
+                  currentCity:  pmMyData[0].officeCity,
+
+                  selectedItemStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+
+                  ///DropdownDialog Heading style [OPTIONAL PARAMETER]
+                  dropdownHeadingStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+
+                  dropdownItemStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+
+                  dropdownDialogRadius: 10.0,
+
+                  searchBarRadius: 10.0,
+
+                  onCountryChanged: (country) async {
                     setState(() {
-                      selectedCityValue = newValue!;
+                     countryName  = country;
                     });
-                    // uploadAboutMe("Physical Status", dropdownValue.toString());
+                  },
+
+                  onStateChanged: (state) async {
+                    setState(() {
+                      officialStateName = state!;
+                    });
+                  },
+
+                  onCityChanged: (city) async {
+                    setState(() {
+                      selectedCityValue = city!;
+                    });
                   },
                 ),
+                const D10HCustomClSizedBoxWidget(),
                 WidgetTitleAndTextfielGreyBgAdjHeight(
                   textFieldHint: 'Enter Your Office Address',
                   textFieldTitle: "Office Address",
@@ -435,48 +499,120 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
                     }),
                 const SizedBox(height: 15),
                 _buildTextField(
-                    tittle: 'Last Name*',
-                    hintText: 'Enter Your Last Name',
-                    controller: _lastNameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        print("Please Type Your Last Name");
-                        return "Please Type Your Last Name";
-                      }
-                      return null;
-                    }),
+                  tittle: 'Last Name*',
+                  hintText: 'Enter Your Last Name',
+                  controller: _lastNameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      print("Please Type Your Last Name");
+                      return "Please Type Your Last Name";
+                    }
+                    return null;
+                  },
+                  // initialValue: pmMyData[0].lastName
+                ),
                 const SizedBox(height: 15),
-                GestureDetector(
-                  onTap: () {
-                    showCountryPicker(
-                        context: context,
-                        onSelect: (Country country) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(country.name)));
-                          setState(() {
-                            personalCountryName = country.name;
-                          });
-                          print(country.name);
-                        });
-                  },
-                  child: WidgetTitleAndDropdown(
-                    DdbTitle: "Country*",
-                    DdbHint: "Select",
-                    DbdItems: Dbditems,
-                    country: personalCountryName,
+                // GestureDetector(
+                //   onTap: () {
+                //     showCountryPicker(
+                //         context: context,
+                //         onSelect: (Country country) {
+                //           ScaffoldMessenger.of(context).showSnackBar(
+                //               SnackBar(content: Text(country.name)));
+                //           setState(() {
+                //             personalCountryName = country.name;
+                //           });
+                //           print(country.name);
+                //         });
+                //   },
+                //   child: WidgetTitleAndDropdown(
+                //     DdbTitle: "Country*",
+                //     DdbHint: "Select",
+                //     DbdItems: Dbditems,
+                //     country: personalCountryName,
+                //   ),
+                // ),
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "City*",
+                //   DdbHint: "Select",
+                //   DbdItems: Dbditems,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       personalSelectedCityValue = newValue!;
+                //     });
+                //     // uploadAboutMe("Physical Status", dropdownValue.toString());
+                //   },
+                // ),
+
+                 CSCPicker(
+                  layout: Layout.vertical,
+
+                  flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+                  dropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.white,
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 1)),
+                  disabledDropdownDecoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      color: Colors.grey.shade100,
+                      border:
+                          Border.all(color: Colors.grey.shade300, width: 1)),
+
+                  countrySearchPlaceholder: "Country",
+                  stateSearchPlaceholder: "State",
+                  citySearchPlaceholder: "City",
+
+                  countryDropdownLabel: "Country*",
+                  stateDropdownLabel: "State*",
+                  cityDropdownLabel: "City*",
+
+                  // defaultCountry: CscCountry.India,
+                  showStates: false,
+
+                  currentCountry: pmMyData[0].personalCountry,
+                  currentCity:  pmMyData[0].personalCity,
+
+                  selectedItemStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
                   ),
-                ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "City*",
-                  DdbHint: "Select",
-                  DbdItems: Dbditems,
-                  onChanged: (String? newValue) {
+
+                  ///DropdownDialog Heading style [OPTIONAL PARAMETER]
+                  dropdownHeadingStyle: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+
+                  dropdownItemStyle: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+
+                  dropdownDialogRadius: 10.0,
+
+                  searchBarRadius: 10.0,
+
+                  onCountryChanged: (country) async {
                     setState(() {
-                      personalSelectedCityValue = newValue!;
+                     personalCountryName  = country;
                     });
-                    // uploadAboutMe("Physical Status", dropdownValue.toString());
+                  },
+
+                  onStateChanged: (state) async {
+                    setState(() {
+                      personalSelectedCityValue = state!;
+                    });
+                  },
+
+                  onCityChanged: (city) async {
+                    setState(() {
+                      selectedCityValue = city!;
+                    });
                   },
                 ),
+                const D10HCustomClSizedBoxWidget(),
+                
                 WidgetTitleAndTextfielGreyBgAdjHeight(
                   textFieldHint: 'Enter Your Address',
                   textFieldTitle: "Address",
@@ -507,6 +643,7 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
                     });
                     // uploadAboutMe("Physical Status", dropdownValue.toString());
                   },
+                  // customInitialValue: pmMyData[0].companyPanNo,
                 ),
                 WidgetTitleAndDropdown(
                   DdbTitle: "Sales Manager*",
@@ -519,6 +656,8 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
                     });
                     // uploadAboutMe("Physical Status", dropdownValue.toString());
                   },
+
+                  // customInitialValue: pmMyData[0].companyPanNo,
                 ),
 
                 const Center(
@@ -860,7 +999,7 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
                 const SizedBox(height: 15),
 
                 workType == "Personal"
-                    ? SizedBox()
+                    ? const SizedBox()
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -1126,12 +1265,14 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
     );
   }
 
-  Widget _buildTextField(
-      {String? tittle,
-      String? hintText,
-      TextEditingController? controller,
-      Function? onChanged,
-      required Function validator}) {
+  Widget _buildTextField({
+    String? tittle,
+    String? hintText,
+    TextEditingController? controller,
+    Function? onChanged,
+    required Function validator,
+    String? initialValue,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1142,6 +1283,7 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
         ),
         const SizedBox(height: 10),
         TextFormField(
+          initialValue: initialValue,
           controller: controller,
           autofocus: true,
           decoration: InputDecoration(
@@ -1165,8 +1307,6 @@ class _PmCompleteAccountScreenState extends State<PmCompleteAccountScreen> {
     );
   }
 }
-
-
 
 // Images Send MultipartFile
 // request.files.add(

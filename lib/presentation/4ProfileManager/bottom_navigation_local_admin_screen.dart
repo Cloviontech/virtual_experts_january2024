@@ -8,9 +8,10 @@ import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen
 import 'package:virtual_experts/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenScreen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/Settings/pm_settings_screen.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/1_account_local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/account/pm_account_screeen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/complaints/AllComplaints.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/dashboard_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/not_used_dashboard_local_admin_screen.dart';
+import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/pm_dashBoard.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/1_pm_profile_finder_search_screen.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
@@ -53,7 +54,7 @@ class _BottomNavigationLocalAdminScreenState
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    DashboardLocalAdminScreen(),
+    const pmDashboardScreen(),
     ProfileFinderSearchLocalAdminScreen(),
     const PmAccountScreen(),
     PmSettingsScreen(),

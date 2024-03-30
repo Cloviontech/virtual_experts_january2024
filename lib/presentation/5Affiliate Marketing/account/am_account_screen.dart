@@ -4,17 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
+import 'package:virtual_experts/model_final/am_models/my_aff_data_model.dart';
 import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
-import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/3ScreenSignin.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/7screenChooseService.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/not_used_2_Edit_profile_local_admin_screen_Account.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/not_used_pm_edit_profile/edit_pro_prof_manag_scr.dart';
-import 'package:virtual_experts/presentation/4ProfileManager/account/pm_acc_bal/pm_account_bal.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/sm_acc_bal/sm_account_bal.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/am_edit_profile_affiliate_marketing/edit_pro_prof_manag_scr.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/2_Edit_profile_local_admin_screen_Account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
-import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
@@ -58,31 +54,31 @@ class _AccountAffiliateMarketingScreenAccountState
   List <String> personalDetailsAns =[];
   
 
-  Future<void> _fetchDataPmMyData() async {
-    // late String private_investicator_id;
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    profile_manager_id = preferences.getString("uid2").toString();
+  // Future<void> _fetchDataPmMyData() async {
+  //   late String am_id;
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //   am_id = preferences.getString("uid2").toString();
 
-    final response = await http.get(Uri.parse(
-        "http://${ApiServices.ipAddress}/pm_my_data/I037O8S3W06"));
+  //   final response = await http.get(Uri.parse(
+  //       "http://${ApiServices.ipAddress}/my_aff_data/$am_id"));
 
-    if (response.statusCode == 200) {
-      List<dynamic> jsonResponse = jsonDecode(response.body);
-      setState(() {
-        _pmMyData =
-            jsonResponse.map((data) => PmMyData.fromJson(data)).toList();
-             isLoading = false;
-                officeDetailsAns.add( _pmMyData[0].officeName.toString(),);
-                officeDetailsAns.add( _pmMyData[0].mobile.toString(),);
-                officeDetailsAns.add( _pmMyData[0].email.toString(),);
-                officeDetailsAns.add( _pmMyData[0].officeCity.toString(),);
-                officeDetailsAns.add( _pmMyData[0].officeAddress.toString(),);
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> jsonResponse = jsonDecode(response.body);
+  //     setState(() {
+  //       _pmMyData =
+  //           jsonResponse.map((data) => PmMyData.fromJson(data)).toList();
+  //            isLoading = false;
+  //               officeDetailsAns.add( _pmMyData[0].officeName.toString(),);
+  //               officeDetailsAns.add( _pmMyData[0].mobile.toString(),);
+  //               officeDetailsAns.add( _pmMyData[0].email.toString(),);
+  //               officeDetailsAns.add( _pmMyData[0].officeCity.toString(),);
+  //               officeDetailsAns.add( _pmMyData[0].officeAddress.toString(),);
                 
-                 personalDetailsAns.add( _pmMyData[0].officeName.toString(),);
-                personalDetailsAns.add( _pmMyData[0].mobile.toString(),);
-                personalDetailsAns.add( _pmMyData[0].email.toString(),);
-                personalDetailsAns.add( _pmMyData[0].officeCity.toString(),);
-                personalDetailsAns.add( _pmMyData[0].officeAddress.toString(),);
+  //                personalDetailsAns.add( _pmMyData[0].officeName.toString(),);
+  //               personalDetailsAns.add( _pmMyData[0].mobile.toString(),);
+  //               personalDetailsAns.add( _pmMyData[0].email.toString(),);
+  //               personalDetailsAns.add( _pmMyData[0].officeCity.toString(),);
+  //               personalDetailsAns.add( _pmMyData[0].officeAddress.toString(),);
                 
                 
 
@@ -93,19 +89,19 @@ class _AccountAffiliateMarketingScreenAccountState
 
         
 
-      });
+  //     });
      
 
-      debugPrint(_pmMyData[0].profilePicture);
+  //     debugPrint(_pmMyData[0].profilePicture);
 
 
     
-    } else {
-      throw Exception('Failed to load data');
-    }
+  //   } else {
+  //     throw Exception('Failed to load data');
+  //   }
 
-    _pmMyData[0].createdDate.toString();
-  }
+  //   _pmMyData[0].createdDate.toString();
+  // }
 
   // 
     String? _service = '';
@@ -120,6 +116,57 @@ class _AccountAffiliateMarketingScreenAccountState
   }
 
 
+  static List<MyAffData> myAffData = [];
+
+  bool loadingmyAffData = true;
+
+  fetchMyAffData() async {
+    debugPrint('entering getUsers function');
+
+     late String am_id;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    am_id = preferences.getString("uid2").toString();
+
+    
+    try {
+      var url = Uri.parse("http://${ApiServices.ipAddress}/my_aff_data/$am_id");
+
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      setState(() {
+        myAffData = jsonResponse
+            .map((data) => MyAffData.fromJson(data))
+            .toList();
+
+               loadingmyAffData = false;
+
+
+                officeDetailsAns.add(myAffData[0].fullName .toString(),);
+                officeDetailsAns.add(myAffData[0].mobile.toString(),);
+                officeDetailsAns.add(myAffData[0].email.toString(),);
+                officeDetailsAns.add(myAffData[0].personalCity .toString(),);
+                officeDetailsAns.add(myAffData[0].personalAddress .toString(),);
+
+      });
+
+      debugPrint('error code');
+      print(response.statusCode);
+    } 
+
+    else {
+       print(response.statusCode);
+    }
+    }
+    
+    
+    catch (e) {
+      print("error $e");
+    }
+   
+  } 
+
 
  
 
@@ -128,7 +175,7 @@ class _AccountAffiliateMarketingScreenAccountState
   void initState() {
     super.initState();
     getServiceOfUser();
-    _fetchDataPmMyData();
+    fetchMyAffData();
   }
 
   @override
@@ -140,7 +187,7 @@ class _AccountAffiliateMarketingScreenAccountState
       // ),
       body: 
 
-       isLoading ? 
+          loadingmyAffData ? 
 
        Center(child: CircularProgressIndicator()) :
       
@@ -167,17 +214,7 @@ class _AccountAffiliateMarketingScreenAccountState
               SizedBox(
                 height: DeviceSize.itemHeight / 10,
               ),
-               Center(
-                child: Text(
-                  // '${_service}',
-                 '${SevenChooseServiceScreen.sharedPreffService}',
-                  style: TextStyle(
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w700,
-                      color: ColorConstant.blueGray900,
-                      fontSize: 18),
-                ),
-              ),
+              
               Card(
                 elevation: 0,
                 child: Padding(
@@ -187,21 +224,21 @@ class _AccountAffiliateMarketingScreenAccountState
                   child: Column(
                     children: [
                       Container(
-                        height: DeviceSize.itemHeight / 2,
-                        width: DeviceSize.itemHeight / 2,
+                        // height: DeviceSize.itemHeight / 2,
+                        // width: DeviceSize.itemHeight / 2,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             color: ColorConstant.clPurple1),
                         child: Padding(
                           padding: EdgeInsets.all(
-                            DeviceSize.itemHeight / 20,
+                            10,
                           ),
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.red, shape: BoxShape.circle),
                             child: CircleAvatar(
                               backgroundImage: NetworkImage(
-                                _pmMyData[0].profilePicture.toString(),
+                                  myAffData[0].profilePicture.toString(),
                               ),
                             ),
                           ),
@@ -212,7 +249,7 @@ class _AccountAffiliateMarketingScreenAccountState
                       ),
                       Text(
                         // 'Jacob Jones',
-                        _pmMyData[0].firstName.toString(),
+                        myAffData[0].fullName.toString(),
                         style: TextStyle(
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w700,
@@ -242,16 +279,18 @@ class _AccountAffiliateMarketingScreenAccountState
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 color: ColorConstant.blueGray900,
-                                fontSize: DeviceSize.itemWidth / 11.411),
+                                // fontSize: DeviceSize.itemWidth / 11.411
+                                ),
                           ),
                           Text(
-                            'test',
-                            // _pmMyData[0].createdDate.toString(),
+                            // 'test',
+                            myAffData[0].createdDate.toString(),
                             style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 color: ColorConstant.deepPurpleA200,
-                                fontSize: DeviceSize.itemWidth / 11.411),
+                                // fontSize: DeviceSize.itemWidth / 11.411
+                                ),
                           ),
                         ],
                       ),
@@ -349,40 +388,40 @@ class _AccountAffiliateMarketingScreenAccountState
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 10,
-              child: MyElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return EditAccountAffiliateMarketing();
-                      }),
-                    );
-                  },
-                  borderRadius: BorderRadius.circular(10),
-                  width: double.maxFinite,
-                  backgroundColor: Colors.transparent,
-                  // gradient: LinearGradient(
-                  //     begin: Alignment(0, 0.56),
-                  //     end: Alignment(1, 0.56),
-                  //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                        color: ColorConstant.whiteA700,
-                        // fontWeight: FontWeight.bold,
-                        fontSize: DeviceSize.itemHeight / 12),
-                  )),
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       Expanded(
+      //         flex: 10,
+      //         child: MyElevatedButton(
+      //             onPressed: () {
+      //               Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(builder: (context) {
+      //                   return EditAccountAffiliateMarketing();
+      //                 }),
+      //               );
+      //             },
+      //             borderRadius: BorderRadius.circular(10),
+      //             width: double.maxFinite,
+      //             backgroundColor: Colors.transparent,
+      //             // gradient: LinearGradient(
+      //             //     begin: Alignment(0, 0.56),
+      //             //     end: Alignment(1, 0.56),
+      //             //     colors: [ColorConstant.indigo500, ColorConstant.purpleA100]),
+      //             child: Text(
+      //               'Edit Profile',
+      //               style: TextStyle(
+      //                   color: ColorConstant.whiteA700,
+      //                   // fontWeight: FontWeight.bold,
+      //                   fontSize: DeviceSize.itemHeight / 12),
+      //             )),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

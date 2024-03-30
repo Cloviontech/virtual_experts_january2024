@@ -5,9 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model/data_model.dart';
 import 'package:virtual_experts/model_final/modelAllUser.dart';
 import 'package:virtual_experts/model_final/profile_manager_models/all_profile_finders_data.dart';
+import 'package:virtual_experts/model_final/profile_manager_models/alluserdata.dart';
+import 'package:virtual_experts/model_final/profile_manager_models/pm_my_data.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/3_pm_id123456_about_me_pm_screen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/pm_profile_finder/4_pm_reason_for_reject_screen.dart';
@@ -87,27 +90,56 @@ class _ProfileFinderSearchLocalAdminScreenState
     return model;
   }
 
-  static List<AllProfFindsData> _allProfFinduserList = [];
+  static List<Alluserdata> alluserdata = [];
 
   Future<void> _fetchAllProfFindsData() async {
-    // late String private_investicator_id;
+    // late String profile_manager_id;
     //  SharedPreferences preferences = await SharedPreferences.getInstance();
-    //   private_investicator_id = preferences.getString("uid2").toString();
+    //   profile_manager_id = preferences.getString("uid2").toString();
 
     final response =
-        await http.get(Uri.parse("http://${ApiService.ipAddress}/alluserdata"));
+        await http.get(Uri.parse("http://${ApiServices.ipAddress}/alluserdata/"));
 
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
       setState(() {
-        _allProfFinduserList = jsonResponse
-            .map((data) => AllProfFindsData.fromJson(data))
+        alluserdata = jsonResponse
+            .map((data) => Alluserdata.fromJson(data))
             .toList();
       });
 
       _isLoading = false;
 
-      debugPrint(_allProfFinduserList[0].profilePicture);
+      debugPrint(alluserdata[0].profilePicture);
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.body);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+
+  static List<PmMyData> pmMyData = [];
+
+  Future<void> fetchPmMyData() async {
+    late String profile_manager_id;
+     SharedPreferences preferences = await SharedPreferences.getInstance();
+      profile_manager_id = preferences.getString("uid2").toString();
+
+    final response =
+        await http.get(Uri.parse("http://${ApiServices.ipAddress}/pm_my_data/"));
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      setState(() {
+            pmMyData = jsonResponse
+            .map((data) => PmMyData.fromJson(data))
+            .toList();
+      });
+
+      _isLoading = false;
+
+      debugPrint(alluserdata[0].profilePicture);
       debugPrint(response.statusCode.toString());
       debugPrint(response.body);
     } else {
@@ -143,6 +175,8 @@ class _ProfileFinderSearchLocalAdminScreenState
                       fontSize: DeviceSize.itemWidth / 9.411),
                 ),
               ),
+
+              Text(alluserdata.length.toString()),
               D10HCustomClSizedBoxWidget(),
               Container(
                 height: DeviceSize.itemHeight / 3.8228,
@@ -188,7 +222,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                             MaterialPageRoute(builder: (context) {
                               return Id123456AboutMeLocalAdminScreen(
                                 profile_finder_user_id:
-                                    _allProfFinduserList[index].uid,
+                                    alluserdata[index].uid.toString(),
                               );
                             }),
                           );
@@ -212,7 +246,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                           alignment: Alignment.topCenter,
                                           child: CircleAvatar(
                                             backgroundImage: NetworkImage(
-                                                _allProfFinduserList[index]
+                                                alluserdata[index]
                                                     .profilePicture
                                                     .toString()),
                                           ),
@@ -227,7 +261,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                _allProfFinduserList[index].uid,
+                                                alluserdata[index].uid.toString(),
                                                 style: TextStyle(
                                                     fontFamily: 'Inter',
                                                     // fontWeight: FontWeight.w900,
@@ -238,7 +272,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                                             15.413),
                                               ),
                                               Text(
-                                                _allProfFinduserList[index]
+                                                alluserdata[index]
                                                     .name
                                                     .toString(),
                                                 style: TextStyle(
@@ -251,7 +285,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                                             11.413),
                                               ),
                                               Text(
-                                                _allProfFinduserList[index]
+                                                alluserdata[index]
                                                     .mobile
                                                     .toString(),
                                                 style: TextStyle(
@@ -265,7 +299,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                               ),
                                               Expanded(
                                                 child: Text(
-                                                  _allProfFinduserList[index]
+                                                  alluserdata[index]
                                                       .birthCity
                                                       .toString(),
                                                   style: TextStyle(
@@ -295,9 +329,9 @@ class _ProfileFinderSearchLocalAdminScreenState
                                               builder: (BuildContext context) {
                                                 return CustomDialog(
                                                   profile_finder_id:
-                                                      _allProfFinduserList[
+                                                      alluserdata[
                                                               index]
-                                                          .uid,
+                                                          .uid.toString(),
                                                 ); // Your custom widget goes here
                                               },
                                             );
@@ -324,7 +358,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                         ),
                                         Switch(
                                           // value: isSwitched,
-                                          value: _allProfFinduserList[index]
+                                          value: alluserdata[index]
                                                   .gender ==
                                               'male',
                                           // onChanged: (value) {
@@ -337,7 +371,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                                           //           builder: (context) {
                                           //         return ReasonForrejectLocalAdminScreen(
                                           //           profile_finder_id:
-                                          //               _allProfFinduserList[
+                                          //               alluserdata[
                                           //                       index]
                                           //                   .uid,
                                           //         );
@@ -361,7 +395,7 @@ class _ProfileFinderSearchLocalAdminScreenState
                         ),
                       );
                     },
-                    itemCount: _allProfFinduserList.length,
+                    itemCount: alluserdata.length,
                   ),
                 ),
             ],
