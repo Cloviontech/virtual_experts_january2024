@@ -212,7 +212,7 @@ class AppRoutes {
 
     bottomNavigationPrivateInvestigatorScreen: (context) => BottomNavigationPrivateInvestigatorScreen(),
 
-    bottomNavigationPrivateInvestigatorScreen: (context) => BottomNavigationPrivateInvestigatorScreen(),
+    // bottomNavigationPrivateInvestigatorScreen: (context) => BottomNavigationPrivateInvestigatorScreen(),
 
     clientsHome: (context) => ClientsHome(),
 

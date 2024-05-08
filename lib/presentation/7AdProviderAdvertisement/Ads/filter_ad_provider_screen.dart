@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:virtual_experts/presentation/8AdDistributorAdvertisement/bottomNavigationBarAdDistributor.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -12,7 +11,8 @@ class AdDistributorFilterScreen extends StatefulWidget {
   const AdDistributorFilterScreen({Key? key}) : super(key: key);
 
   @override
-  State<AdDistributorFilterScreen> createState() => _AdDistributorFilterScreenState();
+  State<AdDistributorFilterScreen> createState() =>
+      _AdDistributorFilterScreenState();
 }
 
 class _AdDistributorFilterScreenState extends State<AdDistributorFilterScreen> {
@@ -21,7 +21,6 @@ class _AdDistributorFilterScreenState extends State<AdDistributorFilterScreen> {
 
   String selectedAdType = '';
   String selectedStatus = '';
-  
 
   List<String> adType = [
     "Image Ads",
@@ -53,8 +52,7 @@ class _AdDistributorFilterScreenState extends State<AdDistributorFilterScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-            
-               const Center(
+              const Center(
                 child: Text(
                   'Filter',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -63,10 +61,6 @@ class _AdDistributorFilterScreenState extends State<AdDistributorFilterScreen> {
               SizedBox(
                 height: DeviceSize.itemHeight / 10,
               ),
-
-
-
-
               WidgetTitleAndTextfieldColorChangeble(
                 onChanged: (vaue) {},
                 textFieldHint: 'Enter',
@@ -134,8 +128,17 @@ class _AdDistributorFilterScreenState extends State<AdDistributorFilterScreen> {
               flex: 10,
               child: MyElevatedButton(
                   onPressed: () {
-
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavigationAdDistributorScreen(option: "1", id: adIdController.text, name: adNameController.text, adType: selectedAdType, adStatus: selectedStatus,)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                BottomNavigationAdDistributorScreen(
+                                  option: "1",
+                                  id: adIdController.text,
+                                  name: adNameController.text,
+                                  adType: selectedAdType,
+                                  adStatus: selectedStatus,
+                                )));
                   },
                   borderRadius: BorderRadius.circular(10),
                   width: double.maxFinite,
@@ -152,10 +155,10 @@ class _AdDistributorFilterScreenState extends State<AdDistributorFilterScreen> {
                         fontSize: DeviceSize.itemHeight / 12),
                   )),
             ),
-            ],
-          ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }
 

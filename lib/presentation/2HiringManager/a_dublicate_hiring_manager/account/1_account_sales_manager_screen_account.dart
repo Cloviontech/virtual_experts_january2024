@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/sm_acc_bal/sm_account_bal.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/account/sm_acc_bal/sm_account_bal.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
@@ -22,6 +22,8 @@ class AccountHiringManagerScreen extends StatefulWidget {
 }
 
 class _AccountHiringManagerScreenState extends State<AccountHiringManagerScreen> {
+  
+  
   late String profile_manager_id;
 
   static List<PmMyData> _pmMyData = [];

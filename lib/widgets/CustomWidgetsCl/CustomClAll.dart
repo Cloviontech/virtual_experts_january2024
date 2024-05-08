@@ -725,14 +725,12 @@ class CustomClCheckboxWithQueCenAnsWidget extends StatelessWidget {
   }
 }
 
-
-
 class CustomClCheckboxWithQueCenAnsWidgetWithAnswer extends StatelessWidget {
-   CustomClCheckboxWithQueCenAnsWidgetWithAnswer({
+  CustomClCheckboxWithQueCenAnsWidgetWithAnswer({
     super.key,
     required this.question,
-    required this.completed,  this.onTap,
-
+    required this.completed,
+    this.onTap,
   });
 
   final String question;
@@ -795,9 +793,7 @@ class CustomClCheckboxWithQueCenAnsWidgetWithAnswer extends StatelessWidget {
           height: MediaQuery.of(context).size.height / 100,
         ),
         GestureDetector(
-          onTap: 
-            onTap,
-          
+          onTap: onTap,
           child: Container(
             height: DeviceSize.itemHeight / 6,
             width: double.maxFinite,
@@ -888,12 +884,11 @@ class CustomClRectangleCheckboxWithQuestionWidget extends StatelessWidget {
 
 // Check box color Changable
 class CustomClRectangleCheckboxWithQuestionWidget2 extends StatefulWidget {
-   CustomClRectangleCheckboxWithQuestionWidget2({
+  CustomClRectangleCheckboxWithQuestionWidget2({
     super.key,
     required this.question,
     this.tick = false,
     this.tickFunction,
-
   });
 
   final String question;
@@ -922,13 +917,12 @@ class _CustomClRectangleCheckboxWithQuestionWidget2State
               height: 20,
               width: 20,
               child: Checkbox(
-                
                 // tristate: true,
                 // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
 
                 value: widget.tick,
                 onChanged: (newBool) {
-                 widget.tickFunction!();
+                  widget.tickFunction!();
                   setState(() {
                     widget.tick = newBool!;
                   });
@@ -936,7 +930,7 @@ class _CustomClRectangleCheckboxWithQuestionWidget2State
                 side: BorderSide(color: ColorConstant.clCheckboxDarkBlueColor),
                 shape: const RoundedRectangleBorder(),
                 activeColor: ColorConstant.clCheckboxDarkBlueColor,
-                
+
                 fillColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
                   if (states.contains(MaterialState.disabled)) {
@@ -1535,27 +1529,26 @@ class MatchingListImageHorizontalListView extends StatefulWidget {
   final String imageAddress;
   final String listType;
 
-  MatchingListImageHorizontalListView({
-    super.key,
-    this.leftTitle,
-    this.leftSubTitle,
-    this.rightTitle = "",
-    this.leftBigTitle,
-    this.imageWord1,
-    this.imageWord2,
-    this.imageWord3,
-    required this.imageWord4,
-    required this.listLength,
-    required this.imageAddress, required this.listType
-  });
-
+  MatchingListImageHorizontalListView(
+      {super.key,
+      this.leftTitle,
+      this.leftSubTitle,
+      this.rightTitle = "",
+      this.leftBigTitle,
+      this.imageWord1,
+      this.imageWord2,
+      this.imageWord3,
+      required this.imageWord4,
+      required this.listLength,
+      required this.imageAddress,
+      required this.listType});
 
   BlockedUsersByMe _blockedUsersByMe = BlockedUsersByMe();
- static  AllMaletest1 allMaletest1 = AllMaletest1();
- static int bugNullBlock =0;
+  static AllMaletest1 allMaletest1 = AllMaletest1();
+  static int bugNullBlock = 0;
 
-    
-  static profMore(context, String requestingUserid, String userUid, String listType) async {
+  static profMore(
+      context, String requestingUserid, String userUid, String listType) async {
     showDialog(
       context: context,
       builder: (context) => Center(
@@ -1568,16 +1561,17 @@ class MatchingListImageHorizontalListView extends StatefulWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextButton(
-                child:   listType =='block' ? 
-                
-                 Text( "Unblock this Profile" ,)
-                 :
-                 Text( "Block this Profile" ,) ,
+                child: listType == 'block'
+                    ? Text(
+                        "Unblock this Profile",
+                      )
+                    : Text(
+                        "Block this Profile",
+                      ),
                 onPressed: () async {
-                  await 
-                   listType =='block' ? 
-                  unBlock(requestingUserid, userUid) :
-                  block('Not Interested', requestingUserid, userUid);
+                  await listType == 'block'
+                      ? unBlock(requestingUserid, userUid)
+                      : block('Not Interested', requestingUserid, userUid);
                 },
               ),
               TextButton(
@@ -1633,67 +1627,53 @@ class MatchingListImageHorizontalListView extends StatefulWidget {
       print(json);
 
       debugPrint("Blocked succesfully");
-      
+
       // MatchingListImageHorizontalListView.allMaletest1.curUsers[]
-      
     } else {
       print("error");
       print(response1.statusCode);
     }
   }
 
-
-  
-
   //
 
-   
-
-  
-  static unBlock( String unBlockedId, String userUid1) async {
+  static unBlock(String unBlockedId, String userUid1) async {
     debugPrint('UnBlock Start');
 
     debugPrint(userUid1);
 
-  
     print('unBlock Processing');
 
-   
     try {
-        var requestBody = {
-      
-      'unblock': unBlockedId,
-    };
-       var responseUnb = await http.post(
-      Uri.parse("http://10.0.2.2:8000/block/$userUid1"),
-      // headers: headers,
-      body: requestBody,
-    );
+      var requestBody = {
+        'unblock': unBlockedId,
+      };
+      var responseUnb = await http.post(
+        Uri.parse("http://10.0.2.2:8000/block/$userUid1"),
+        // headers: headers,
+        body: requestBody,
+      );
 
-    print('unBlock Request Processing');
+      print('unBlock Request Processing');
       // var bson = jsonDecode(response1.body);
 
-    debugPrint("statusCodeIs${responseUnb.statusCode}");
+      debugPrint("statusCodeIs${responseUnb.statusCode}");
 
-    if (responseUnb.statusCode == 200) {
-      print(responseUnb.body);
-      // print(bson);
+      if (responseUnb.statusCode == 200) {
+        print(responseUnb.body);
+        // print(bson);
 
-      debugPrint("unBlocked succesfully");
-    } else {
-      print("error");
-      print(responseUnb.statusCode);
-    }
-      
+        debugPrint("unBlocked succesfully");
+      } else {
+        print("error");
+        print(responseUnb.statusCode);
+      }
     } catch (e) {
       debugPrint(e.toString());
-      
     }
-
-    
   }
 
-  // 
+  //
 
   static showAlert(BuildContext context, String requestingUserId) {
     bool _phone = false;
@@ -1867,7 +1847,7 @@ class MatchingListImageHorizontalListView extends StatefulWidget {
       }
     }
   }
-  
+
   @override
   State<MatchingListImageHorizontalListView> createState() =>
       _MatchingListImageHorizontalListViewState();
@@ -1887,8 +1867,6 @@ class _MatchingListImageHorizontalListViewState
 
   // late List<UserModel>? _userModel = [];
 
- 
-
   // void _getDataMatList() async {
   //   _userModel = (await ApiService1().getUsers1());
   //   Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
@@ -1898,13 +1876,11 @@ class _MatchingListImageHorizontalListViewState
     debugPrint('_getDataMatList start');
 
     late String private_investicator_id;
-   SharedPreferences preferences = await SharedPreferences.getInstance();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     private_investicator_id = preferences.getString("uid2").toString();
-  
-    
-    final responseMatList = await http.get(
-        Uri.parse("http://${ApiService.ipAddress}/pi_my_clients/$private_investicator_id"
-             ));
+
+    final responseMatList = await http.get(Uri.parse(
+        "http://${ApiService.ipAddress}/pi_my_clients/$private_investicator_id"));
     var json = jsonDecode(responseMatList.body);
 
     print("statusCodeIs${responseMatList.statusCode}");
@@ -1912,11 +1888,12 @@ class _MatchingListImageHorizontalListViewState
     if (responseMatList.statusCode == 200) {
       print(responseMatList.body);
 
-      setState(()  {
+      setState(() {
         isLoading = false;
-       MatchingListImageHorizontalListView.allMaletest1 = AllMaletest1.fromJson(json,  ThreeSigninScreen.userUidAccess );
+        MatchingListImageHorizontalListView.allMaletest1 =
+            AllMaletest1.fromJson(json, ThreeSigninScreen.userUidAccess);
       });
-        } else {
+    } else {
       print("error");
       print(responseMatList.statusCode);
     }
@@ -1926,14 +1903,11 @@ class _MatchingListImageHorizontalListViewState
 
   //  BlockedUsersByMe _blockedUsersByMe = BlockedUsersByMe();
 
-  
-
   _getblockedProfilesByMe() async {
     debugPrint('getblockedProfilesByMe start');
-    
-    final responseMatList = await http.get(
-        Uri.parse("http://${ApiService.ipAddress}/block/${ThreeSigninScreen.userUidAccess}"
-             ));
+
+    final responseMatList = await http.get(Uri.parse(
+        "http://${ApiService.ipAddress}/block/${ThreeSigninScreen.userUidAccess}"));
     var json = jsonDecode(responseMatList.body);
 
     print("statusCodeIs${responseMatList.statusCode}");
@@ -1941,12 +1915,14 @@ class _MatchingListImageHorizontalListViewState
     if (responseMatList.statusCode == 200) {
       print(responseMatList.body);
 
-      setState(()  {
-       MatchingListImageHorizontalListView.bugNullBlock =1;
+      setState(() {
+        MatchingListImageHorizontalListView.bugNullBlock = 1;
         isLoading = false;
-        EveryMaleFourtyNineScreen.blockedUsersByMe = BlockedProfilesByMe1.fromJson(json,  ThreeSigninScreen.userUidAccess );
+        EveryMaleFourtyNineScreen.blockedUsersByMe =
+            BlockedProfilesByMe1.fromJson(
+                json, ThreeSigninScreen.userUidAccess);
       });
-        } else {
+    } else {
       print("error");
       print(responseMatList.statusCode);
     }
@@ -1954,13 +1930,9 @@ class _MatchingListImageHorizontalListViewState
     debugPrint('getblockedProfilesByMe end');
   }
 
-
-
-
-
-   Future<void> addsavedSearch(
-    int index, 
-   ) async {
+  Future<void> addsavedSearch(
+    int index,
+  ) async {
     debugPrint('add saved search start');
     try {
       // Replace the URL with your API endpoint
@@ -1970,13 +1942,20 @@ class _MatchingListImageHorizontalListViewState
       Map<String, dynamic> requestBody = {
         // 'data': data,
         'add new': {
-          'tag': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].profileTag,
-          'country': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].rCountry,
-          'city': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].fatherCity,
-          'age': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].age,
-          'complexion': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].complexion,
-          'gender': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].gender,
-          'denomination': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].denomination,
+          'tag': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].profileTag,
+          'country': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].rCountry,
+          'city': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].fatherCity,
+          'age': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].age,
+          'complexion': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].complexion,
+          'gender': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].gender,
+          'denomination': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].denomination,
         }
         // Add other fields as needed for your API request
       };
@@ -1988,8 +1967,6 @@ class _MatchingListImageHorizontalListViewState
         //   // Add any other headers if required by your API
         // },
         body: jsonEncode(requestBody),
-
-        
       );
 
       if (response.statusCode == 200) {
@@ -2007,10 +1984,11 @@ class _MatchingListImageHorizontalListViewState
     }
     debugPrint('add saved search end');
   }
-  // 
+
+  //
   Future<void> editSavedSearch(
-    int index, 
-   ) async {
+    int index,
+  ) async {
     debugPrint('edit saved search start');
     try {
       // Replace the URL with your API endpoint
@@ -2020,15 +1998,22 @@ class _MatchingListImageHorizontalListViewState
       Map<String, dynamic> requestBody = {
         // 'data': data,
         'edit': {
-          'tag_edit': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].profileTag,
-          'country': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].rCountry,
-          'city': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].fatherCity,
-          'age': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].age,
-          'complexion': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].complexion,
-          'gender': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].gender,
-          'denomination': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].denomination,
-          'id': MatchingListImageHorizontalListView.allMaletest1.curUsers![index].id,
-          
+          'tag_edit': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].profileTag,
+          'country': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].rCountry,
+          'city': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].fatherCity,
+          'age': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].age,
+          'complexion': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].complexion,
+          'gender': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].gender,
+          'denomination': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].denomination,
+          'id': MatchingListImageHorizontalListView
+              .allMaletest1.curUsers![index].id,
         }
         // Add other fields as needed for your API request
       };
@@ -2040,8 +2025,6 @@ class _MatchingListImageHorizontalListViewState
           // Add any other headers if required by your API
         },
         body: jsonEncode(requestBody),
-
-        
       );
 
       if (response.statusCode == 200) {
@@ -2059,10 +2042,11 @@ class _MatchingListImageHorizontalListViewState
     }
     debugPrint('Edit saved search end');
   }
-  // 
+
+  //
   Future<void> removesavedSearch(
-    int index, 
-   ) async {
+    int index,
+  ) async {
     debugPrint('remove saved search start');
     try {
       // Replace the URL with your API endpoint
@@ -2073,7 +2057,6 @@ class _MatchingListImageHorizontalListViewState
         // 'data': data,
         'remove': {
           'remove': ['remove']
-          
         }
         // Add other fields as needed for your API request
       };
@@ -2085,8 +2068,6 @@ class _MatchingListImageHorizontalListViewState
           // Add any other headers if required by your API
         },
         body: jsonEncode(requestBody),
-
-        
       );
 
       if (response.statusCode == 200) {
@@ -2104,7 +2085,6 @@ class _MatchingListImageHorizontalListViewState
     }
     debugPrint('remove saved search end');
   }
-
 
   //
 
@@ -2159,59 +2139,49 @@ class _MatchingListImageHorizontalListViewState
   //   }
   // }
 
-
-
-  static favourites(String favId, ) async {
+  static favourites(
+    String favId,
+  ) async {
     debugPrint(ThreeSigninScreen.userUidAccess);
     debugPrint('fav Start + $favId');
-
-    
 
     var requestBody = {
       'myfavorite_id': favId,
     };
     print('fav Processing');
 
-
     try {
-       var responsefav = await http.post(
-      Uri.parse("http://10.0.2.2:8000/favorites/${ThreeSigninScreen.userUidAccess}"),
-      // headers: headers,
-      body: requestBody,
-    );
+      var responsefav = await http.post(
+        Uri.parse(
+            "http://10.0.2.2:8000/favorites/${ThreeSigninScreen.userUidAccess}"),
+        // headers: headers,
+        body: requestBody,
+      );
 
-    print('fav Processing');
+      print('fav Processing');
 
-    // var json = jsonDecode(responsefav.body);
+      // var json = jsonDecode(responsefav.body);
 
-    debugPrint("statusCodeIs${responsefav.statusCode}");
+      debugPrint("statusCodeIs${responsefav.statusCode}");
 
-     if (responsefav.statusCode == 200) {
-      print(responsefav.body);
-      print(json);
+      if (responsefav.statusCode == 200) {
+        print(responsefav.body);
+        print(json);
 
-      debugPrint("Fav succesfully");
-    } else {
-      print("error");
-      print(responsefav.statusCode);
-    }
-
-      
+        debugPrint("Fav succesfully");
+      } else {
+        print("error");
+        print(responsefav.statusCode);
+      }
     } catch (e) {
-
       debugPrint(e.toString());
-      
     }
-
-   
-   
   }
 
   @override
   void initState() {
     _getDataMatList();
     // getblockedProfilesByMe();
-    
 
     // DataImport.allMaleUsers_import();
     super.initState();
@@ -2235,8 +2205,8 @@ class _MatchingListImageHorizontalListViewState
 
     print("uid for Update ${ThreeSigninScreen.userUidAccess}");
 
-    final url =
-        Uri.parse("http://${ApiService.ipAddress}/about_candidate/${ThreeSigninScreen.userUidAccess}");
+    final url = Uri.parse(
+        "http://${ApiService.ipAddress}/about_candidate/${ThreeSigninScreen.userUidAccess}");
     final request = http.MultipartRequest('POST', url);
 
 //     List<String> sibling_nameedit = ['xx', 'yy', 'zz'];
@@ -2395,19 +2365,16 @@ class _MatchingListImageHorizontalListViewState
         // Text(_userModel!.length.toString(),),
 
         isLoading == true
-        // DataImport.isLoading_all_male_users == true
-            ? Center(child: CircularProgressIndicator(
-              semanticsLabel: 'Loading',
-            ))
-            :
-            
-             SizedBox(
+            // DataImport.isLoading_all_male_users == true
+            ? Center(
+                child: CircularProgressIndicator(
+                semanticsLabel: 'Loading',
+              ))
+            : SizedBox(
                 height: 200,
-                child: 
-                ListView.builder(
+                child: ListView.builder(
                     shrinkWrap: true,
                     physics: PageScrollPhysics(),
-                    
                     itemCount: widget.listLength,
                     // itemCount: DataImport.allMaleUsers.curUsers!.length,
                     scrollDirection: Axis.horizontal,
@@ -2434,12 +2401,9 @@ class _MatchingListImageHorizontalListViewState
                                   fit: BoxFit.cover,
                                   // imageUrl: MatchingListImageHorizontalListView.imageAddress,
 
-                                  imageUrl: MatchingListImageHorizontalListView.allMaletest1.curUsers![index].selfie,
+                                  imageUrl: MatchingListImageHorizontalListView
+                                      .allMaletest1.curUsers![index].selfie,
                                   // imageUrl: EveryMaleFourtyNineScreen.blockedUsersByMe.myProf![index].selfie.toString(),
-                                  
-
-
-                                  
 
                                   // progressIndicatorBuilder:
                                   //     (context, url, downloadProgress) =>
@@ -2453,10 +2417,9 @@ class _MatchingListImageHorizontalListViewState
                                   //       color: Colors.blue),
                                   // ),
                                   // errorWidget: (context, url, error) => Icon(Icons
-                                  //     .error), 
+                                  //     .error),
                                   //// replace with your own error widget
                                 ),
-
                               ),
                             ),
                           ),
@@ -2478,14 +2441,17 @@ class _MatchingListImageHorizontalListViewState
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                     MatchingListImageHorizontalListView.profMore(
-                                        context,
-                                        // _allMaleUserData4.the0Ppqmbpewtl![index].uid
-                                        //     .toString(),
-                                        MatchingListImageHorizontalListView.allMaletest1.curUsers![index].uid,
-                                        ThreeSigninScreen.userUidAccess,
-                                        'New Reg'
-                                      );
+                                      MatchingListImageHorizontalListView
+                                          .profMore(
+                                              context,
+                                              // _allMaleUserData4.the0Ppqmbpewtl![index].uid
+                                              //     .toString(),
+                                              MatchingListImageHorizontalListView
+                                                  .allMaletest1
+                                                  .curUsers![index]
+                                                  .uid,
+                                              ThreeSigninScreen.userUidAccess,
+                                              'New Reg');
                                     },
                                     child: Container(
                                         decoration: BoxDecoration(
@@ -2518,7 +2484,8 @@ class _MatchingListImageHorizontalListViewState
                               children: [
                                 Text(
                                   // widget.imageWord1,
-                                  MatchingListImageHorizontalListView.allMaletest1.curUsers![index].uid
+                                  MatchingListImageHorizontalListView
+                                      .allMaletest1.curUsers![index].uid
                                       .toString(),
 
                                   style: const TextStyle(
@@ -2526,16 +2493,16 @@ class _MatchingListImageHorizontalListViewState
                                 ),
                                 Text(
                                   // widget.imageWord2,
-                                  MatchingListImageHorizontalListView.allMaletest1
-                                      .curUsers![index].address
+                                  MatchingListImageHorizontalListView
+                                      .allMaletest1.curUsers![index].address
                                       .toString(),
                                   style: const TextStyle(
                                       fontSize: 10, color: Colors.white),
                                 ),
                                 Text(
                                   // widget.imageWord3,
-                                  MatchingListImageHorizontalListView.allMaletest1
-                                      .curUsers![index].yourIntrest
+                                  MatchingListImageHorizontalListView
+                                      .allMaletest1.curUsers![index].yourIntrest
                                       .toString(),
                                   style: const TextStyle(
                                       fontSize: 10, color: Colors.white),
@@ -2555,11 +2522,10 @@ class _MatchingListImageHorizontalListViewState
                                 onTap: () {
                                   debugPrint('ontap');
 
-
-                                  favourites(MatchingListImageHorizontalListView.allMaletest1.curUsers![index].uid);
+                                  favourites(MatchingListImageHorizontalListView
+                                      .allMaletest1.curUsers![index].uid);
                                 },
                                 child: Container(
-                                 
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       begin: const Alignment(-0.8, 1),
@@ -2572,7 +2538,6 @@ class _MatchingListImageHorizontalListViewState
                                     ),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                              
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: SvgPicture.asset(
@@ -2590,8 +2555,6 @@ class _MatchingListImageHorizontalListViewState
     );
   }
 }
-
-
 
 // display name and data
 class customDisplayDataWidget extends StatefulWidget {
@@ -2648,3 +2611,145 @@ class _customDisplayDataWidgetState extends State<customDisplayDataWidget> {
     );
   }
 }
+
+class RadioTwoWidget extends StatefulWidget {
+  final void Function(int) onValueReturned;
+  final String title;
+  final String value1Name;
+  final String value2Name;
+  final Color? titleColor;
+  
+
+  const RadioTwoWidget({super.key, required this.onValueReturned, required this.title, required this.value1Name, required this.value2Name, this.titleColor});
+
+  @override
+  _RadioTwoWidgetState createState() => _RadioTwoWidgetState();
+}
+
+class _RadioTwoWidgetState extends State<RadioTwoWidget> {
+   int _selectedValue = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: widget.titleColor),
+        ),
+        Row(
+          children: [
+            Radio(
+              value: 1,
+              groupValue: _selectedValue,
+              onChanged: (value) {
+                // setState(() {
+                _selectedValue = value!;
+
+                // });
+
+                widget.onValueReturned(_selectedValue);
+              },
+            ),
+            Text(widget.value1Name),
+            Radio(
+              value: 0,
+              groupValue: _selectedValue,
+              onChanged: (value) {
+                // setState(() {
+                _selectedValue = value!;
+                // });
+                widget.onValueReturned(_selectedValue);
+              },
+            ),
+            Text(widget.value2Name),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+
+
+
+class RadioThreeWidget extends StatefulWidget {
+  final void Function(int) onValueReturned;
+  final String title;
+  final String value1Name;
+  final String value2Name;
+  final String value3Name;
+  
+
+  const RadioThreeWidget({super.key, required this.onValueReturned, required this.title, required this.value1Name, required this.value2Name, required this.value3Name});
+
+  @override
+  _RadioThreeWidgetState createState() => _RadioThreeWidgetState();
+}
+
+class _RadioThreeWidgetState extends State<RadioThreeWidget> {
+  late int _selectedValue = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          // 'Are you 18 years old or more?',
+          widget.title,
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
+        ),
+        Row(
+          children: [
+            Radio(
+              value: 0,
+              groupValue: _selectedValue,
+              onChanged: (value) {
+                // setState(() {
+                _selectedValue = value!;
+
+                // });
+
+                widget.onValueReturned(_selectedValue);
+              },
+            ),
+            Text(widget.value1Name),
+            Radio(
+              value: 1,
+              groupValue: _selectedValue,
+              onChanged: (value) {
+                // setState(() {
+                _selectedValue = value!;
+                // });
+                widget.onValueReturned(_selectedValue);
+              },
+            ),
+            Text(widget.value2Name),
+
+             Radio(
+              value: 2,
+              groupValue: _selectedValue,
+              onChanged: (value) {
+                // setState(() {
+                _selectedValue = value!;
+
+                // });
+
+                widget.onValueReturned(_selectedValue);
+              },
+            ),
+            Text(widget.value3Name),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+
+
+

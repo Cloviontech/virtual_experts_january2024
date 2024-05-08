@@ -16,30 +16,33 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart'
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
-
-
-
 // AllAdsAdDistributorsAdsScreen.dart
 
-
-
 class AllAdsAdDistributorsAdsScreen extends StatefulWidget {
+  final String? option;
   final String id;
   final String name;
   final String adType;
   final String adStatus;
 
-  AllAdsAdDistributorsAdsScreen({Key? key, required this.id, required this.name, required this.adType, required this.adStatus}) : super(key: key);
+  const AllAdsAdDistributorsAdsScreen(
+      {Key? key,
+      required this.id,
+      required this.name,
+      required this.adType,
+      required this.adStatus,
+      this.option})
+      : super(key: key);
 
   @override
-  State<AllAdsAdDistributorsAdsScreen> createState() => _AllAdsAdDistributorsAdsScreenState();
+  State<AllAdsAdDistributorsAdsScreen> createState() =>
+      _AllAdsAdDistributorsAdsScreenState();
 }
 
-class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsScreen> {
-  
-  
+class _AllAdsAdDistributorsAdsScreenState
+    extends State<AllAdsAdDistributorsAdsScreen> {
   //  fetch ad provider Ads
-  
+
   late Future<List<AddistributorAds>> futureAdsAdDis;
 
   Future<List<AddistributorAds>> fetchAdsAdDis() async {
@@ -61,8 +64,6 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
           .where((ad) => jsonDecode(ad.adDis.toString())['uid'] == userId)
           .toList();
 
-   
-
       return ads;
     } else {
       throw Exception('Failed to load data');
@@ -83,7 +84,6 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
   bool _isLoading = true;
 
   var size, height, width;
-
 
 // not used
   AddistributorAds? dataFromAPI;
@@ -147,6 +147,8 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
             if (ad.status != widget.adStatus) return false;
           }
           return true;
+          // return false;
+          
         }));
 
         _isLoading = false;
@@ -172,12 +174,11 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
     }
   }
 
-  
   @override
   void initState() {
     super.initState();
     currentTile = 0; // Set "All" as default selected role
-    // _getData();
+    _getData();
 
     futureAdsAdDis = fetchAdsAdDis();
   }
@@ -206,7 +207,7 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
             children: [
               Center(
                 child: Text(
-                  'Ad Distributor Ads',
+                  'Ad Distributor Adssss',
                   style: TextStyle(
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w700,
@@ -272,8 +273,7 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => 
-                              const AdDisAddNewAdScreen(),
+                              builder: (context) => const AdDisAddNewAdScreen(),
                             ),
                           );
                         },
@@ -300,7 +300,7 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
                           onTap: () {
                             setState(() {
                               currentTile = index;
-                               futureAdsAdDis = fetchAdsAdDis();
+                              futureAdsAdDis = fetchAdsAdDis();
                               filterData(roles[index]); // Call filter function
                             });
                           },
@@ -344,62 +344,83 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
                 height: DeviceSize.itemHeight / 10,
               ),
 
-             SizedBox(
-                      height: 600,
-                      child: FutureBuilder<List<AddistributorAds>>(
-                        future: futureAdsAdDis,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            // Filter users by status
-                            List<AddistributorAds> pendingUsers = snapshot.data!
-                                .where((user) => user.status == 'Pending')
-                                .toList();
+              // Text(widget.option.toString()),
+              // Text(filteredDataList.length.toString()),
+              // Text(dataList.length.toString()),
+              // Text(widget.id),
+              // Text(widget.name),
 
-                            List<AddistributorAds> activeUsers = snapshot.data!
-                                .where((user) => user.status == 'Active')
-                                .toList();
+              SizedBox(
+                height: 600,
+                child: FutureBuilder<List<AddistributorAds>>(
+                  future: futureAdsAdDis,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      // Filter users by status
+                      List<AddistributorAds> pendingUsers = snapshot.data!
+                          .where((user) => user.status == 'Pending')
+                          .toList();
 
-                            List<AddistributorAds> deactiveUsers = snapshot.data!
-                                .where((user) => user.status == 'Deactive')
-                                .toList();
+                      List<AddistributorAds> activeUsers = snapshot.data!
+                          .where((user) => user.status == 'Active')
+                          .toList();
 
-                            List<AddistributorAds> closedUsers = snapshot.data!
-                                .where((user) => user.status == 'Closed')
-                                .toList();
+                      List<AddistributorAds> deactiveUsers = snapshot.data!
+                          .where((user) => user.status == 'Deactive')
+                          .toList();
 
-                            List<AddistributorAds> rejectedUsers = snapshot.data!
-                                .where((user) => user.status == 'Rejected')
-                                .toList();
+                      List<AddistributorAds> closedUsers = snapshot.data!
+                          .where((user) => user.status == 'Closed')
+                          .toList();
 
+                      List<AddistributorAds> rejectedUsers = snapshot.data!
+                          .where((user) => user.status == 'Rejected')
+                          .toList();
 
-
-
-
-                            
-                            
-
-                            return 
-                            
-                            (currentTile == 0) ?
-                             ListView.builder(
-                              itemCount: snapshot.data!.length,
+                      return (currentTile == 0)
+                          ? ListView.builder(
+                              itemCount:widget.option == "1" ? filteredDataList.length :  snapshot.data!.length,
                               physics: const AlwaysScrollableScrollPhysics(),
                               controller: ScrollController(),
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                return AdDistributorBannerControl(
+                                return 
+
+                                widget.option == '1' ?
+
+                                AdDistributorBannerControl(
+                                  adName: filteredDataList[index].adType,
+                                  isSwitched:
+                                      filteredDataList[index].status == ('Closed')
+                                          ? true
+                                          : false,
+                                  adNo: filteredDataList[index].adId.toString(),
+                                  date: filteredDataList[index].adCreatedDate
+                                          .toString() +
+                                      " | " +
+                                      filteredDataList[index].adCreatedTime
+                                          .toString(),
+                                  status: filteredDataList[index].status,
+                                  viewsCount: filteredDataList[index].noViews,
+                                  balanceAmount: 100,
+                                  coins: filteredDataList[index].coin,
+                                  wallColor: ColorConstant.lightRed1cl,
+                                )
+
+                                :
+                                
+                                
+                                AdDistributorBannerControl(
                                   adName: snapshot.data![index].adType,
                                   isSwitched:
                                       snapshot.data![index].status == ('Closed')
                                           ? true
                                           : false,
                                   adNo: snapshot.data![index].adId.toString(),
-                                  date: snapshot.data![index]
-                                          .adCreatedDate
+                                  date: snapshot.data![index].adCreatedDate
                                           .toString() +
                                       " | " +
-                                      snapshot.data![index]
-                                          .adCreatedTime
+                                      snapshot.data![index].adCreatedTime
                                           .toString(),
                                   status: snapshot.data![index].status,
                                   viewsCount: snapshot.data![index].noViews,
@@ -408,232 +429,237 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
                                   wallColor: ColorConstant.lightRed1cl,
                                 );
                               },
-                            ) 
-                            :
-
-                            (currentTile == 1) ?
-
-                            ListView.builder(
-                              itemCount: activeUsers.length,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              controller: ScrollController(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return AdDistributorBannerControl(
-                                  adName: activeUsers[index].adType,
-                                  isSwitched:
-                                      activeUsers[index].status == ('Closed')
-                                          ? true
-                                          : false,
-                                  adNo: activeUsers[index].adId.toString(),
-                                  date: activeUsers[index]
-                                          .adCreatedDate
-                                          .toString() +
-                                      " | " +
-                                      activeUsers[index]
-                                          .adCreatedTime
-                                          .toString(),
-                                  status: activeUsers[index].status,
-                                  viewsCount: activeUsers[index].noViews,
-                                  balanceAmount: 100,
-                                  coins: activeUsers[index].coin,
-                                  wallColor: ColorConstant.lightRed1cl,
-                                );
-                              },
                             )
-                            :
-
-                            (currentTile == 2) ?
-
-                            ListView.builder(
-                              itemCount: pendingUsers.length,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              controller: ScrollController(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return AdDistributorBannerControl(
-                                  adName: pendingUsers[index].adType,
-                                  isSwitched:
-                                      pendingUsers[index].status == ('Closed')
+                          : (currentTile == 1)
+                              ? ListView.builder(
+                                  itemCount: activeUsers.length,
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
+                                  controller: ScrollController(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return AdDistributorBannerControl(
+                                      adName: activeUsers[index].adType,
+                                      isSwitched: activeUsers[index].status ==
+                                              ('Closed')
                                           ? true
                                           : false,
-                                  adNo: pendingUsers[index].adId.toString(),
-                                  date: pendingUsers[index]
-                                          .adCreatedDate
-                                          .toString() +
-                                      " | " +
-                                      pendingUsers[index]
-                                          .adCreatedTime
-                                          .toString(),
-                                  status: pendingUsers[index].status,
-                                  viewsCount: pendingUsers[index].noViews,
-                                  balanceAmount: 100,
-                                  coins: pendingUsers[index].coin,
-                                  wallColor: ColorConstant.lightRed1cl,
-                                );
-                              },
-                            )
-                            :
+                                      adNo: activeUsers[index].adId.toString(),
+                                      date: activeUsers[index]
+                                              .adCreatedDate
+                                              .toString() +
+                                          " | " +
+                                          activeUsers[index]
+                                              .adCreatedTime
+                                              .toString(),
+                                      status: activeUsers[index].status,
+                                      viewsCount: activeUsers[index].noViews,
+                                      balanceAmount: 100,
+                                      coins: activeUsers[index].coin,
+                                      wallColor: ColorConstant.lightRed1cl,
+                                    );
+                                  },
+                                )
+                              : (currentTile == 2)
+                                  ? ListView.builder(
+                                      itemCount: pendingUsers.length,
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      controller: ScrollController(),
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return AdDistributorBannerControl(
+                                          adName: pendingUsers[index].adType,
+                                          isSwitched:
+                                              pendingUsers[index].status ==
+                                                      ('Closed')
+                                                  ? true
+                                                  : false,
+                                          adNo: pendingUsers[index]
+                                              .adId
+                                              .toString(),
+                                          date: pendingUsers[index]
+                                                  .adCreatedDate
+                                                  .toString() +
+                                              " | " +
+                                              pendingUsers[index]
+                                                  .adCreatedTime
+                                                  .toString(),
+                                          status: pendingUsers[index].status,
+                                          viewsCount:
+                                              pendingUsers[index].noViews,
+                                          balanceAmount: 100,
+                                          coins: pendingUsers[index].coin,
+                                          wallColor: ColorConstant.lightRed1cl,
+                                        );
+                                      },
+                                    )
+                                  : (currentTile == 3)
+                                      ? ListView.builder(
+                                          itemCount: deactiveUsers.length,
+                                          physics:
+                                              const AlwaysScrollableScrollPhysics(),
+                                          controller: ScrollController(),
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
+                                            return AdDistributorBannerControl(
+                                              adName:
+                                                  deactiveUsers[index].adType,
+                                              isSwitched:
+                                                  deactiveUsers[index].status ==
+                                                          ('Closed')
+                                                      ? true
+                                                      : false,
+                                              adNo: deactiveUsers[index]
+                                                  .adId
+                                                  .toString(),
+                                              date: deactiveUsers[index]
+                                                      .adCreatedDate
+                                                      .toString() +
+                                                  " | " +
+                                                  deactiveUsers[index]
+                                                      .adCreatedTime
+                                                      .toString(),
+                                              status:
+                                                  deactiveUsers[index].status,
+                                              viewsCount:
+                                                  deactiveUsers[index].noViews,
+                                              balanceAmount: 100,
+                                              coins: deactiveUsers[index].coin,
+                                              wallColor:
+                                                  ColorConstant.lightRed1cl,
+                                            );
+                                          },
+                                        )
+                                      : (currentTile == 4)
+                                          ? ListView.builder(
+                                              itemCount: closedUsers.length,
+                                              physics:
+                                                  const AlwaysScrollableScrollPhysics(),
+                                              controller: ScrollController(),
+                                              shrinkWrap: true,
+                                              itemBuilder: (context, index) {
+                                                return AdDistributorBannerControl(
+                                                  adName:
+                                                      closedUsers[index].adType,
+                                                  isSwitched: closedUsers[index]
+                                                              .status ==
+                                                          ('Closed')
+                                                      ? true
+                                                      : false,
+                                                  adNo: closedUsers[index]
+                                                      .adId
+                                                      .toString(),
+                                                  date: closedUsers[index]
+                                                          .adCreatedDate
+                                                          .toString() +
+                                                      " | " +
+                                                      closedUsers[index]
+                                                          .adCreatedTime
+                                                          .toString(),
+                                                  status:
+                                                      closedUsers[index].status,
+                                                  viewsCount: closedUsers[index]
+                                                      .noViews,
+                                                  balanceAmount: 100,
+                                                  coins:
+                                                      closedUsers[index].coin,
+                                                  wallColor:
+                                                      ColorConstant.lightRed1cl,
+                                                );
+                                              },
+                                            )
+                                          : ListView.builder(
+                                              itemCount: rejectedUsers.length,
+                                              physics:
+                                                  const AlwaysScrollableScrollPhysics(),
+                                              controller: ScrollController(),
+                                              shrinkWrap: true,
+                                              itemBuilder: (context, index) {
+                                                return AdDistributorBannerControl(
+                                                  adName: rejectedUsers[index]
+                                                      .adType,
+                                                  isSwitched:
+                                                      rejectedUsers[index]
+                                                                  .status ==
+                                                              ('Closed')
+                                                          ? true
+                                                          : false,
+                                                  adNo: rejectedUsers[index]
+                                                      .adId
+                                                      .toString(),
+                                                  date: rejectedUsers[index]
+                                                          .adCreatedDate
+                                                          .toString() +
+                                                      " | " +
+                                                      rejectedUsers[index]
+                                                          .adCreatedTime
+                                                          .toString(),
+                                                  status: rejectedUsers[index]
+                                                      .status,
+                                                  viewsCount:
+                                                      rejectedUsers[index]
+                                                          .noViews,
+                                                  balanceAmount: 100,
+                                                  coins:
+                                                      rejectedUsers[index].coin,
+                                                  wallColor:
+                                                      ColorConstant.lightRed1cl,
+                                                );
+                                              },
+                                            );
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    return const CircularProgressIndicator();
+                  },
+                ),
+              ),
 
-
-
-                            (currentTile == 3) ?
-
-                            ListView.builder(
-                              itemCount: deactiveUsers.length,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              controller: ScrollController(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return AdDistributorBannerControl(
-                                  adName: deactiveUsers[index].adType,
-                                  isSwitched:
-                                      deactiveUsers[index].status == ('Closed')
-                                          ? true
-                                          : false,
-                                  adNo: deactiveUsers[index].adId.toString(),
-                                  date: deactiveUsers[index]
-                                          .adCreatedDate
-                                          .toString() +
-                                      " | " +
-                                      deactiveUsers[index]
-                                          .adCreatedTime
-                                          .toString(),
-                                  status: deactiveUsers[index].status,
-                                  viewsCount: deactiveUsers[index].noViews,
-                                  balanceAmount: 100,
-                                  coins: deactiveUsers[index].coin,
-                                  wallColor: ColorConstant.lightRed1cl,
-                                );
-                              },
-                            )
-                            :
-
-
-                            (currentTile == 4) ?
-
-                            ListView.builder(
-                              itemCount: closedUsers.length,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              controller: ScrollController(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return AdDistributorBannerControl(
-                                  adName: closedUsers[index].adType,
-                                  isSwitched:
-                                      closedUsers[index].status == ('Closed')
-                                          ? true
-                                          : false,
-                                  adNo: closedUsers[index].adId.toString(),
-                                  date: closedUsers[index]
-                                          .adCreatedDate
-                                          .toString() +
-                                      " | " +
-                                      closedUsers[index]
-                                          .adCreatedTime
-                                          .toString(),
-                                  status: closedUsers[index].status,
-                                  viewsCount: closedUsers[index].noViews,
-                                  balanceAmount: 100,
-                                  coins: closedUsers[index].coin,
-                                  wallColor: ColorConstant.lightRed1cl,
-                                );
-                              },
-                            )
-                            :
-
-
-                            
-
-                            ListView.builder(
-                              itemCount: rejectedUsers.length,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              controller: ScrollController(),
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return AdDistributorBannerControl(
-                                  adName: rejectedUsers[index].adType,
-                                  isSwitched:
-                                      rejectedUsers[index].status == ('Closed')
-                                          ? true
-                                          : false,
-                                  adNo: rejectedUsers[index].adId.toString(),
-                                  date: rejectedUsers[index]
-                                          .adCreatedDate
-                                          .toString() +
-                                      " | " +
-                                      rejectedUsers[index]
-                                          .adCreatedTime
-                                          .toString(),
-                                  status: rejectedUsers[index].status,
-                                  viewsCount: rejectedUsers[index].noViews,
-                                  balanceAmount: 100,
-                                  coins: rejectedUsers[index].coin,
-                                  wallColor: ColorConstant.lightRed1cl,
-                                );
-                              },
-                            )     ;
-                           
-                            
-
-
-                            
-                          } else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const CircularProgressIndicator();
-                        },
-                      ),
-                    ),
-                  
-                  
-                  
-                  
-                  //  SizedBox(
-                  //     height: 600,
-                  //     child: FutureBuilder<List<AddistributorAds>>(
-                  //       future: futureAdsAdDis,
-                  //       builder: (context, snapshot) {
-                  //         if (snapshot.hasData) {
-                  //           return ListView.builder(
-                  //             itemCount: snapshot.data!.length,
-                  //             physics: const AlwaysScrollableScrollPhysics(),
-                  //             controller: ScrollController(),
-                  //             shrinkWrap: true,
-                  //             itemBuilder: (context, index) {
-                  //               return AdDistributorBannerControl(
-                  //                 adName: snapshot.data![index].adType,
-                  //                 isSwitched:
-                  //                     snapshot.data![index].status == ('Closed')
-                  //                         ? true
-                  //                         : false,
-                  //                 adNo: snapshot.data![index].adId.toString(),
-                  //                 date: snapshot.data![index].adCreatedDate
-                  //                         .toString() +
-                  //                     " | " +
-                  //                     snapshot.data![index].adCreatedTime
-                  //                         .toString(),
-                  //                 status: snapshot.data![index].status,
-                  //                 viewsCount: snapshot.data![index].noViews,
-                  //                 balanceAmount: 100,
-                  //                 coins: snapshot.data![index].coin,
-                  //                 wallColor: ColorConstant.lightRed1cl,
-                  //               );
-                  //             },
-                  //           );
-                  //         } else if (snapshot.hasError) {
-                  //           return Text('${snapshot.error}');
-                  //         }
-                  //         return const CircularProgressIndicator();
-                  //       },
-                  //     ),
-                  //   ),
+              //  SizedBox(
+              //     height: 600,
+              //     child: FutureBuilder<List<AddistributorAds>>(
+              //       future: futureAdsAdDis,
+              //       builder: (context, snapshot) {
+              //         if (snapshot.hasData) {
+              //           return ListView.builder(
+              //             itemCount: snapshot.data!.length,
+              //             physics: const AlwaysScrollableScrollPhysics(),
+              //             controller: ScrollController(),
+              //             shrinkWrap: true,
+              //             itemBuilder: (context, index) {
+              //               return AdDistributorBannerControl(
+              //                 adName: snapshot.data![index].adType,
+              //                 isSwitched:
+              //                     snapshot.data![index].status == ('Closed')
+              //                         ? true
+              //                         : false,
+              //                 adNo: snapshot.data![index].adId.toString(),
+              //                 date: snapshot.data![index].adCreatedDate
+              //                         .toString() +
+              //                     " | " +
+              //                     snapshot.data![index].adCreatedTime
+              //                         .toString(),
+              //                 status: snapshot.data![index].status,
+              //                 viewsCount: snapshot.data![index].noViews,
+              //                 balanceAmount: 100,
+              //                 coins: snapshot.data![index].coin,
+              //                 wallColor: ColorConstant.lightRed1cl,
+              //               );
+              //             },
+              //           );
+              //         } else if (snapshot.hasError) {
+              //           return Text('${snapshot.error}');
+              //         }
+              //         return const CircularProgressIndicator();
+              //       },
+              //     ),
+              //   ),
 
               const SizedBox(
                 height: 200,
               ),
 
-              
               if (_isLoading)
                 const Center(
                   child: CircularProgressIndicator(),
@@ -656,9 +682,3 @@ class _AllAdsAdDistributorsAdsScreenState extends State<AllAdsAdDistributorsAdsS
     );
   }
 }
-
-
-
-
-
-

@@ -1,61 +1,64 @@
 // To parse this JSON data, do
 //
-//     final pmMyData = pmMyDataFromJson(jsonString);
+//     final allPrivateInvestigatorData = allPrivateInvestigatorDataFromJson(jsonString);
 
 import 'dart:convert';
 
-List<PmMyData> pmMyDataFromJson(String str) => List<PmMyData>.from(json.decode(str).map((x) => PmMyData.fromJson(x)));
+List<AllPrivateInvestigatorData> allPrivateInvestigatorDataFromJson(String str) => List<AllPrivateInvestigatorData>.from(json.decode(str).map((x) => AllPrivateInvestigatorData.fromJson(x)));
 
-String pmMyDataToJson(List<PmMyData> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String allPrivateInvestigatorDataToJson(List<AllPrivateInvestigatorData> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class PmMyData {
+class AllPrivateInvestigatorData {
     String? uid;
     String? email;
     String? mobile;
     String? password;
     int? otp;
     int? userOtp;
-    dynamic profilePicture;
-    String? officeName;
-    String? officeCountry;
-    String? officeCity;
-    String? officeAddress;
+    String? createdDate;
+    String? profilePicture;
+    dynamic officeName;
+    dynamic officeCountry;
+    dynamic officeCity;
+    dynamic officeAddress;
     String? firstName;
     String? lastName;
     String? personalCountry;
     String? personalCity;
     String? personalAddress;
-    String? notary;
+    String? hiringManager;
     dynamic idCard;
-    String? createdDate;
-    dynamic otp1;
-    dynamic userOtp1;
-    String? levelEducation;
-    String? fieldStudy;
-    String? workJobTitle;
-    String? workCompanyName;
-    String? workJobLocation;
-    String? exJobTitle;
-    String? exCompanyName;
-    String? yearExperience;
-    String? exLocation;
-    String? degreeCer;
-    String? exCer;
-    String? workType;
-    String? gstNumber;
-    String? gstCertificate;
-    String? companyPanNo;
-    String? arnNo;
-    String? panCard;
-    String? notificationStatus;
+    String? tagline;
+    String? myClient;
+    int? totalRatings;
+    int? otp1;
+    int? userOtp1;
+    dynamic levelEducation;
+    dynamic fieldStudy;
+    dynamic workJobTitle;
+    dynamic workCompanyName;
+    dynamic workJobLocation;
+    dynamic exJobTitle;
+    dynamic exCompanyName;
+    dynamic yearExperience;
+    dynamic exLocation;
+    dynamic degreeCer;
+    dynamic exCer;
+    dynamic workType;
+    dynamic gstNumber;
+    dynamic gstCertificate;
+    dynamic companyPanNo;
+    dynamic arnNo;
+    dynamic panCard;
 
-    PmMyData({
+    AllPrivateInvestigatorData({
         this.uid,
         this.email,
         this.mobile,
         this.password,
         this.otp,
         this.userOtp,
+        this.createdDate,
         this.profilePicture,
         this.officeName,
         this.officeCountry,
@@ -66,9 +69,11 @@ class PmMyData {
         this.personalCountry,
         this.personalCity,
         this.personalAddress,
-        this.notary,
+        this.hiringManager,
         this.idCard,
-        this.createdDate,
+        this.tagline,
+        this.myClient,
+        this.totalRatings,
         this.otp1,
         this.userOtp1,
         this.levelEducation,
@@ -88,16 +93,16 @@ class PmMyData {
         this.companyPanNo,
         this.arnNo,
         this.panCard,
-        this.notificationStatus,
     });
 
-    factory PmMyData.fromJson(Map<String, dynamic> json) => PmMyData(
+    factory AllPrivateInvestigatorData.fromJson(Map<String, dynamic> json) => AllPrivateInvestigatorData(
         uid: json["uid"],
         email: json["email"],
         mobile: json["mobile"],
         password: json["password"],
         otp: json["otp"],
         userOtp: json["user_otp"],
+        createdDate: json["created_date"],
         profilePicture: json["profile_picture"],
         officeName: json["office_name"],
         officeCountry: json["office_country"],
@@ -108,9 +113,11 @@ class PmMyData {
         personalCountry: json["personal_country"],
         personalCity: json["personal_city"],
         personalAddress: json["personal_address"],
-        notary: json["notary"],
+        hiringManager: json["hiring_manager"],
         idCard: json["id_card"],
-        createdDate: json["created_date"],
+        tagline: json["tagline"],
+        myClient: json["my_client"],
+        totalRatings: json["total_ratings"],
         otp1: json["otp1"],
         userOtp1: json["user_otp1"],
         levelEducation: json["level_education"],
@@ -130,7 +137,6 @@ class PmMyData {
         companyPanNo: json["company_pan_no"],
         arnNo: json["arn_no"],
         panCard: json["pan_card"],
-        notificationStatus: json["notification_status"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -140,6 +146,7 @@ class PmMyData {
         "password": password,
         "otp": otp,
         "user_otp": userOtp,
+        "created_date": createdDate,
         "profile_picture": profilePicture,
         "office_name": officeName,
         "office_country": officeCountry,
@@ -150,9 +157,11 @@ class PmMyData {
         "personal_country": personalCountry,
         "personal_city": personalCity,
         "personal_address": personalAddress,
-        "notary": notary,
+        "hiring_manager": hiringManager,
         "id_card": idCard,
-        "created_date": createdDate,
+        "tagline": tagline,
+        "my_client": myClient,
+        "total_ratings": totalRatings,
         "otp1": otp1,
         "user_otp1": userOtp1,
         "level_education": levelEducation,
@@ -172,6 +181,5 @@ class PmMyData {
         "company_pan_no": companyPanNo,
         "arn_no": arnNo,
         "pan_card": panCard,
-        "notification_status": notificationStatus,
     };
 }

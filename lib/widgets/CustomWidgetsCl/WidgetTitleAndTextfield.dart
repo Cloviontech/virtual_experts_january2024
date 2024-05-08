@@ -485,9 +485,7 @@ class _WidgetTitleAndTextfieldSuffixCalendarState
           widget.textFieldTitle,
           style: TextStyle(
               fontFamily: 'Roboto',
-              fontWeight: FontWeight.w400,
-              color: ColorConstant.gray800,
-              fontSize: 14),
+               fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black),
         ),
         SizedBox(
           height: 10,

@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/sm_acc_bal/sm_account_bal.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/account/sm_acc_bal/sm_account_bal.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/account/pm_edit_account_screen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/registeration/complete_profile_screen.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/2_Edit_profile_local_admin_screen_Account.dart';

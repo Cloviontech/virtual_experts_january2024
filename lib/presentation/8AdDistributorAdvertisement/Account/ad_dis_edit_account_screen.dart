@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model_final/ad_provider_models/ad_pro_user_all_data_model_vibin.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/not_used_2_Edit_profile_local_admin_screen_Account.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/account/not_used_2_Edit_profile_local_admin_screen_Account.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';

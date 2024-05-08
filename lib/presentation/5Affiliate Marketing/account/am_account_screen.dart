@@ -7,7 +7,7 @@ import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:virtual_experts/model_final/am_models/my_aff_data_model.dart';
 import 'package:virtual_experts/model_final/profile_manager/pm_my_data.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/7screenChooseService.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/sm_acc_bal/sm_account_bal.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/account/sm_acc_bal/sm_account_bal.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/account/am_edit_profile_affiliate_marketing/edit_pro_prof_manag_scr.dart';
 // import 'package:virtual_experts/presentation/4LocalAdmin/account_local_admin/2_Edit_profile_local_admin_screen_Account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';

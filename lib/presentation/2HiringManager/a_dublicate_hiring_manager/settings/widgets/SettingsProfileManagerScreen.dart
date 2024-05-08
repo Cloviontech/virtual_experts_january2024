@@ -1,7 +1,7 @@
 // AccountSettingsPriInvScreen
 
 import 'package:flutter/material.dart';
-import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/dashboard_private_admin_screen.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/not_used_dashboard_private_admin_screen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/cl_custom_widgets2.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';

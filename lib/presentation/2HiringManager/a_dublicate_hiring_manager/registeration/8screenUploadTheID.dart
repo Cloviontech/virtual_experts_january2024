@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/9screenThisProfileForWhom.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/FillTheFormHiringMgrScreen.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/registeration/FillTheFormHiringMgrScreen.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';

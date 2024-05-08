@@ -13,16 +13,21 @@ import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
 class BottomNavigationAdDistributorScreen extends StatefulWidget {
-   final option;
-   final id;
-   final name;
-   final adType;
-   final adStatus;
+  final option;
+  final id;
+  final name;
+  final adType;
+  final adStatus;
 
-  const BottomNavigationAdDistributorScreen({super.key, this.option, this.id, this.name, this.adType, this.adStatus, 
-
+  const BottomNavigationAdDistributorScreen({
+    super.key,
+    this.option,
+    this.id,
+    this.name,
+    this.adType,
+    this.adStatus,
   });
- 
+
   @override
   State<BottomNavigationAdDistributorScreen> createState() =>
       _BottomNavigationAdDistributorScreenState();
@@ -33,24 +38,34 @@ class _BottomNavigationAdDistributorScreenState
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-     AdDisDashboardScreen(),
-    AllAdsAdDistributorsAdsScreen(id: '', name: '', adType: '', adStatus: '',),
+    AdDisDashboardScreen(),
+    AllAdsAdDistributorsAdsScreen(
+      id: '',
+      name: '',
+      adType: '',
+      adStatus: '',
+    ),
     const AdDisAccountScreen(),
-     settings_ad_distributor(),
+    settings_ad_distributor(),
   ];
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print("object");
     print(widget.option == "1");
-    if(widget.option == "1"){
-         setState(() {
-    _selectedIndex = 1;
-    _pages[1] =  AllAdsAdDistributorsAdsScreen(id: widget.id,name: widget.name,adType: widget.adType, adStatus: widget.adStatus,);
+    if (widget.option == "1") {
+      setState(() {
+        _selectedIndex = 1;
+        _pages[1] = AllAdsAdDistributorsAdsScreen(
+          option: widget.option,
+          id: widget.id,
+          name: widget.name,
+          adType: widget.adType,
+          adStatus: widget.adStatus,
+        );
       });
-     
     }
   }
 
@@ -126,4 +141,3 @@ class _BottomNavigationAdDistributorScreenState
     });
   }
 }
-

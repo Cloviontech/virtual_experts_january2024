@@ -54,7 +54,7 @@ class _AdProAllAdsScreenState extends State<AdProAllAdsScreen> {
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
 
-      List<AdproviderAds> ads = jsonResponse
+      List<AdproviderAds> ads = jsonResponse 
           .map((dynamic adJson) => AdproviderAds.fromJson(adJson))
           .where((ad) => jsonDecode(ad.adPro.toString())['uid'] == userId)
           .toList();

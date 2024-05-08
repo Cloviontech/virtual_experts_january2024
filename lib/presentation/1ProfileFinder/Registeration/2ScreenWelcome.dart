@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/image_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/registeration/ContactDetailsElevenHiringMgrScreen.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 
 class TwoWelcomeScreen extends StatelessWidget {
@@ -109,17 +110,15 @@ class TwoWelcomeScreen extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           debugPrint('test nav');
+
+                          // original
                           Navigator.pushNamed(
-                              context, 
-                              // AppRoutes.threeSigninScreen
-                              
-                              AppRoutes.sevenChooseServiceScreen
+                              context, AppRoutes.sevenChooseServiceScreen);
 
-                              // AppRoutes.contactDetailsPrivateInvestScreen
-                              );
 
-                          // Navigator.of(context).push(
-                          //    CustomPageRoute(child: SigninScreenThree(), direction: AxisDirection.left, )),
+                          // temporary
+                          // Navigator.push(context,MaterialPageRoute(builder: (context) => 
+                          // HmCompleteAccountScreen()));
                         },
                         child: Container(
                           child: const Text(

@@ -6,7 +6,8 @@ import 'package:virtual_experts/core/utils/size_utils.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/4ScreenSignUp.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/7screenChooseService.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/Registeration/forgot_password/forgot_password_screen.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/BottomNavigationBarSales.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/registeration/ContactDetailsElevenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
 import 'package:virtual_experts/presentation/6Sales/bottom_navigation/BottomNavigationBarSales.dart';
@@ -21,6 +22,7 @@ import '../../../widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../MatchingList/1screen_advertisement.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/registeration/8screenUploadTheID.dart';
 
 class ThreeSigninScreen extends StatefulWidget {
   const ThreeSigninScreen({super.key, required this.service});
@@ -154,7 +156,16 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return BottomNavigationHmScreen(
+            return
+
+                // BottomNavigationHmScreen(
+                //   service: '',
+                // );
+
+                // temperory
+                // HmCompleteAccountScreen();
+
+                BottomNavigationHmScreen(
               service: '',
             );
           }),

@@ -757,12 +757,12 @@ import 'package:virtual_experts/core/services/api_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:virtual_experts/presentation/4ProfileManager/dashboard_local_admin/not_used_dashboard_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/9PrivateInvestigator/bottom_navigation_local_admin_screen.dart';
-import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/dashboard_private_admin_screen.dart';
+import 'package:virtual_experts/presentation/9PrivateInvestigator/dashboard_private_investigator/not_used_dashboard_private_admin_screen.dart';
 import '../../../core/utils/color_constant.dart';
 import '../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
-import '../../2HiringManager/a_dublicate_hiring_manager.dart/registeration/ContactDetailsElevenHiringMgrScreen.dart';
+import '../../2HiringManager/a_dublicate_hiring_manager/registeration/ContactDetailsElevenHiringMgrScreen.dart';
 import '../../7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import '../../8AdDistributorAdvertisement/not_used_dashBoard/dashboard_ad_distributor.dart';
 

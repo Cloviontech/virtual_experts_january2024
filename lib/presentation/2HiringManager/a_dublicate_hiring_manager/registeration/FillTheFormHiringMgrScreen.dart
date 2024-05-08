@@ -10,7 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:virtual_experts/core/app_export.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/image_constant.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/ContactDetailsElevenHiringMgrScreen.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/registeration/ContactDetailsElevenHiringMgrScreen.dart';
 import 'package:virtual_experts/routes/app_routes.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/ClCustomWidgets2.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';

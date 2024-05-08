@@ -53,7 +53,7 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
 
    late String sales_manager_id;
 
-    static List<SmMyDataModel> _smMyData = [];
+    static List<SmMyData> _smMyData = [];
 
   Future<void> _fetchDataPmMyData() async {
     // late String private_investicator_id;
@@ -67,7 +67,7 @@ class _AccountSalesManagerScreenState extends State<AccountSalesManagerScreen> {
       List<dynamic> jsonResponse = jsonDecode(response.body);
       setState(() {
         _smMyData =
-            jsonResponse.map((data) => SmMyDataModel.fromJson(data)).toList();
+            jsonResponse.map((data) => SmMyData.fromJson(data)).toList();
         isLoading = false;
         // officeDetailsAns.add(
         //   _smMyData[0].officeName.toString(),

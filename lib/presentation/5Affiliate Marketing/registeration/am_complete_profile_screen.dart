@@ -24,7 +24,7 @@ import '../../../core/utils/color_constant.dart';
 import '../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
-import '../../2HiringManager/a_dublicate_hiring_manager.dart/registeration/ContactDetailsElevenHiringMgrScreen.dart';
+import '../../2HiringManager/a_dublicate_hiring_manager/registeration/ContactDetailsElevenHiringMgrScreen.dart';
 import '../../7AdProviderAdvertisement/bottomNavigationAdProvider.dart';
 import '../../8AdDistributorAdvertisement/not_used_dashBoard/dashboard_ad_distributor.dart';
 

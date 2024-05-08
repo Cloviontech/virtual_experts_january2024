@@ -286,7 +286,6 @@ class _BottomNavigationLocalAdminScreenState
                   children: [
                     GestureDetector(
                       onTap: () {
-
                         Navigator.pop(context);
                         Navigator.push(
                           context,
@@ -324,7 +323,7 @@ class _BottomNavigationLocalAdminScreenState
                     ),
                     GestureDetector(
                       onTap: () {
-                       Navigator.pop(context);
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {

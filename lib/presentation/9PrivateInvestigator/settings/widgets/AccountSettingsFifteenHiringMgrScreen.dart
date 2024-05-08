@@ -7,7 +7,7 @@ import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
-import '../../dashboard_private_investigator/dashboard_private_admin_screen.dart';
+import '../../dashboard_private_investigator/not_used_dashboard_private_admin_screen.dart';
 
 class AccountSettingsPriInvScreen extends StatelessWidget {
   AccountSettingsPriInvScreen({super.key});

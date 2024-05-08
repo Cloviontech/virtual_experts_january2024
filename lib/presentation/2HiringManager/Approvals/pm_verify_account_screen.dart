@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:country_picker/country_picker.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
@@ -19,20 +18,22 @@ import '../../../core/utils/color_constant.dart';
 import '../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import '../../../widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
-import '../../8AdDistributorAdvertisement/not_used_dashBoard/dashboard_ad_distributor.dart';
 
-class PmEditAccountScreen extends StatefulWidget {
-  const PmEditAccountScreen({super.key, this.navigateFrom});
+class HmVerifyPmAccountScreen extends StatefulWidget {
+  const HmVerifyPmAccountScreen(
+      {super.key, this.navigateFrom, required this.pmMyData1});
 
   final String? navigateFrom;
+  final PmMyData pmMyData1;
 
   @override
-  State<PmEditAccountScreen> createState() => _PmEditAccountScreenState();
+  State<HmVerifyPmAccountScreen> createState() =>
+      _HmVerifyPmAccountScreenState();
 }
 
-class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
+class _HmVerifyPmAccountScreenState extends State<HmVerifyPmAccountScreen> {
   static List<PmMyData> pmMyData = [];
-  
+
   late String officialStateName;
 
   Future<void> fetchPmMyData() async {
@@ -41,7 +42,8 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
     profile_manager_id = preferences.getString("uid2").toString();
 
     final response = await http.get(Uri.parse(
-        "http://${ApiServices.ipAddress}/pm_my_data/$profile_manager_id"));
+        // "http://${ApiServices.ipAddress}/pm_my_data/$profile_manager_id"));
+        "http://${ApiServices.ipAddress}/pm_my_data/${widget.pmMyData1.uid}"));
 
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -49,44 +51,43 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
         pmMyData = jsonResponse.map((data) => PmMyData.fromJson(data)).toList();
         loadingPmMyData = false;
         _officeNameController =
-            TextEditingController(text: pmMyData[0].officeName);
+            TextEditingController(text: widget.pmMyData1.officeName);
         _officeAddressController =
-            TextEditingController(text: pmMyData[0].officeAddress);
+            TextEditingController(text: widget.pmMyData1.officeAddress);
         _firstNameController =
-            TextEditingController(text: pmMyData[0].firstName);
+            TextEditingController(text: widget.pmMyData1.firstName);
         _lastNameController =
-            TextEditingController(text: pmMyData[0].lastName);
+            TextEditingController(text: widget.pmMyData1.lastName);
         _personAddressController =
-            TextEditingController(text: pmMyData[0].personalAddress);
+            TextEditingController(text: widget.pmMyData1.personalAddress);
         _levelOfEducationController =
-            TextEditingController(text: pmMyData[0].levelEducation);
-         _fieldOfStudyController =
-            TextEditingController(text: pmMyData[0].fieldStudy);
+            TextEditingController(text: widget.pmMyData1.levelEducation);
+        _fieldOfStudyController =
+            TextEditingController(text: widget.pmMyData1.fieldStudy);
         _jobTitleController =
-            TextEditingController(text: pmMyData[0].workJobTitle);
+            TextEditingController(text: widget.pmMyData1.workJobTitle);
         _companyNameController =
-            TextEditingController(text: pmMyData[0].workCompanyName);
+            TextEditingController(text: widget.pmMyData1.workCompanyName);
         _companyNameController =
-            TextEditingController(text: pmMyData[0].workCompanyName);
+            TextEditingController(text: widget.pmMyData1.workCompanyName);
         _jobLocationController =
-            TextEditingController(text: pmMyData[0].workJobLocation);
+            TextEditingController(text: widget.pmMyData1.workJobLocation);
         _jobTitleController1 =
-            TextEditingController(text: pmMyData[0].exJobTitle);
+            TextEditingController(text: widget.pmMyData1.exJobTitle);
         _companyNameController1 =
-            TextEditingController(text: pmMyData[0].exCompanyName);
+            TextEditingController(text: widget.pmMyData1.exCompanyName);
         _yearOfExperienceController =
-            TextEditingController(text: pmMyData[0].yearExperience);
+            TextEditingController(text: widget.pmMyData1.yearExperience);
         _locationController =
-            TextEditingController(text: pmMyData[0].exLocation);
+            TextEditingController(text: widget.pmMyData1.exLocation);
         _typeController =
-            TextEditingController(text: pmMyData[0].workType);
+            TextEditingController(text: widget.pmMyData1.workType);
         _gstNumberController =
-            TextEditingController(text: pmMyData[0].gstNumber);
+            TextEditingController(text: widget.pmMyData1.gstNumber);
         _companyPanNumberController =
-            TextEditingController(text: pmMyData[0].companyPanNo);
-         _arnNumberController =
-            TextEditingController(text: pmMyData[0].arnNo);
-        
+            TextEditingController(text: widget.pmMyData1.companyPanNo);
+        _arnNumberController =
+            TextEditingController(text: widget.pmMyData1.arnNo);
       });
     } else {
       throw Exception('Failed to load data');
@@ -95,30 +96,25 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _officeNameController = TextEditingController();
-   TextEditingController _officeAddressController =
-      TextEditingController();
-   TextEditingController _firstNameController = TextEditingController();
-   TextEditingController _lastNameController = TextEditingController();
-   TextEditingController _personAddressController =
-      TextEditingController();
+  TextEditingController _officeAddressController = TextEditingController();
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _personAddressController = TextEditingController();
 
-   TextEditingController _levelOfEducationController =
-      TextEditingController();
-   TextEditingController _fieldOfStudyController = TextEditingController();
-   TextEditingController _jobTitleController = TextEditingController();
-   TextEditingController _companyNameController = TextEditingController();
-   TextEditingController _jobLocationController = TextEditingController();
+  TextEditingController _levelOfEducationController = TextEditingController();
+  TextEditingController _fieldOfStudyController = TextEditingController();
+  TextEditingController _jobTitleController = TextEditingController();
+  TextEditingController _companyNameController = TextEditingController();
+  TextEditingController _jobLocationController = TextEditingController();
   // EXPERIENCE
-   TextEditingController _jobTitleController1 = TextEditingController();
-   TextEditingController _companyNameController1 = TextEditingController();
-   TextEditingController _yearOfExperienceController =
-      TextEditingController();
-   TextEditingController _locationController = TextEditingController();
-   TextEditingController _typeController = TextEditingController();
-   TextEditingController _gstNumberController = TextEditingController();
-   TextEditingController _companyPanNumberController =
-      TextEditingController();
-   TextEditingController _arnNumberController = TextEditingController();
+  TextEditingController _jobTitleController1 = TextEditingController();
+  TextEditingController _companyNameController1 = TextEditingController();
+  TextEditingController _yearOfExperienceController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
+  TextEditingController _typeController = TextEditingController();
+  TextEditingController _gstNumberController = TextEditingController();
+  TextEditingController _companyPanNumberController = TextEditingController();
+  TextEditingController _arnNumberController = TextEditingController();
 
   String? countryName;
   String? selectedCityValue;
@@ -309,7 +305,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
     getAccessToken();
     hiringManagerUid();
     salesManagerUid();
-    fetchPmMyData();
+    // fetchPmMyData();
   }
 
   @override
@@ -329,6 +325,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Text(widget.pmMyData1.uid.toString()),
                 const Center(
                     child: Text(
                   "Edit Profile",
@@ -339,9 +336,9 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                       height: 3),
                 )),
 
-                const Text('length'),
+                // const Text('length'),
 
-                Text(pmMyData.length.toString()),
+                // Text(pmMyData.length.toString()),
                 _buildTextField(
                   tittle: 'Office Name*',
                   hintText: 'Enter Your Office Name',
@@ -354,7 +351,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                     return null;
                   },
 
-                  // initialValue: pmMyData[0].officeName,
+                  // initialValue:  widget.pmMyData1.officeName,
                 ),
                 const SizedBox(height: 15),
                 // GestureDetector(
@@ -375,7 +372,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                 //     DdbHint: "Select",
                 //     DbdItems: Dbditems,
                 //     country: countryName,
-                //     // customInitialValue: '${pmMyData[0].officeCountry.toString()}',
+                //     // customInitialValue: '${ widget.pmMyData1.officeCountry.toString()}',
                 //   ),
 
                 // ),
@@ -391,8 +388,6 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                 //     // uploadAboutMe("Physical Status", dropdownValue.toString());
                 //   },
                 // ),
-
-
 
                 CSCPicker(
                   layout: Layout.vertical,
@@ -420,8 +415,8 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                   // defaultCountry: CscCountry.India,
                   showStates: false,
 
-                  currentCountry: pmMyData[0].officeCountry,
-                  currentCity:  pmMyData[0].officeCity,
+                  currentCountry: widget.pmMyData1.officeCountry,
+                  currentCity: widget.pmMyData1.officeCity,
 
                   selectedItemStyle: const TextStyle(
                     color: Colors.black,
@@ -445,7 +440,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
 
                   onCountryChanged: (country) async {
                     setState(() {
-                     countryName  = country;
+                      countryName = country;
                     });
                   },
 
@@ -509,7 +504,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                     }
                     return null;
                   },
-                  // initialValue: pmMyData[0].lastName
+                  // initialValue:  widget.pmMyData1.lastName
                 ),
                 const SizedBox(height: 15),
                 // GestureDetector(
@@ -544,7 +539,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                 //   },
                 // ),
 
-                 CSCPicker(
+                CSCPicker(
                   layout: Layout.vertical,
 
                   flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
@@ -570,8 +565,8 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                   // defaultCountry: CscCountry.India,
                   showStates: false,
 
-                  currentCountry: pmMyData[0].personalCountry,
-                  currentCity:  pmMyData[0].personalCity,
+                  currentCountry: widget.pmMyData1.personalCountry,
+                  currentCity: widget.pmMyData1.personalCity,
 
                   selectedItemStyle: const TextStyle(
                     color: Colors.black,
@@ -595,7 +590,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
 
                   onCountryChanged: (country) async {
                     setState(() {
-                     personalCountryName  = country;
+                      personalCountryName = country;
                     });
                   },
 
@@ -612,7 +607,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                   },
                 ),
                 const D10HCustomClSizedBoxWidget(),
-                
+
                 WidgetTitleAndTextfielGreyBgAdjHeight(
                   textFieldHint: 'Enter Your Address',
                   textFieldTitle: "Address",
@@ -643,7 +638,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                     });
                     // uploadAboutMe("Physical Status", dropdownValue.toString());
                   },
-                  // customInitialValue: pmMyData[0].companyPanNo,
+                  // customInitialValue:  widget.pmMyData1.companyPanNo,
                 ),
                 WidgetTitleAndDropdown(
                   DdbTitle: "Sales Manager*",
@@ -657,7 +652,7 @@ class _PmEditAccountScreenState extends State<PmEditAccountScreen> {
                     // uploadAboutMe("Physical Status", dropdownValue.toString());
                   },
 
-                  // customInitialValue: pmMyData[0].companyPanNo,
+                  // customInitialValue:  widget.pmMyData1.companyPanNo,
                 ),
 
                 const Center(

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_experts/model/complex_user.dart';
 import 'package:virtual_experts/model/data_model.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/3_account_balance_Local_admin_screen_account.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/account/3_account_balance_Local_admin_screen_account.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';

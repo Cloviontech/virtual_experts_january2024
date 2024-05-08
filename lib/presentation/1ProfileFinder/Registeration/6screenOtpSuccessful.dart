@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:virtual_experts/presentation/1ProfileFinder/PrivateInvestigator/AllInvestigatorThirtyEightScreen.dart';
 import 'package:virtual_experts/core/utils/color_constant.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/8screenUploadTheID.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/registeration/ContactDetailsElevenHiringMgrScreen.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/registeration/8screenUploadTheID.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/registeration/ContactDetailsElevenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/bottom_navigation_local_admin_screen.dart';
 import 'package:virtual_experts/presentation/4ProfileManager/registeration/complete_profile_screen.dart';
 import 'package:virtual_experts/presentation/5Affiliate%20Marketing/bottom_navigation_affiliate_marketing_screen.dart';
@@ -78,7 +78,8 @@ class _SixOtpSuccessfulScreenState extends State<SixOtpSuccessfulScreen> {
         const Duration(seconds: 3),
         () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (BuildContext context) => const HmCompleteAccountScreen()),
+              builder: (BuildContext context) => const
+               HmCompleteAccountScreen()),
         ),
       );
     }

@@ -9,7 +9,7 @@ import '../../../../core/utils/color_constant.dart';
 import '../../../../model_final/modelAllUser.dart';
 import '../../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 import '../../../1ProfileFinder/MatchingList/1screen_advertisement.dart';
-import '../../dashboard_private_investigator/dashboard_private_admin_screen.dart';
+import '../../dashboard_private_investigator/not_used_dashboard_private_admin_screen.dart';
 import 'package:http/http.dart' as http;
 
 class ClientsHome extends StatefulWidget {
@@ -131,10 +131,10 @@ class _ClientsHomeState extends State<ClientsHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
-        testingNextPage: DashboardPrivateInvestigatorScreen(),
-      ),
-      backgroundColor: ColorConstant.clYellowBgColor4,
+      // appBar: const ClAppbarLeadGridSuffHeart(
+      //   testingNextPage: DashboardPrivateInvestigatorScreen(),
+      // ),
+      backgroundColor: Colors.transparent,
       body:
           //  isLoading
           //     ? const Center(child: CircularProgressIndicator())

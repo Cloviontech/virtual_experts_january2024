@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Account/AccountSixteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Settings/AccountSettingsFifteenHiringMgrScreen.dart';
 import 'package:virtual_experts/presentation/2HiringManager/Approvals/AllApplicationsThirteenHiringMgrScreen.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/account/1_account_sales_manager_screen_account.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/dashboard/hm_dashboard_screen.dart';
-import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager.dart/settings/widgets/SettingsProfileManagerScreen.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/account/1_account_sales_manager_screen_account.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/dashboard/hm_dashboard_screen.dart';
+import 'package:virtual_experts/presentation/2HiringManager/a_dublicate_hiring_manager/settings/widgets/SettingsProfileManagerScreen.dart';
 import 'package:virtual_experts/presentation/6Sales/account/1_account_sales_manager_screen_account.dart';
 import 'package:virtual_experts/presentation/6Sales/dashBoard/not_used_DashBoardSalesScreen.dart';
 import 'package:virtual_experts/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -14,9 +13,7 @@ import 'package:virtual_experts/core/utils/color_constant.dart';
 import 'package:virtual_experts/core/utils/size_utils.dart';
 
 class BottomNavigationHmScreen extends StatefulWidget {
-
-
-   final String service;
+  final String service;
 
   const BottomNavigationHmScreen({super.key, required this.service});
   @override
@@ -24,15 +21,14 @@ class BottomNavigationHmScreen extends StatefulWidget {
       _BottomNavigationHmScreenState();
 }
 
-class _BottomNavigationHmScreenState
-    extends State<BottomNavigationHmScreen> {
+class _BottomNavigationHmScreenState extends State<BottomNavigationHmScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
     DashBoardHiringManagerScreen(),
     AllApplicationsThirteenHiringMgrScreen(),
     AccountHiringManagerScreen(),
-     SettingsHiringManagerScreen(),
+    SettingsHiringManagerScreen(),
   ];
 
   @override
@@ -40,7 +36,9 @@ class _BottomNavigationHmScreenState
     return Scaffold(
       backgroundColor: ColorConstant.clPurple05,
       appBar: ClAppbarLeadProfilePicSuffHeart(
-        testingNextPage: BottomNavigationHmScreen(service: '',),
+        testingNextPage: BottomNavigationHmScreen(
+          service: '',
+        ),
       ),
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -73,7 +71,7 @@ class _BottomNavigationHmScreenState
                 color: _selectedIndex == 1
                     ? ColorConstant.deepPurpleA200
                     : Colors.grey.shade300),
-            label: 'Task',
+            label: 'Approvals',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/images/img_user_blue_gray_100.svg',
